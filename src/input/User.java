@@ -1,30 +1,30 @@
 package input;
 
-import controller.Level;
 import controller.LevelsOperation;
-import controller.Shop;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class User {
-    private String name;
+    private String userName;
+    private String password;
     private int numberOfStars;
-    private ArrayList<Awards> awards;
-    private ArrayList<Integer> unlockedLevels;
-    private Shop shop;
+    private HashSet<Integer> unlockedLevels;
+    //private Shop shop;
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public User(String name) {
-        this.name = name;
+    public String getPassword() { return password; }
+
+    public User(String name, String password) {
+        this.userName = name;
+        this.password = password;
+        this.numberOfStars = 0;
     }
 
     public User() {
 
     }
-    public void levelMenu(){
-        LevelsOperation levelsOperation = new LevelsOperation();
-    }
+
 }

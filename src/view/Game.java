@@ -4,6 +4,7 @@ import animals.domestics.Domestic;
 import animals.wilds.Wild;
 import controller.*;
 import factories.Factory;
+import input.User;
 import products.Product;
 import vehicles.Helicopter;
 import vehicles.Truck;
