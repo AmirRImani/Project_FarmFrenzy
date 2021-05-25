@@ -1,22 +1,40 @@
 package animals.domestics;
 
 import animals.Animal;
-import products.Product;
+import animals.Speed;
+import products.Products;
 
 public class Domestic extends Animal {
-    protected int amountOfFoodNeed;
-    protected int fullFood;
-    protected boolean wantToEat;
+    protected int value;
+    protected final int fullHealth = 100;
+    protected final int healthToEat = 50;
+    protected final int healDecrease = 10;
     protected int health;
-    protected Product product;
+    protected boolean wantToEat;
+    protected Products product;
+    protected int timeToProduct;
+
+    protected Domestic(int value, Products product, int timeToProduct, int speed) {
+        super(speed);//TODO
+        this.value = value;
+        this.health = 100;
+        this.wantToEat = false;
+        this.product = product;
+        this.timeToProduct = timeToProduct;
+    }
 
     public void checkWantToEat(Domestic domestic){
-        if(domestic.health < domestic.amountOfFoodNeed)
+        if(domestic.health < domestic.healthToEat)
             wantToEat = true;
-        else if(domestic.health >= domestic.fullFood)
+        else if(domestic.health >= domestic.fullHealth)
             wantToEat = false;
     }
-    public void eat(Domestic domestic){
+
+    public void tired(){
+        this.health -= this.healDecrease;
+    }
+
+    public void eat(){
 
     }
 

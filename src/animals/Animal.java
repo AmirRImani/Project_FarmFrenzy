@@ -1,5 +1,7 @@
 package animals;
 
+import controller.Board;
+
 import java.util.Random;
 
 public class Animal {
@@ -7,36 +9,59 @@ public class Animal {
     protected int column;
     protected int speed;
 
-    protected char randomWalk(){
+    protected Animal(int speed) {
+        Random random = new Random();
+        this.row = random.nextInt(Board.ROW.getLength());
+        this.column = random.nextInt(Board.COLUMN.getLength());
+        this.speed = speed;
+    }
+
+    private Directions randomWalk(){
         Random rand = new Random();
         int random = rand.nextInt(4);
         switch (random){
             case 0:
-                return 'U';
+                return Directions.UP;
             case 1:
-                return 'D';
+                return Directions.DOWN;
             case 2:
-                return 'R';
+                return Directions.RIGHT;
             case 3:
-                return 'L';
+                return Directions.LEFT;
+            default:
+                return Directions.UP;
         }
-        return 0;
     }
 
-    protected void walk(Animal animal, char direction){
-        switch (direction){
-            case 'U':
-                animal.column -= animal.speed;
-                break;
-            case 'D':
-                animal.column += animal.speed;
-                break;
-            case 'R':
-                animal.row += animal.speed;
-                break;
-            case 'L':
-                animal.row -= animal.speed;
-                break;
+    protected void walk(){
+        Directions direction;
+        int boardRow = Board.ROW.getLength();
+        int boardColumn = Board.COLUMN.getLength();
+        //TODO
+        while(this.column > boardColumn || this.column < 1 || this.row > boardRow || this.row < 1) {
+            direction = randomWalk();
+            switch (direction) {
+                case UP:
+                    this.column -= this.speed;
+                    break;
+                case DOWN:
+                    this.column += this.speed;
+                    break;
+                case RIGHT:
+                    this.row += this.speed;
+                    break;
+                case LEFT:
+                    this.row -= this.speed;
+                    break;
+            }
+            if (this.column > boardColumn)
+                this.column -= this.speed;
+            else if (this.column < 1)
+                this.column += this.speed;
+            else if (this.row > boardColumn)
+                this.row -= this.speed;
+            else if (this.row < 1)
+                this.row += this.speed;
         }
     }
 }

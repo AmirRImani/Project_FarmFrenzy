@@ -1,15 +1,26 @@
 package factories;
 
-import products.Product;
+import products.Products;
 
-import java.util.ArrayList;
+public class Factory {
+    //protected int levelUpPrice;
+    //protected int currentLevel;
+    protected String name;
+    protected int costToBuild;
+    protected int timeToProduce;
+    protected Products neededProduct;
+    protected Products producedProduct;
 
-public abstract class Factory {
-    protected int levelUpPrice;
-    protected int highestLevel;
-    protected int currentLevel;
-    protected ArrayList<Product> neededProducts = new ArrayList<>();
-    protected ArrayList<Product> producedProducts = new ArrayList<>();
+    public Factory(Factories factory) {
+        this.name = factory.name();
+        this.costToBuild = factory.getCost();
+        this.timeToProduce = factory.getTime();
+        this.neededProduct = factory.getNeededProduct();
+        this.producedProduct = factory.getProducedProduct();
+    }
 
-    public abstract void produce();
+    public void produce(){
+
+    }
+
 }
