@@ -10,6 +10,7 @@ public class Factory {
     protected int timeToProduce;
     protected Products neededProduct;
     protected Products producedProduct;
+    protected int startTime;//TODO start to produce
 
     public Factory(Factories factory) {
         this.name = factory.name();

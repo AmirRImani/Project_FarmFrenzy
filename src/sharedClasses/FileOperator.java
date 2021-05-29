@@ -1,3 +1,5 @@
+package sharedClasses;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -30,7 +32,15 @@ public class FileOperator <E> {
     }
 
 
-    public void saveFile(File file,HashSet<E> hashSet,boolean append) throws IOException {
+    public void saveFile(File file,HashSet<E> hashSet) throws IOException {
+        Gson gson = builder.create();
+        fileWriter = new FileWriter(file);
+        fileWriter.write(gson.toJson(hashSet));
+        fileWriter.close();
+        //TODO
+    }
+
+    public void saveFile(File file,ArrayList<E> hashSet) throws IOException {
         Gson gson = builder.create();
         fileWriter = new FileWriter(file);
         fileWriter.write(gson.toJson(hashSet));

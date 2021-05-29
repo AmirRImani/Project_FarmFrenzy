@@ -1,14 +1,12 @@
 package input;
 
-import controller.LevelsOperation;
-
 import java.util.HashSet;
 
 public class User {
     private String userName;
     private String password;
-    private int numberOfStars;
-    private HashSet<Integer> unlockedLevels;
+    private int numberOfCoins;
+    private int unlockedLevels;
     //private Shop shop;
 
     public String getUserName() {
@@ -17,14 +15,28 @@ public class User {
 
     public String getPassword() { return password; }
 
+    public int getNumberOfCoins() { return numberOfCoins; }
+
+    public int getUnlockedLevels() { return unlockedLevels; }
+
     public User(String name, String password) {
         this.userName = name;
         this.password = password;
-        this.numberOfStars = 0;
+        this.numberOfCoins = 1;
     }
 
     public User() {
 
     }
 
+    public User(String userName, String password, int numberOfCoins, int unlockedLevels) {
+        this.userName = userName;
+        this.password = password;
+        this.numberOfCoins = numberOfCoins;
+        this.unlockedLevels = unlockedLevels;
+    }
+
+    public void clearCoins(){
+        this.numberOfCoins = 0;
+    }
 }

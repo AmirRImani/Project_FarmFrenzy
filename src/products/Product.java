@@ -2,10 +2,11 @@ package products;
 
 public class Product {
     //TODO
-    private String nameOfProduct;
-    private int spaceNeeded;
-    private int disappearTime;
-    private int price;
+    protected String nameOfProduct;
+    protected int spaceNeeded;
+    protected int disappearTime;
+    protected int price;
+    protected int startTime;//TODO time when it's been made
 
     public Product(Products product) {
         this.nameOfProduct = product.name();

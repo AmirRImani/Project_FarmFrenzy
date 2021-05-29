@@ -6,6 +6,7 @@ public class Well {
     private int chronometer;
     private int amountOfWater;
     private boolean startToWater;
+    //TODO these methods can be used in sharedClasses.TimeProcessor
 
     private boolean isEmpty(){
         if(amountOfWater <= 0) {

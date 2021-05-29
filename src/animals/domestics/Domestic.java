@@ -1,7 +1,6 @@
 package animals.domestics;
 
 import animals.Animal;
-import animals.Speed;
 import products.Products;
 
 public class Domestic extends Animal {
@@ -13,14 +12,15 @@ public class Domestic extends Animal {
     protected boolean wantToEat;
     protected Products product;
     protected int timeToProduct;
+    protected int startTime;//TODO start to produce
 
-    protected Domestic(int value, Products product, int timeToProduct, int speed) {
-        super(speed);//TODO
-        this.value = value;
+    protected Domestic(Domestics domestic) {
+        super(domestic.getSpeed());//TODO
+        this.value = domestic.getValue();
         this.health = 100;
         this.wantToEat = false;
-        this.product = product;
-        this.timeToProduct = timeToProduct;
+        this.product = domestic.getProduct();
+        this.timeToProduct = domestic.getTimeToProduct();
     }
 
     public void checkWantToEat(Domestic domestic){

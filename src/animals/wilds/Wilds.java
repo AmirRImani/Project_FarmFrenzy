@@ -1,18 +1,13 @@
-package animals;
+package animals.wilds;
 
-public enum Speed {
+public enum Wilds {
     LION(1),
     BEAR(1),
-    TIGER(2),
-    DOG(1),
-    CAT(1),
-    HEN(1),
-    TURKEY(1),
-    BUFFALO(1);
+    TIGER(2);
 
     private int speed;
 
-    Speed(int speed){
+    Wilds(int speed){
         this.speed = speed;
     }
 
