@@ -34,17 +34,19 @@ public class LevelsOperation {
     private ArrayList<Level> typeChanger(ArrayList<String> arrayList) {
         ArrayList<Level> levels = new ArrayList<>();
         System.out.println(arrayList.toString());
-        HashMap<Wilds,Integer> timeOfWilds = new HashMap<>();
-        HashSet<Factories> neededFactories = new HashSet<>();
-        HashMap<Factories,Integer> factoriesLevel = new HashMap<>();
+
 
         //TODO
-        Pattern pattern = Pattern.compile("(\\{[^\\}]+\\})");
+        Pattern pattern = Pattern.compile("\\[(\\{.+\\})\\]");
         Matcher matcher;
-        Pattern patternNumber = Pattern.compile("number=([^,|.]+)");
+        Pattern patternNumber = Pattern.compile("number=([^,|\\.]+)");
         Matcher matcherNumber;
         Pattern patternTimeWilds = Pattern.compile("timeOfWilds=\\{([^\\}]+)\\}");
         Matcher matcherTimeWilds;
+        Pattern patternWild = Pattern.compile("(\\w+)=");
+        Matcher matcherWild;
+        Pattern patternTime = Pattern.compile("(\\d+)\\.\\d+");
+        Matcher matcherTime;
         Pattern patternTasks = Pattern.compile("tasks=([^,|.]+)");//TODO
         Matcher matcherTasks;
         Pattern patternFactories = Pattern.compile("neededFactories=\\[([^\\]]+)\\]");
@@ -56,10 +58,13 @@ public class LevelsOperation {
         Pattern patternStartCoin = Pattern.compile("startCoin=([^,|.]+)");
         Matcher matcherStartCoin;
 
-        String[] split = arrayList.toString().split("},");
+        String[] split = arrayList.toString().split("startCoin=\\d+\\.\\d+},");
 
         for (String s : split) {
-            matcher = pattern.matcher(s+"}");
+            HashMap<Wilds,Integer> timeOfWilds = new HashMap<>();
+            HashSet<Factories> neededFactories = new HashSet<>();
+            HashMap<Factories,Integer> factoriesLevel = new HashMap<>();
+            matcher = pattern.matcher(s);
             matcher.find();
             for (int i = 0; i < matcher.groupCount(); i++) {
                 matcherNumber = patternNumber.matcher(matcher.group(i));
@@ -78,7 +83,18 @@ public class LevelsOperation {
                 matcherGoldTime.find();
                 matcherStartCoin.find();
 
+                System.out.println(matcherTimeWilds.group(1));
+                String[] splitWilds = matcherTimeWilds.group(1).split(",");
                 //TODO split of hashset and hashmap and loop
+                for (String splitWild : splitWilds) {
+                    matcherWild = patternWild.matcher(splitWild);
+                    matcherTime = patternTime.matcher(splitWild);
+                    matcherWild.find();
+                    matcherTime.find();
+                    timeOfWilds.put(Wilds.valueOf(matcherWild.group(1)), Integer.parseInt(matcherTime.group(1)));
+                }
+
+
 
 //                levels.add(new User(matcherName.group(1),
 //                        matcherPassword.group(1),
