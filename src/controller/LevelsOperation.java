@@ -1,8 +1,10 @@
 package controller;
 
+import animals.domestics.Domestics;
 import animals.wilds.Wilds;
 import factories.Factories;
 import input.User;
+import products.Products;
 import sharedClasses.FileOperator;
 import view.Game;
 
@@ -33,11 +35,8 @@ public class LevelsOperation {
 
     private ArrayList<Level> typeChanger(ArrayList<String> arrayList) {
         ArrayList<Level> levels = new ArrayList<>();
-        System.out.println(arrayList.toString());
 
-
-        //TODO
-        Pattern pattern = Pattern.compile("\\[(\\{.+\\})\\]");
+        Pattern pattern = Pattern.compile("\\{(.+)\\}");
         Matcher matcher;
         Pattern patternNumber = Pattern.compile("number=([^,|\\.]+)");
         Matcher matcherNumber;
@@ -47,43 +46,52 @@ public class LevelsOperation {
         Matcher matcherWild;
         Pattern patternTime = Pattern.compile("(\\d+)\\.\\d+");
         Matcher matcherTime;
-        Pattern patternTasks = Pattern.compile("tasks=([^,|.]+)");//TODO
+        Pattern patternTasks = Pattern.compile("tasks=\\[([^\\]]+)\\]");
         Matcher matcherTasks;
-        Pattern patternFactories = Pattern.compile("neededFactories=\\[([^\\]]+)\\]");
-        Matcher matcherFactories;
-        Pattern patternFactorLev = Pattern.compile("factoriesLevel=\\{([^\\}]+)\\}");
-        Matcher matcherFactorLev;
+        Pattern patternType = Pattern.compile("type=(\\w+)");
+        Matcher matcherType;
+        Pattern patternProduct = Pattern.compile("typeOfProduct=(\\w+)");
+        Matcher matcherProduct;
+        Pattern patternDomestic = Pattern.compile("typeOfDomestic=(\\w+)");
+        Matcher matcherDomestic;
+        Pattern patternTarget = Pattern.compile("target=(\\d+)\\.\\d+");
+        Matcher matcherTarget;
+//        Pattern patternFactories = Pattern.compile("neededFactories=\\[([^\\]]+)\\]");
+//        Matcher matcherFactories;
+//        Pattern patternFactorLev = Pattern.compile("factoriesLevel=\\{([^\\}]+)\\}");
+//        Matcher matcherFactorLev;
         Pattern patternGoldTime = Pattern.compile("goldTime=([^,|.]+)");
         Matcher matcherGoldTime;
         Pattern patternStartCoin = Pattern.compile("startCoin=([^,|.]+)");
         Matcher matcherStartCoin;
 
-        String[] split = arrayList.toString().split("startCoin=\\d+\\.\\d+},");
+        String[] split = arrayList.toString().split("\\}, \\{n");
 
         for (String s : split) {
             HashMap<Wilds,Integer> timeOfWilds = new HashMap<>();
-            HashSet<Factories> neededFactories = new HashSet<>();
-            HashMap<Factories,Integer> factoriesLevel = new HashMap<>();
-            matcher = pattern.matcher(s);
+            HashSet<Task> tasks = new HashSet<>();
+//            HashSet<Factories> neededFactories = new HashSet<>();
+//            HashMap<Factories,Integer> factoriesLevel = new HashMap<>();
+            matcher = pattern.matcher("}, {n" + s);
             matcher.find();
+
             for (int i = 0; i < matcher.groupCount(); i++) {
                 matcherNumber = patternNumber.matcher(matcher.group(i));
                 matcherTimeWilds = patternTimeWilds.matcher(matcher.group(i));
-                matcherTasks = patternTasks.matcher(matcher.group(i));
-                matcherFactories = patternFactories.matcher(matcher.group(i));
-                matcherFactorLev = patternFactories.matcher(matcher.group(i));
-                matcherGoldTime = patternFactories.matcher(matcher.group(i));
-                matcherStartCoin = patternFactories.matcher(matcher.group(i));
+                matcherTasks = patternTasks.matcher(matcher.group(i) + "]");
+//                matcherFactories = patternFactories.matcher(matcher.group(i));
+//                matcherFactorLev = patternFactories.matcher(matcher.group(i));
+                matcherGoldTime = patternGoldTime.matcher(matcher.group(i));
+                matcherStartCoin = patternStartCoin.matcher(matcher.group(i));
 
                 matcherNumber.find();
                 matcherTimeWilds.find();
                 matcherTasks.find();
-                matcherFactories.find();
-                matcherFactorLev.find();
+//                matcherFactories.find();
+//                matcherFactorLev.find();
                 matcherGoldTime.find();
                 matcherStartCoin.find();
 
-                System.out.println(matcherTimeWilds.group(1));
                 String[] splitWilds = matcherTimeWilds.group(1).split(",");
                 //TODO split of hashset and hashmap and loop
                 for (String splitWild : splitWilds) {
@@ -94,12 +102,27 @@ public class LevelsOperation {
                     timeOfWilds.put(Wilds.valueOf(matcherWild.group(1)), Integer.parseInt(matcherTime.group(1)));
                 }
 
+                String[] splitTasks = matcherTasks.group(1).split("},");
+                for (String splitTask : splitTasks) {
+                    matcherType = patternType.matcher(splitTask);
+                    matcherDomestic = patternDomestic.matcher(splitTask);
+                    matcherProduct = patternProduct.matcher(splitTask);
+                    matcherTarget = patternTarget.matcher(splitTask);
+                    matcherType.find();
+                    matcherDomestic.find();
+                    matcherProduct.find();
+                    matcherTarget.find();
+                    if(matcherType.group(1).equals("COIN"))
+                        tasks.add(new Task(Tasks.valueOf("COIN"), Integer.parseInt(matcherTarget.group(1))));
+                    else if(matcherType.group(1).equals("CATCH"))
+                        tasks.add(new Task(Tasks.valueOf("CATCH"), Products.valueOf(matcherProduct.group(1)), Integer.parseInt(matcherTarget.group(1))));
+                    else if(matcherType.group(1).equals("DOMESTIC"))
+                        tasks.add(new Task(Tasks.valueOf("DOMESTIC"), Domestics.valueOf(matcherDomestic.group(1)), Integer.parseInt(matcherTarget.group(1))));
+                }
 
 
-//                levels.add(new User(matcherName.group(1),
-//                        matcherPassword.group(1),
-//                        Integer.parseInt(matcherCoins.group(1)),
-//                        Integer.parseInt(matcherUnlocked.group(1))));
+                levels.add(new Level(Integer.parseInt(matcherNumber.group(1)), Integer.parseInt(matcherGoldTime.group(1)),
+                        Integer.parseInt(matcherStartCoin.group(1)), timeOfWilds, tasks));
             }
         }
         return levels;

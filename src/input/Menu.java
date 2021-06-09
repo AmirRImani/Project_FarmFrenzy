@@ -71,7 +71,7 @@ public class Menu {
         User user;
         boolean rightCommand = false;
         while (!rightCommand) {
-            System.out.println("LOG IN or SIGNUP: ");
+            System.out.println("LOG IN or SIGNUP or EXIT: ");
             command = scanner.nextLine();
 
             if (command.toUpperCase().trim().equals("LOG IN")) {
@@ -86,7 +86,9 @@ public class Menu {
                     userMenu(scanner, user);
                     rightCommand = true;
                 }
-            } else
+            }else if(command.toUpperCase().trim().equals("EXIT"))
+                rightCommand = exit(scanner);
+            else
                 System.out.println("\nWrong command");
             if (!rightCommand)
                 System.out.println();
@@ -159,9 +161,9 @@ public class Menu {
         Matcher matcher;
         boolean rightCommand = false;
         while (!rightCommand) {
-            System.out.println("START[level] or LOG OUT or SETTINGS: ");
+            System.out.println("START[level] or LOG OUT or SETTINGS or EXIT: ");
             command = scanner.nextLine();
-            matcher = pattern.matcher(command.toUpperCase());
+            matcher = pattern.matcher(command.toUpperCase().trim());
             if (matcher.find()) {
                 LevelsOperation levelsOperation = LevelsOperation.getInstance();
                 rightCommand = levelsOperation.getLevel(Integer.parseInt(matcher.group(1)), user);
@@ -171,14 +173,27 @@ public class Menu {
             } else if(command.toUpperCase().equals("SETTINGS")){
                 new Option();
                 //TODO
-            } else
+            } else if(command.toUpperCase().equals("EXIT"))
+                exit(scanner);
+            else
                 System.out.println("\nWrong command");
             if(!rightCommand)
                 System.out.println();
         }
     }
-    private void exit(){
-        //TODO  exit in commands
-        System.exit(1);
+    private boolean exit(Scanner scanner){
+        System.out.println("Are you sure you want to exit? YES or NO");
+        String command = scanner.nextLine();
+        switch (command.toUpperCase().trim()){
+            case "YES":
+                System.exit(1);
+                return true;
+            case "NO":
+                return false;
+            default:
+                System.out.println("\nWrong command");
+                return false;
+        }
+
     }
 }

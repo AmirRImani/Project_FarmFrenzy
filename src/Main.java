@@ -1,13 +1,11 @@
-import controller.LevelsOperation;
 import input.Menu;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-//        Scanner scanner = new Scanner(System.in);
-//        Menu menu = new Menu();
-//        menu.input(scanner);
-        LevelsOperation levelsOperation = LevelsOperation.getInstance();
+        Scanner scanner = new Scanner(System.in);
+        Menu menu = new Menu();
+        menu.input(scanner);
     }
 }

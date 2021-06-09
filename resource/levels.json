@@ -1,1 +1,1 @@
-[{"number":1,"timeOfWilds":{"TIGER":2},"tasks":[],"neededFactories":["BAKERY"],"factoriesLevel":{"BAKERY":2},"goldTime":2,"startCoin":2}]
+[{"number":1,"goldTime":70,"startCoin":100,"timeOfWilds":{"BEAR":20,"TIGER":35},"tasks":[{"type":"DOMESTIC","typeOfDomestic":"BUFFALO","target":5},{"type":"COIN","target":1000}]},{"number":2,"goldTime":100,"startCoin":200,"timeOfWilds":{"BEAR":20,"TIGER":35,"LION":40},"tasks":[{"type":"CATCH","typeOfProduct":"EGG","target":40},{"type":"DOMESTIC","typeOfDomestic":"BUFFALO","target":5},{"type":"COIN","target":1000}]}]
