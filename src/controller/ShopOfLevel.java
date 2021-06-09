@@ -1,10 +1,10 @@
 package controller;
 
-import factories.Factory;
+import factories.Workshop;
 import products.Product;
 
 public class ShopOfLevel {
-    public void buildLevelUp(Factory factory){
+    public void buildLevelUp(Workshop workshop){
 
     }
 

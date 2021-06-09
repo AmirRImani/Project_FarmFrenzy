@@ -4,17 +4,17 @@ import animals.Animal;
 import products.Products;
 
 public class Domestic extends Animal {
-    protected int value;
-    protected final int fullHealth = 100;
-    protected final int healthToEat = 50;
-    protected final int healDecrease = 10;
-    protected int health;
-    protected boolean wantToEat;
-    protected Products product;
-    protected int timeToProduct;
-    protected int startTime;//TODO start to produce
+    private int value;
+    private final int fullHealth = 100;
+    private final int healthToEat = 50;
+    private final int healDecrease = 10;
+    private int health;
+    private boolean wantToEat;
+    private Products product;
+    private int timeToProduct;
+    private int startTime;//TODO start to produce
 
-    protected Domestic(Domestics domestic) {
+    public Domestic(Domestics domestic) {
         super(domestic.getSpeed());//TODO
         this.value = domestic.getValue();
         this.health = 100;

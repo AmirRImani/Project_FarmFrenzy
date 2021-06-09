@@ -60,7 +60,7 @@ public class Menu {
     private void save(){
         FileOperator fileOperator = new FileOperator("users.json");
         try {
-            fileOperator.saveFile(fileOperator.getFile(),users);
+            fileOperator.saveFile(fileOperator.getFile(),users, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -166,7 +166,7 @@ public class Menu {
             matcher = pattern.matcher(command.toUpperCase().trim());
             if (matcher.find()) {
                 LevelsOperation levelsOperation = LevelsOperation.getInstance();
-                rightCommand = levelsOperation.getLevel(Integer.parseInt(matcher.group(1)), user);
+                rightCommand = levelsOperation.getLevel(Integer.parseInt(matcher.group(1)), user, scanner);
             } else if (command.toUpperCase().equals("LOG OUT")) {
                 System.out.println("\nLogout " + user.getUserName() + "\n");
                 input(scanner);

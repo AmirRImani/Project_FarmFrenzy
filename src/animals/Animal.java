@@ -5,14 +5,18 @@ import controller.Board;
 import java.util.Random;
 
 public class Animal {
-    protected int row;
-    protected int column;
-    protected int speed;
+    private int column;
+    private int row;
+    private int speed;
+
+    public int getX() { return column; }
+
+    public int getY() { return row; }
 
     protected Animal(int speed) {
         Random random = new Random();
-        this.row = random.nextInt(Board.ROW.getLength());
         this.column = random.nextInt(Board.COLUMN.getLength());
+        this.row = random.nextInt(Board.ROW.getLength());
         this.speed = speed;
     }
 

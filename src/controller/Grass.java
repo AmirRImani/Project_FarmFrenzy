@@ -1,17 +1,17 @@
 package controller;
 
 public class Grass {
-    private int row;
     private int column;
+    private int row;
 
-    public Grass(int row, int column) {
-        this.row = row;
+    public Grass(int column, int row) {
         this.column = column;
+        this.row = row;
     }
 
-    protected int getRow() { return row; }
-
     protected int getColumn() { return column; }
+
+    protected int getRow() { return row; }
 
 
 }

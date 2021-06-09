@@ -32,9 +32,9 @@ public class FileOperator <E> {
     }
 
 
-    public void saveFile(File file,HashSet<E> hashSet) throws IOException {
+    public void saveFile(File file,HashSet<E> hashSet, boolean append) throws IOException {
         Gson gson = builder.create();
-        fileWriter = new FileWriter(file);
+        fileWriter = new FileWriter(file, append);
         fileWriter.write(gson.toJson(hashSet));
         fileWriter.close();
         //TODO

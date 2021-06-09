@@ -1,21 +1,28 @@
 package animals.wilds;
 
 import animals.Animal;
-import factories.Factories;
+import controller.Cage;
 
 public class Wild extends Animal {
-    protected boolean inCage;
-    protected int startTime;//TODO start to be in cage
+    private boolean inCage;
+    private boolean prisoned;
+    private int tapNeeded;
 
-    protected Wild(int speed) {
-        super(speed);
-        this.inCage = false;
+    public boolean isInCage() { return inCage; }
+
+    public int getTapNeeded() { return tapNeeded; }
+
+    public void setCage(){
+        this.inCage = true;
     }
 
     public Wild(Wilds wild) {
         super(wild.getSpeed());
         this.inCage = false;
+        this.prisoned = false;
+        this.tapNeeded = wild.getTapNeeded();
     }
+
 
     protected void kill(){
 

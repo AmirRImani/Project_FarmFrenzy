@@ -2,16 +2,17 @@ package controller;
 
 import animals.domestics.Domestics;
 import animals.wilds.Wilds;
-import factories.Factories;
 import input.User;
 import products.Products;
 import sharedClasses.FileOperator;
 import view.Game;
+import view.Input;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,18 +61,20 @@ public class LevelsOperation {
 //        Matcher matcherFactories;
 //        Pattern patternFactorLev = Pattern.compile("factoriesLevel=\\{([^\\}]+)\\}");
 //        Matcher matcherFactorLev;
-        Pattern patternGoldTime = Pattern.compile("goldTime=([^,|.]+)");
+        Pattern patternGoldTime = Pattern.compile("goldTime=([^,|\\.]+)");
         Matcher matcherGoldTime;
-        Pattern patternStartCoin = Pattern.compile("startCoin=([^,|.]+)");
+        Pattern patternStartCoin = Pattern.compile("startCoin=([^,|\\.]+)");
         Matcher matcherStartCoin;
+        Pattern patternAward = Pattern.compile("award=([^,|\\.]+)");
+        Matcher matcherAward;
 
         String[] split = arrayList.toString().split("\\}, \\{n");
 
         for (String s : split) {
             HashMap<Wilds,Integer> timeOfWilds = new HashMap<>();
             HashSet<Task> tasks = new HashSet<>();
-//            HashSet<Factories> neededFactories = new HashSet<>();
-//            HashMap<Factories,Integer> factoriesLevel = new HashMap<>();
+//            HashSet<Workshops> neededFactories = new HashSet<>();
+//            HashMap<Workshops,Integer> factoriesLevel = new HashMap<>();
             matcher = pattern.matcher("}, {n" + s);
             matcher.find();
 
@@ -83,6 +86,7 @@ public class LevelsOperation {
 //                matcherFactorLev = patternFactories.matcher(matcher.group(i));
                 matcherGoldTime = patternGoldTime.matcher(matcher.group(i));
                 matcherStartCoin = patternStartCoin.matcher(matcher.group(i));
+                matcherAward = patternAward.matcher(matcher.group(i));
 
                 matcherNumber.find();
                 matcherTimeWilds.find();
@@ -91,6 +95,7 @@ public class LevelsOperation {
 //                matcherFactorLev.find();
                 matcherGoldTime.find();
                 matcherStartCoin.find();
+                matcherAward.find();
 
                 String[] splitWilds = matcherTimeWilds.group(1).split(",");
                 //TODO split of hashset and hashmap and loop
@@ -121,8 +126,8 @@ public class LevelsOperation {
                 }
 
 
-                levels.add(new Level(Integer.parseInt(matcherNumber.group(1)), Integer.parseInt(matcherGoldTime.group(1)),
-                        Integer.parseInt(matcherStartCoin.group(1)), timeOfWilds, tasks));
+                levels.add(new Level(Integer.parseInt(matcherNumber.group(1)), Integer.parseInt(matcherAward.group(1)),
+                        Integer.parseInt(matcherGoldTime.group(1)), Integer.parseInt(matcherStartCoin.group(1)), timeOfWilds, tasks));
             }
         }
         return levels;
@@ -143,11 +148,11 @@ public class LevelsOperation {
         return false;
     }
 
-    public boolean getLevel(int level, User user){
+    public boolean getLevel(int level, User user, Scanner scanner){
         System.out.println();
         if(startLevelPossible(level, user)) {
             System.out.println("Level " + level + " started");
-            startLevel(levels.get(level - 1), user);
+            startLevel(levels.get(level - 1), user, scanner);
             return true;
         } else {
             System.out.println("This level is locked for you");
@@ -157,9 +162,13 @@ public class LevelsOperation {
     }
 
 
-    public void startLevel(Level level, User user){
+    public void startLevel(Level level, User user, Scanner scanner){
         //TODO
         HashSet<Task> tasks = level.getTasks();
         Game game = new Game(level, user);
+        Input input = new Input();
+        while(true){
+            input.commandGetter(scanner, game);
+        }
     }
 }
