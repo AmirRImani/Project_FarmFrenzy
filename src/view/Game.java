@@ -2,6 +2,9 @@ package view;
 
 import animals.domestics.Domestic;
 import animals.domestics.Domestics;
+import animals.helpers.Dog;
+import animals.helpers.Helper;
+import animals.helpers.Helpers;
 import animals.wilds.Wild;
 import animals.wilds.Wilds;
 import controller.*;
@@ -15,13 +18,15 @@ import vehicles.Truck;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 
 public class Game {
     private int coin;
     private HashSet<Domestic> domestics;
     private HashSet<Workshop> workshops;
-    private HashMap<Wilds,Integer> wildsAppearance;
+    private HashMap<Wilds, int[]> wildsAppearance;
     private HashSet<Wild> wilds;
+    private HashSet<Helper> helpers;
     private HashSet<Product> productsOnGround;
     private HashSet<Grass> grasses;
     private HashSet<Cage> cages;
@@ -48,9 +53,10 @@ public class Game {
         this.grasses = new HashSet<>();
         this.productsOnGround = new HashSet<>();
         this.wilds = new HashSet<>();
+        this.helpers = new HashSet<>();
     }
 
-    public void buy(Domestics domestic) {
+    public void buyDome(Domestics domestic) {
         if(this.coin >= domestic.getValue()) {
             domestics.add(new Domestic(domestic));
             System.out.println("Buying has been done");
@@ -59,11 +65,21 @@ public class Game {
             System.out.println("Not enough coin to buy");
     }
 
+    public void buyHelper(Helpers helper) {
+        if(this.coin >= helper.getValue()) {
+            helpers.add(new Helper(helper));
+            System.out.println("Buying has been done");
+            this.coin -= helper.getValue();
+        } else
+            System.out.println("Not enough coin to buy");
+    }
+
 
     public void pickup(int x, int y) {
         boolean found = false;
         boolean fullWarehouse = false;
-        for (Product product : productsOnGround) {
+        HashSet<Product> products = new HashSet<>(productsOnGround);
+        for (Product product : products) {
             if(product.getX() == x && product.getY() == y){
                 found = true;
                 if(this.warehouse.addProduct(Products.valueOf(product.getNameOfProduct()), 1)) {
@@ -113,7 +129,7 @@ public class Game {
                     }
                 } else{
                     Cage newCage = new Cage(wild);
-                    wild.setCage();
+                    wild.setCage(true);
                     cages.add(newCage);
                     System.out.println("New cage on " + wild.getX() + ", " + wild.getY());
                     return;
@@ -125,9 +141,7 @@ public class Game {
 
     public void turn(int turnNumber) {
         TimeProcessor timeProcessor = TimeProcessor.getInstance();
-        for (int i = 0; i < turnNumber; i++) {
-            timeProcessor.changeStep();
-        }
+        timeProcessor.changeSteps(turnNumber,this);
     }
 
     public void truckLoad(String productName) {
@@ -169,4 +183,111 @@ public class Game {
         else
             System.out.println("Truck is on road");
     }
+
+    public void workshopProducts() {
+        for (Workshop workshop : workshops) {
+            if (workshop.isBusy()) {
+                if (workshop.isProduced()) {
+                    System.out.println(workshop.getName() + "'s work is done");//TODO change response or delete it
+                    productsOnGround.add(new Product(workshop.getProducedProduct()));
+                }
+            }
+        }
+    }
+
+    public void domesticProducts() {
+        for (Domestic domestic : domestics) {
+            if(domestic.isProduced()){
+                System.out.println();//TODO change response or delete it
+                productsOnGround.add(new Product(domestic.getProduct(),domestic.getX(),domestic.getY()));
+            }
+        }
+    }
+
+    public void feedAnimals() {
+        for (Domestic domestic : domestics) {
+            if(domestic.needToEat())
+                onGrass(domestic);//TODO
+        }
+
+        HashSet<Grass> grassHashSet = new HashSet<>(grasses);
+
+        for (Grass grass : grassHashSet) {
+            Domestic dome = grass.moreImportant();
+            if(dome != null) {
+                dome.eat();
+                grasses.remove(grass);
+            }
+        }
+    }
+
+    private boolean onGrass(Domestic domestic) {
+        for (Grass grass : grasses) {
+            if(grass.getColumn() == domestic.getY() && grass.getRow() == domestic.getY()) {
+                grass.addDome(domestic);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void appearWilds() {
+        for (Wilds wild : Wilds.values()) {
+            if(wildsAppearance.containsKey(wild)){
+                timeWild(wild, wildsAppearance.get(wild));//TODO
+            }
+        }
+    }
+
+    private void timeWild(Wilds wild, int[] ints) {
+        for (int i = 0; i < ints.length; i++) {
+            if(ints[i] == TimeProcessor.currentStep)
+                wilds.add(new Wild(wild));
+        }
+    }
+
+    public void disappearProducts() {
+        HashSet<Product> products = new HashSet<>(productsOnGround);
+        for (Product product : products) {
+            if(product.spoil())
+                productsOnGround.remove(product);
+        }
+    }
+
+    public void freeWilds() {
+        HashSet<Cage> cageHashSet = new HashSet<>(cages);
+        for (Cage cage : cageHashSet) {
+            if(cage.isPrisoned()) {
+                if (cage.free()) {
+                    cages.remove(cage);
+                    wilds.remove(cage.getWild());
+                    System.out.println("Wild in " + cage.getX() + "," + cage.getY() + " was freed");
+                }
+            }
+        }
+    }
+
+    public void decreaseCageResist() {
+        HashSet<Cage> cageHashSet = new HashSet<>(cages);
+        for (Cage cage : cageHashSet) {
+            if(cage.decreaseTap())
+                cages.remove(cage);
+        }
+    }
+
+
+//    public void dogAttack() {
+//        for (Helper helper : helpers) {
+//            if(helper instanceof Dog){
+//                if(onWild((Dog) helper))
+//            }
+//        }
+//    }
+//
+//    private boolean onWild(Dog dog) {
+//        for (Wild wild : wilds) {
+//            if(!wild.isInCage())
+//
+//        }
+//    }
 }

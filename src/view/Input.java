@@ -1,6 +1,7 @@
 package view;
 
 import animals.domestics.Domestics;
+import animals.helpers.Helpers;
 import factories.Workshops;
 import products.Products;
 
@@ -41,7 +42,13 @@ public class Input {
         if(matcherBuy.find()) {
             for (Domestics domestic : Domestics.values()) {
                 if (domestic.name().equals(matcherBuy.group(1))) {
-                    game.buy(Domestics.valueOf(matcherBuy.group(1)));
+                    game.buyDome(Domestics.valueOf(matcherBuy.group(1)));
+                    return;
+                }
+            }
+            for (Helpers helper : Helpers.values()) {
+                if(helper.name().equals(matcherBuy.group(1))){
+                    game.buyHelper(Helpers.valueOf(matcherBuy.group(1)));
                     return;
                 }
             }

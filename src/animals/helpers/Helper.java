@@ -3,11 +3,11 @@ package animals.helpers;
 import animals.Animal;
 
 public class Helper extends Animal {
-    protected int value;
+    private int value;
 
 
-    protected Helper(int value, int speed) {
-        super(speed);//TODO
-        this.value = value;
+    public Helper(Helpers helper) {
+        super(helper.getSpeed());//TODO
+        this.value = helper.getValue();
     }
 }

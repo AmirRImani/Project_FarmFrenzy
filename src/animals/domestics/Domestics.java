@@ -23,7 +23,7 @@ public enum Domestics {
 
     public products.Products getProduct() { return product; }
 
-    public int getTimeToProduct() { return timeToProduct; }
+    public int getTimeToProduce() { return timeToProduct; }
 
     public int getSpeed(){
         return speed;

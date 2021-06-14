@@ -13,9 +13,13 @@ public class Workshop {
     private Products neededProduct;
     private Products producedProduct;
     private int startTime;//TODO start to produce
-    boolean busy;
+    private boolean busy;
 
     public String getName() { return name; }
+
+    public Products getProducedProduct() { return producedProduct; }
+
+    public boolean isBusy() { return busy; }
 
     public Workshop(Workshops workshop) {
         this.name = workshop.name();
@@ -45,4 +49,11 @@ public class Workshop {
         }
     }
 
+    public boolean isProduced() {
+        if(TimeProcessor.currentStep >= startTime + timeToProduce){
+            busy = false;
+            return true;
+        }
+        return false;
+    }
 }

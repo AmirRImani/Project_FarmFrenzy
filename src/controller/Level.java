@@ -10,7 +10,7 @@ public class Level {
     int goldTime;
     int award;
     int startCoin;
-    private HashMap<Wilds,Integer> timeOfWilds;
+    private HashMap<Wilds,int[]> timeOfWilds;
     private HashSet<Task> tasks;
     //TODO  make enum of names like factory names
     //private HashSet<Workshops> neededFactories;
@@ -20,7 +20,7 @@ public class Level {
 
     public HashSet<Task> getTasks() { return tasks; }
 
-    public HashMap<Wilds, Integer> getTimeOfWilds() { return timeOfWilds; }
+    public HashMap<Wilds, int[]> getTimeOfWilds() { return timeOfWilds; }
 
     //public HashSet<Workshops> getNeededFactories() { return neededFactories; }
 
@@ -30,7 +30,7 @@ public class Level {
 
     public int getStartCoin() { return startCoin; }
 
-    public Level(int number, int goldTime, int award, int startCoin, HashMap<Wilds, Integer> timeOfWilds, HashSet<Task> tasks/*, HashSet<Workshops> neededFactories, HashMap<Workshops, Integer> factoriesLevel*/) {
+    public Level(int number, int goldTime, int award, int startCoin, HashMap<Wilds, int[]> timeOfWilds, HashSet<Task> tasks/*, HashSet<Workshops> neededFactories, HashMap<Workshops, Integer> factoriesLevel*/) {
         this.number = number;
         this.goldTime = goldTime;
         this.award = award;

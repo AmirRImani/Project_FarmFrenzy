@@ -12,9 +12,11 @@ public class Wild extends Animal {
 
     public int getTapNeeded() { return tapNeeded; }
 
-    public void setCage(){
-        this.inCage = true;
+    public void setCage(boolean inCage){
+        this.inCage = inCage;
     }
+
+    public void prison(boolean prisoned) { this.prisoned = prisoned; }
 
     public Wild(Wilds wild) {
         super(wild.getSpeed());

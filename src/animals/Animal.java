@@ -15,8 +15,8 @@ public class Animal {
 
     protected Animal(int speed) {
         Random random = new Random();
-        this.column = random.nextInt(Board.COLUMN.getLength());
-        this.row = random.nextInt(Board.ROW.getLength());
+        this.column = random.nextInt(Board.COLUMN.getLength()) + 1;
+        this.row = random.nextInt(Board.ROW.getLength()) + 1;
         this.speed = speed;
     }
 

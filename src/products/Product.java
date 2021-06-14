@@ -1,5 +1,10 @@
 package products;
 
+import controller.Board;
+import sharedClasses.TimeProcessor;
+
+import java.util.Random;
+
 public class Product {
     //TODO
     private String nameOfProduct;
@@ -27,5 +32,20 @@ public class Product {
         this.y = y;
     }
 
+    public Product(Products product) {
+        Random random = new Random();
+        this.nameOfProduct = product.name();
+        this.spaceNeeded = product.getSpace();
+        this.disappearTime = product.getDisappear();
+        this.price = product.getPrice();
+        this.x = random.nextInt(Board.COLUMN.getLength()) + 1;
+        this.y = random.nextInt(Board.ROW.getLength()) + 1;
+    }
 
+
+    public boolean spoil() {
+        if(TimeProcessor.currentStep >= startTime + disappearTime)
+            return true;
+        return false;
+    }
 }
