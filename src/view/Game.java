@@ -2,14 +2,15 @@ package view;
 
 import animals.domestics.Domestic;
 import animals.domestics.Domestics;
+import animals.helpers.Cat;
 import animals.helpers.Dog;
 import animals.helpers.Helper;
 import animals.helpers.Helpers;
 import animals.wilds.Wild;
 import animals.wilds.Wilds;
 import controller.*;
-import factories.Workshop;
-import factories.Workshops;
+import workshops.Workshop;
+import workshops.Workshops;
 import input.User;
 import products.Product;
 import products.Products;
@@ -18,7 +19,6 @@ import vehicles.Truck;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 
 public class Game {
     private int coin;
@@ -79,24 +79,32 @@ public class Game {
         boolean found = false;
         boolean fullWarehouse = false;
         HashSet<Product> products = new HashSet<>(productsOnGround);
+        if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
+            System.out.println("Coordinate is not on game board");
+            return;
+        }
         for (Product product : products) {
             if(product.getX() == x && product.getY() == y){
                 found = true;
                 if(this.warehouse.addProduct(Products.valueOf(product.getNameOfProduct()), 1)) {
                     this.productsOnGround.remove(product);
                     fullWarehouse = false;
-                    System.out.println("Product " + product.getNameOfProduct() + "transferred to warehouse");
+                    System.out.println("Product " + product.getNameOfProduct() + " transferred to warehouse");
                 } else
                     fullWarehouse = true;
             }
         }
         if(!found)
             System.out.println("There isn't any product on this coordinate");
-        else if(!fullWarehouse)
+        else if(fullWarehouse)
             System.out.println("There isn't enough space in warehouse");
     }
 
     public void plant(int x, int y) {
+        if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
+            System.out.println("Coordinate is not on game board");
+            return;
+        }
         if(this.well.putGrass()) {
             grasses.add(new Grass(x, y));
             System.out.println("Grass planted");
@@ -116,6 +124,10 @@ public class Game {
     }
 
     public void cage(int x, int y) {
+        if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
+            System.out.println("Coordinate is not on game board");
+            return;
+        }
         for (Wild wild : wilds) {
             if(wild.getX() == x && wild.getX() == y){
                 System.out.println("Cage");
@@ -261,7 +273,7 @@ public class Game {
                 if (cage.free()) {
                     cages.remove(cage);
                     wilds.remove(cage.getWild());
-                    System.out.println("Wild in " + cage.getX() + "," + cage.getY() + " was freed");
+                    System.out.println("Wild on " + cage.getX() + "," + cage.getY() + " was freed");
                 }
             }
         }
@@ -276,18 +288,81 @@ public class Game {
     }
 
 
-//    public void dogAttack() {
-//        for (Helper helper : helpers) {
-//            if(helper instanceof Dog){
-//                if(onWild((Dog) helper))
-//            }
-//        }
-//    }
-//
-//    private boolean onWild(Dog dog) {
-//        for (Wild wild : wilds) {
-//            if(!wild.isInCage())
-//
-//        }
-//    }
+    public void dogAttack() {
+        HashSet<Helper> helperHashSet = new HashSet<>(helpers);
+        for (Helper helper : helperHashSet) {
+            if(helper instanceof Dog){
+                onWild(helper);//TODO
+            }
+        }
+    }
+
+    private void onWild(Helper helper) {
+        HashSet<Wild> wildHashSet = new HashSet<>(wilds);
+        for (Wild wild : wildHashSet) {
+            if(!wild.isInCage()){
+                if(wild.getX() == helper.getX() && wild.getY() == helper.getY()){
+                    System.out.println("Dog on " + helper.getX() + "," + helper.getY() + " attacked a wild");
+                    wilds.remove(wild);
+                    helpers.remove(helper);
+                }
+            }
+        }
+    }
+
+    public void catCatches() {
+        for (Helper helper : helpers) {
+            if(helper instanceof Cat){
+                onProduct(helper.getX(), helper.getY());//TODO
+            }
+        }
+    }
+
+    private void onProduct(int x, int y) {
+        HashSet<Product> products = new HashSet<>(productsOnGround);
+        for (Product product : products) {
+            if(product.getX() == x && product.getY() == y){
+                System.out.println("Product on " + x + "," + y + " moved to warehouse by cat");
+                productsOnGround.remove(product);
+                warehouse.addProduct(Products.valueOf(product.getNameOfProduct()),1);//TODO
+            }
+        }
+    }
+
+    public void wildAttack() {
+        for (Wild wild : wilds) {
+            if(!wild.isInCage()){
+                onDome(wild.getX(), wild.getY());//TODO
+            }
+        }
+    }
+
+    private void onDome(int x, int y) {
+        HashSet<Domestic> domesticHashSet = new HashSet<>(domestics);
+        for (Domestic domestic : domesticHashSet) {
+            if(domestic.getX() == x && domestic.getY() == y){
+                System.out.println("Wild on " + x + "," + y + " attacked a domestic");
+                domestics.remove(domestic);
+            }
+        }
+    }
+
+    public void walk() {
+        for (Domestic domestic : domestics)
+            domestic.walk();
+        for (Helper helper : helpers)
+            helper.walk();
+        for (Wild wild : wilds) {
+            if(!wild.isPrisoned())
+                wild.walk();
+        }
+    }
+
+    public void showDetails() {
+        //TODO to show information after time change
+    }
+
+    public void checkWin() {
+        //TODO if user did all tasks of level
+    }
 }

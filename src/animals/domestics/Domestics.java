@@ -3,9 +3,9 @@ package animals.domestics;
 import products.Products;
 
 public enum Domestics {
-    HEN(1, products.Products.EGG,2,1),
-    TURKEY(1, products.Products.FEATHER,3,1),
-    BUFFALO(1, products.Products.MILK,5,1);
+    HEN(100, products.Products.EGG,2,1),
+    TURKEY(200, products.Products.FEATHER,3,1),
+    BUFFALO(400, products.Products.MILK,5,1);
 
     private int value;
     private Products product;

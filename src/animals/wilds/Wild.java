@@ -10,6 +10,8 @@ public class Wild extends Animal {
 
     public boolean isInCage() { return inCage; }
 
+    public boolean isPrisoned() { return prisoned; }
+
     public int getTapNeeded() { return tapNeeded; }
 
     public void setCage(boolean inCage){

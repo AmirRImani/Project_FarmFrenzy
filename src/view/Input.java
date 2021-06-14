@@ -2,7 +2,6 @@ package view;
 
 import animals.domestics.Domestics;
 import animals.helpers.Helpers;
-import factories.Workshops;
 import products.Products;
 
 import java.util.Scanner;

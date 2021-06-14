@@ -1,4 +1,4 @@
-package factories;
+package workshops;
 
 import controller.Warehouse;
 import products.Products;
@@ -41,8 +41,7 @@ public class Workshop {
                 startTime = TimeProcessor.currentStep;
                 busy = true;
                 return true;
-            }
-            else {
+            } else {
                 System.out.println("Not enough ingredients");
                 return false;
             }

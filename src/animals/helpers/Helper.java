@@ -10,4 +10,5 @@ public class Helper extends Animal {
         super(helper.getSpeed());//TODO
         this.value = helper.getValue();
     }
+
 }

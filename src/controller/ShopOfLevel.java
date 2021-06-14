@@ -1,6 +1,6 @@
 package controller;
 
-import factories.Workshop;
+import workshops.Workshop;
 import products.Product;
 
 public class ShopOfLevel {

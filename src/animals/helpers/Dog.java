@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class Dog extends Helper {
     public Dog() {
-        super(Helpers.DOG.getValue(), Helpers.DOG.getSpeed());
+        super(Helpers.DOG);
     }
 
     protected void findWild(ArrayList<Wild> wilds){
 
     }
-    protected void attackDefence(Wild wild){
+    public void attack(Wild wild){
 
     }
 }

@@ -37,7 +37,7 @@ public class Animal {
         }
     }
 
-    protected void walk(){
+    public void walk(){
         Directions direction;
         int boardRow = Board.ROW.getLength();
         int boardColumn = Board.COLUMN.getLength();

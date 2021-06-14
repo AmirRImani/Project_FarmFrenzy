@@ -11,6 +11,7 @@ public class Warehouse {
     HashMap<Products,Integer> amountOfProduct;
 
     public Warehouse() {
+        this.remainedSpace = fullSpace;
         this.amountOfProduct = new HashMap<>();
     }
 

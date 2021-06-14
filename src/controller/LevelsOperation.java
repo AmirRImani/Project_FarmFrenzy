@@ -1,6 +1,7 @@
 package controller;
 
 import animals.domestics.Domestics;
+import animals.wilds.Wild;
 import animals.wilds.Wilds;
 import input.User;
 import products.Products;
@@ -9,10 +10,7 @@ import view.Game;
 import view.Input;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,6 +43,8 @@ public class LevelsOperation {
         Matcher matcherTimeWilds;
         Pattern patternWild = Pattern.compile("(\\w+)=");
         Matcher matcherWild;
+        Pattern patternTimes = Pattern.compile("(\\d+.+)\\]");
+        Matcher matcherTimes;
         Pattern patternTime = Pattern.compile("(\\d+)\\.\\d+");
         Matcher matcherTime;
         Pattern patternTasks = Pattern.compile("tasks=\\[([^\\]]+)\\]");
@@ -57,10 +57,6 @@ public class LevelsOperation {
         Matcher matcherDomestic;
         Pattern patternTarget = Pattern.compile("target=(\\d+)\\.\\d+");
         Matcher matcherTarget;
-//        Pattern patternFactories = Pattern.compile("neededFactories=\\[([^\\]]+)\\]");
-//        Matcher matcherFactories;
-//        Pattern patternFactorLev = Pattern.compile("factoriesLevel=\\{([^\\}]+)\\}");
-//        Matcher matcherFactorLev;
         Pattern patternGoldTime = Pattern.compile("goldTime=([^,|\\.]+)");
         Matcher matcherGoldTime;
         Pattern patternStartCoin = Pattern.compile("startCoin=([^,|\\.]+)");
@@ -71,10 +67,8 @@ public class LevelsOperation {
         String[] split = arrayList.toString().split("\\}, \\{n");
 
         for (String s : split) {
-            HashMap<Wilds,Integer> timeOfWilds = new HashMap<>();
+            HashMap<Wilds,int[]> timeOfWilds = new HashMap<>();
             HashSet<Task> tasks = new HashSet<>();
-//            HashSet<Workshops> neededFactories = new HashSet<>();
-//            HashMap<Workshops,Integer> factoriesLevel = new HashMap<>();
             matcher = pattern.matcher("}, {n" + s);
             matcher.find();
 
@@ -82,8 +76,6 @@ public class LevelsOperation {
                 matcherNumber = patternNumber.matcher(matcher.group(i));
                 matcherTimeWilds = patternTimeWilds.matcher(matcher.group(i));
                 matcherTasks = patternTasks.matcher(matcher.group(i) + "]");
-//                matcherFactories = patternFactories.matcher(matcher.group(i));
-//                matcherFactorLev = patternFactories.matcher(matcher.group(i));
                 matcherGoldTime = patternGoldTime.matcher(matcher.group(i));
                 matcherStartCoin = patternStartCoin.matcher(matcher.group(i));
                 matcherAward = patternAward.matcher(matcher.group(i));
@@ -91,22 +83,29 @@ public class LevelsOperation {
                 matcherNumber.find();
                 matcherTimeWilds.find();
                 matcherTasks.find();
-//                matcherFactories.find();
-//                matcherFactorLev.find();
                 matcherGoldTime.find();
                 matcherStartCoin.find();
                 matcherAward.find();
 
-                String[] splitWilds = matcherTimeWilds.group(1).split(",");
+                String[] splitWilds = matcherTimeWilds.group(1).split("\\],");
                 //TODO split of hashset and hashmap and loop
                 for (String splitWild : splitWilds) {
-                    matcherWild = patternWild.matcher(splitWild);
-                    matcherTime = patternTime.matcher(splitWild);
+                    matcherWild = patternWild.matcher(splitWild + "]");
+                    matcherTimes = patternTimes.matcher(splitWild + "]");
                     matcherWild.find();
-                    matcherTime.find();
-                    timeOfWilds.put(Wilds.valueOf(matcherWild.group(1)), Integer.parseInt(matcherTime.group(1)));
-                }
+                    matcherTimes.find();
+                    String[] splitTimes = matcherTimes.group(1).split(",");
+                    int[] times = new int[splitTimes.length];
+                    int cnt = 0;
+                    for (String splitTime : splitTimes) {
+                        matcherTime = patternTime.matcher(splitTime);
+                        matcherTime.find();
+                        times[cnt] = Integer.parseInt(matcherTime.group(1));
+                        cnt ++;
+                    }
+                    timeOfWilds.put(Wilds.valueOf(matcherWild.group(1)), times);
 
+                }
                 String[] splitTasks = matcherTasks.group(1).split("},");
                 for (String splitTask : splitTasks) {
                     matcherType = patternType.matcher(splitTask);

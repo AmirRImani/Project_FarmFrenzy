@@ -1,4 +1,4 @@
-package factories;
+package workshops;
 
 import products.Products;
 
