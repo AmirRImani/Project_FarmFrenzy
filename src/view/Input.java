@@ -1,0 +1,98 @@
+package view;
+
+import animals.domestics.Domestics;
+import animals.helpers.Helpers;
+import products.Products;
+
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Input {
+
+
+    public void commandGetter(Scanner scanner, Game game){
+        String command;
+        System.out.println("Please enter your command: ");
+        command = scanner.nextLine();
+        commandRecognizer(command.toUpperCase().trim(), game);
+    }
+
+    protected void commandRecognizer(String command, Game game){
+        Pattern patternBuy = Pattern.compile("BUY (\\w+)");
+        Matcher matcherBuy = patternBuy.matcher(command);
+        Pattern patternPickup = Pattern.compile("PICKUP (\\d+) (\\d+)");
+        Matcher matcherPickup = patternPickup.matcher(command);
+        Pattern patternPlant = Pattern.compile("PLANT (\\d+) (\\d+)");
+        Matcher matcherPlant = patternPlant.matcher(command);
+        Pattern patternWork = Pattern.compile("WORK (\\w+)");
+        Matcher matcherWork = patternWork.matcher(command);
+        Pattern patternCage = Pattern.compile("CAGE (\\d+) (\\d+)");
+        Matcher matcherCage = patternCage.matcher(command);
+        Pattern patternTurn = Pattern.compile("TURN (\\d+)");
+        Matcher matcherTurn = patternTurn.matcher(command);
+        Pattern patternTruckLoad = Pattern.compile("TRUCK LOAD (\\w+)");
+        Matcher matcherTruckLoad = patternTruckLoad.matcher(command);
+        Pattern patternTruckUnload = Pattern.compile("TRUCK UNLOAD (\\w+)");
+        Matcher matcherTruckUnload = patternTruckUnload.matcher(command);
+        Pattern patternBuild = Pattern.compile("BUILD (\\w+)");
+        Matcher matcherBuild = patternBuild.matcher(command);
+
+        if(matcherBuy.find()) {
+            for (Domestics domestic : Domestics.values()) {
+                if (domestic.name().equals(matcherBuy.group(1))) {
+                    game.buyDome(Domestics.valueOf(matcherBuy.group(1)));
+                    return;
+                }
+            }
+            for (Helpers helper : Helpers.values()) {
+                if(helper.name().equals(matcherBuy.group(1))){
+                    game.buyHelper(Helpers.valueOf(matcherBuy.group(1)));
+                    return;
+                }
+            }
+            System.out.println("Domestic name isn't correct");
+        }else if(matcherPickup.find()) {
+            game.pickup(Integer.parseInt(matcherPickup.group(1)), Integer.parseInt(matcherPickup.group(2)));
+        }else if(matcherPlant.find()) {
+            game.plant(Integer.parseInt(matcherPlant.group(1)), Integer.parseInt(matcherPlant.group(2)));
+        }else if(matcherWork.find()){
+            game.work(matcherWork.group(1));
+        }else if(matcherCage.find()) {
+            game.cage(Integer.parseInt(matcherCage.group(1)), Integer.parseInt(matcherCage.group(2)));
+        }else if(matcherTurn.find()) {
+            game.turn(Integer.parseInt(matcherTurn.group(1)));
+        }else if(matcherTruckLoad.find()) {
+            for (Products product : Products.values()) {
+                if (product.name().equals(matcherTruckLoad.group(1))) {
+                    game.truckLoad(matcherTruckLoad.group(1));
+                    return;
+                }
+            }
+            System.out.println("Product name isn't correct");
+        }else if(matcherTruckUnload.find()) {
+            for (Products product : Products.values()) {
+                if (product.name().equals(matcherTruckUnload.group(1))) {
+                    game.truckUnload(matcherTruckUnload.group(1));
+                    return;
+                }
+            }
+            System.out.println("Product name isn't correct");
+        }else if(matcherBuild.find()) {
+            game.build(matcherBuild.group(1));
+        } else {
+            switch (command) {
+                case "WELL":
+                    game.well();
+                    break;
+                case "TRUCK GO":
+                    game.truckGo();
+                    break;
+                default:
+                    System.out.println("Wrong command");
+                    ;
+            }
+        }
+
+    }
+}

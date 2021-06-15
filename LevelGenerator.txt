@@ -1,22 +1,25 @@
- FileOperator fileOperator = new FileOperator("levels.json");
+  FileOperator fileOperator = new FileOperator("levels.json");
 
-        HashMap<Wilds,Integer> timeWilds = new HashMap<>();
+        HashMap<Wilds,int[]> timeWilds = new HashMap<>();
         HashSet<Task> tasks = new HashSet<>();
-        HashSet<Level> levels = new HashSet<>();
-        timeWilds.put(Wilds.BEAR,20);
-        timeWilds.put(Wilds.TIGER,35);
+        ArrayList<Level> levels = new ArrayList<>();
+        int[] times1 = {20,30,50};
+        int[] times2 = {20,20,10};
+        int[] times3 = {30};
+        timeWilds.put(Wilds.BEAR,times1);
+        timeWilds.put(Wilds.TIGER,times2);
         tasks.add(new Task(Tasks.DOMESTIC, Domestics.BUFFALO, 5));
         tasks.add(new Task(Tasks.COIN,1000));
-        levels.add(new Level(1,70,100, timeWilds, tasks));
+        levels.add(new Level(1,70,150,100, timeWilds, tasks));
         HashSet<Task> tasks2 = new HashSet<>(tasks);
-        HashMap<Wilds,Integer> timeWilds2 = new HashMap<>(timeWilds);
-        timeWilds2.put(Wilds.LION,40);
+        HashMap<Wilds,int[]> timeWilds2 = new HashMap<>(timeWilds);
+        timeWilds2.put(Wilds.LION,times3);
         tasks2.add(new Task(Tasks.CATCH, Products.EGG,40));
-        levels.add(new Level(2,100,200, timeWilds2, tasks2));
+        levels.add(new Level(2,100,200,200, timeWilds2, tasks2));
         try {
             fileOperator.saveFile(fileOperator.getFile(),levels);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        LevelsOperation levelsOperation = LevelsOperation.getInstance();
+	
+	LevelsOperation levelsOperation = LevelsOperation.getInstance();
