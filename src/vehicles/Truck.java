@@ -5,6 +5,7 @@ import products.Products;
 import sharedClasses.TimeProcessor;
 
 import java.util.HashMap;
+import java.util.Set;
 
 
 public class Truck {
@@ -65,8 +66,24 @@ public class Truck {
         }
     }
 
-    public void finishTransport(){
-        this.startToGo = false;
-        amountOfProducts.clear();
+    public int finishTransport(){
+        if(TimeProcessor.currentStep >= startTime + TIME_OF_TRAVEL) {
+            this.startToGo = false;
+            amountOfProducts.clear();
+            return price();
+        } else
+            return 0;
+    }
+
+    private int price() {
+        int sum = 0;
+        int quantity;
+        Set<Products> products = amountOfProducts.keySet();
+        Products[] products1 = products.toArray(new Products[0]);
+        for (int i = 0; i < amountOfProducts.size(); i++) {
+            quantity = amountOfProducts.get(products1[i]);
+            sum += quantity;
+        }
+        return sum;
     }
 }

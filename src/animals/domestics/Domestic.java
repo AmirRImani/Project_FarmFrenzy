@@ -40,7 +40,7 @@ public class Domestic extends Animal {
     }
 
     public boolean needToEat(){
-        if(health <= HEALTH_DECREASE)
+        if(health <= HEALTH_TO_EAT)
             return true;
         return false;
     }
@@ -58,6 +58,6 @@ public class Domestic extends Animal {
     }
 
     public void eat() {
-        health += HEALTH_DECREASE;//TODO possible change
+        health = FULL_HEALTH;
     }
 }
