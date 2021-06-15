@@ -179,6 +179,7 @@ public class Game {
                 if(coin >= workshop.getCost()) {
                     Workshop workshop1 = new Workshop(workshop);
                     workshops.add(workshop1);
+                    coin -= workshop.getCost();
                     System.out.println("Built successfully");
                     return;
                 } else{
