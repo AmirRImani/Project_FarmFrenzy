@@ -41,8 +41,9 @@ public class Animal {
         Directions direction;
         int boardRow = Board.ROW.getLength();
         int boardColumn = Board.COLUMN.getLength();
+        boolean correct = false;
         //TODO
-        while(this.column > boardColumn || this.column < 1 || this.row > boardRow || this.row < 1) {
+        while(!correct) {
             direction = randomWalk();
             switch (direction) {
                 case UP:
@@ -58,6 +59,10 @@ public class Animal {
                     this.row -= this.speed;
                     break;
             }
+            if(this.column > boardColumn || this.column < 1 || this.row > boardRow || this.row < 1)
+                correct = false;
+            else
+                correct = true;
             if (this.column > boardColumn)
                 this.column -= this.speed;
             else if (this.column < 1)

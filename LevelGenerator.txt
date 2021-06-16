@@ -1,5 +1,6 @@
-  FileOperator fileOperator = new FileOperator("levels.json");
 
+        FileOperator fileOperator = new FileOperator("levels.json");
+         
         HashMap<Wilds,int[]> timeWilds = new HashMap<>();
         HashSet<Task> tasks = new HashSet<>();
         ArrayList<Level> levels = new ArrayList<>();
