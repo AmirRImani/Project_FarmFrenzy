@@ -20,6 +20,8 @@ import vehicles.Truck;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import static input.Menu.logger;
+
 public class Game {
     private int coin;
     private HashSet<Domestic> domestics;
@@ -60,18 +62,27 @@ public class Game {
         if(this.coin >= domestic.getValue()) {
             domestics.add(new Domestic(domestic));
             System.out.println("Buying has been done");
+            logger.setUseParentHandlers(false);
+            logger.fine("Buying has been done! ");
             this.coin -= domestic.getValue();
         } else
             System.out.println("Not enough coin to buy");
+        logger.setUseParentHandlers(false);
+        logger.info("Not enough coin to buy! ");
     }
 
     public void buyHelper(Helpers helper) {
         if(this.coin >= helper.getValue()) {
             helpers.add(new Helper(helper));
             System.out.println("Buying has been done");
+            logger.setUseParentHandlers(false);
+            logger.info("Buying has been done! ");
+
             this.coin -= helper.getValue();
         } else
             System.out.println("Not enough coin to buy");
+        logger.setUseParentHandlers(false);
+        logger.info("Not enough coin to buy! ");
     }
 
 
@@ -81,6 +92,9 @@ public class Game {
         HashSet<Product> products = new HashSet<>(productsOnGround);
         if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
             System.out.println("Coordinate is not on game board");
+            logger.setUseParentHandlers(false);
+            logger.info("Coordinate is not on game board ");
+
             return;
         }
         for (Product product : products) {
@@ -95,42 +109,65 @@ public class Game {
             }
         }
         if(!found)
+        {
             System.out.println("There isn't any product on this coordinate");
+            logger.setUseParentHandlers(false);
+            logger.info("There isn't any product on this coordinate ");
+        }
         else if(fullWarehouse)
+        {
             System.out.println("There isn't enough space in warehouse");
+            logger.setUseParentHandlers(false);
+            logger.info("here isn't enough space in warehouse!");
+        }
     }
 
     public void plant(int x, int y) {
         if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
             System.out.println("Coordinate is not on game board");
+            logger.setUseParentHandlers(false);
+            logger.info("Coordinate is not on game board!");
+
             return;
         }
         if(this.well.putGrass()) {
             grasses.add(new Grass(x, y));
             System.out.println("Grass planted");
+            logger.setUseParentHandlers(false);
+            logger.info("Grass planted");
         } else
             System.out.println("Water needed");
+        logger.setUseParentHandlers(false);
+        logger.info("Water needed");
     }
 
     public void work(String nameOfWorkshop) {
         for (Workshop workshop : workshops) {
             if(workshop.getName().equals(nameOfWorkshop)){
                 if(workshop.work(warehouse))
-                    System.out.println("Workshop " + workshop.getName() + " started to produce" /* + workshop.getProduct().getName()*/);//TODO
+                    System.out.println("Workshop " + workshop.getName() + " started to produce" /* + workshop.getProduct().getName()*/);
+                logger.setUseParentHandlers(false);
+                logger.fine("Workshop " + workshop.getName() + " started to produce");//TODO
                 return;
             }
         }
         System.out.println("Workshop is incorrect");
+        logger.setUseParentHandlers(false);
+        logger.info("Workshop is incorrect!");
     }
 
     public void cage(int x, int y) {
         if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
             System.out.println("Coordinate is not on game board");
+            logger.setUseParentHandlers(false);
+            logger.info("Coordinate is not on game board!");
             return;
         }
         for (Wild wild : wilds) {
             if(wild.getX() == x && wild.getX() == y){
                 System.out.println("Cage");
+                logger.setUseParentHandlers(false);
+                logger.info("Cage");
                 if(wild.isInCage()){
                     for (Cage cage : cages) {
                         if(cage.getX() == x && cage.getY() == y) {
@@ -144,11 +181,15 @@ public class Game {
                     wild.setCage(true);
                     cages.add(newCage);
                     System.out.println("New cage on " + wild.getX() + ", " + wild.getY());
+                    logger.setUseParentHandlers(false);
+                    logger.fine("New cage on " + wild.getX() + ", " + wild.getY());
                     return;
                 }
             }
         }
         System.out.println("There isn't any wild animal in this coordinate");
+        logger.setUseParentHandlers(false);
+        logger.info("There isn't any wild animal in this coordinate");
     }
 
     public void turn(int turnNumber) {
@@ -168,6 +209,8 @@ public class Game {
         for (Workshop workshop : workshops) {
             if(workshop.getName().equals(workshopName)){
                 System.out.println("This workshop is already built");
+                logger.setUseParentHandlers(false);
+                logger.info("his workshop is already built");
                 return;
             }
         }
@@ -176,31 +219,49 @@ public class Game {
                 Workshop workshop1 = new Workshop(workshop);
                 workshops.add(workshop1);
                 System.out.println("Built successfully");
+                logger.setUseParentHandlers(false);
+                logger.info("his workshop is already built");
                 return;
             }
         }
         System.out.println("Workshop is incorrect");
+        logger.setUseParentHandlers(false);
+        logger.info("Workshop is incorrect");
     }
 
     public void well() {
-        if(this.well.water())
+        if (this.well.water()) {
             System.out.println("Watering well started");
+            logger.setUseParentHandlers(false);
+            logger.info("Watering well started.");
+        }
         else
+        {
             System.out.println("Can't start to water well");
-    }
+        logger.setUseParentHandlers(false);
+        logger.info("Workshop is incorrect");
+    }}
 
     public void truckGo() {
-        if(this.truck.transport())
+        if (this.truck.transport()) {
             System.out.println("Transporting started");
-        else
+            logger.setUseParentHandlers(false);
+            logger.info("Workshop is incorrect");
+        } else
+        {
             System.out.println("Truck is on road");
-    }
+        logger.setUseParentHandlers(false);
+        logger.info("Workshop is incorrect");
+    }}
 
     public void workshopProducts() {
         for (Workshop workshop : workshops) {
             if (workshop.isBusy()) {
                 if (workshop.isProduced()) {
-                    System.out.println(workshop.getName() + "'s work is done");//TODO change response or delete it
+                    System.out.println(workshop.getName() + "'s work is done");
+                    logger.setUseParentHandlers(false);
+                    logger.info(workshop.getName() + "'s work is done");
+                    //TODO change response or delete it
                     productsOnGround.add(new Product(workshop.getProducedProduct()));
                 }
             }
@@ -274,6 +335,8 @@ public class Game {
                     cages.remove(cage);
                     wilds.remove(cage.getWild());
                     System.out.println("Wild on " + cage.getX() + "," + cage.getY() + " was freed");
+                    logger.setUseParentHandlers(false);
+                    logger.info("Wild on " + cage.getX() + "," + cage.getY() + " was freed");
                 }
             }
         }
@@ -303,6 +366,8 @@ public class Game {
             if(!wild.isInCage()){
                 if(wild.getX() == helper.getX() && wild.getY() == helper.getY()){
                     System.out.println("Dog on " + helper.getX() + "," + helper.getY() + " attacked a wild");
+                    logger.setUseParentHandlers(false);
+                    logger.info("Dog on " + helper.getX() + "," + helper.getY() + " attacked a wild");
                     wilds.remove(wild);
                     helpers.remove(helper);
                 }
@@ -323,6 +388,8 @@ public class Game {
         for (Product product : products) {
             if(product.getX() == x && product.getY() == y){
                 System.out.println("Product on " + x + "," + y + " moved to warehouse by cat");
+                logger.setUseParentHandlers(false);
+                logger.info("Product on " + x + "," + y + " moved to warehouse by cat");
                 productsOnGround.remove(product);
                 warehouse.addProduct(Products.valueOf(product.getNameOfProduct()),1);//TODO
             }
@@ -342,6 +409,8 @@ public class Game {
         for (Domestic domestic : domesticHashSet) {
             if(domestic.getX() == x && domestic.getY() == y){
                 System.out.println("Wild on " + x + "," + y + " attacked a domestic");
+                logger.setUseParentHandlers(false);
+                logger.info("Wild on " + x + "," + y + " attacked a domestic");
                 domestics.remove(domestic);
             }
         }
