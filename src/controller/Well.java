@@ -18,7 +18,11 @@ public class Well {
     }
 
     private boolean isEmpty(){
-        if(amountOfWater <= 0)
+        if(TimeProcessor.getInstance().currentStep >= startTime + TIME_TO_FULL && startToWater){
+            amountOfWater = HIGHEST_AMOUNT;
+            startToWater = false;
+            return false;
+        } else if(amountOfWater <= 0)
             return true;
         return false;
     }
@@ -29,7 +33,7 @@ public class Well {
             startTime = TimeProcessor.getInstance().currentStep;
             startToWater = true;
             return true;
-        } else if(TimeProcessor.getInstance().currentStep >= startTime + TIME_TO_FULL){
+        } else if(TimeProcessor.getInstance().currentStep >= startTime + TIME_TO_FULL && startToWater){
             amountOfWater = HIGHEST_AMOUNT;
             startToWater = false;
             return true;
