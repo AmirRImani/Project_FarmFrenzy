@@ -262,7 +262,7 @@ public class Game {
 
     private void timeWild(Wilds wild, int[] ints) {
         for (int i = 0; i < ints.length; i++) {
-            if(ints[i] == TimeProcessor.currentStep)
+            if(ints[i] == TimeProcessor.getInstance().currentStep)
                 wilds.add(new Wild(wild));
         }
     }

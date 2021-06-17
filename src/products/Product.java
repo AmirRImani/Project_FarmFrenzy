@@ -28,7 +28,7 @@ public class Product {
         this.spaceNeeded = product.getSpace();
         this.disappearTime = product.getDisappear();
         this.price = product.getPrice();
-        this.startTime = TimeProcessor.currentStep;
+        this.startTime = TimeProcessor.getInstance().currentStep;
         this.x = x;
         this.y = y;
     }
@@ -39,14 +39,14 @@ public class Product {
         this.spaceNeeded = product.getSpace();
         this.disappearTime = product.getDisappear();
         this.price = product.getPrice();
-        this.startTime = TimeProcessor.currentStep;
+        this.startTime = TimeProcessor.getInstance().currentStep;
         this.x = random.nextInt(Board.COLUMN.getLength()) + 1;
         this.y = random.nextInt(Board.ROW.getLength()) + 1;
     }
 
 
     public boolean spoil() {
-        if(TimeProcessor.currentStep >= startTime + disappearTime)
+        if(TimeProcessor.getInstance().currentStep >= startTime + disappearTime)
             return true;
         return false;
     }
