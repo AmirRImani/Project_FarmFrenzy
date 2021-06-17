@@ -25,16 +25,16 @@ public class Cage {
         this.prisoned = false;
         this.numberOfTapNeed = wild.getTapNeeded();
         this.numberOfTap = 1;
-        this.lastAttempt = TimeProcessor.currentStep;
+        this.lastAttempt = TimeProcessor.getInstance().currentStep;
         this.startTimeComplete = 0;
     }
 
     public boolean increaseTap(){
-        if(lastAttempt < TimeProcessor.currentStep && !prisoned) {
+        if(lastAttempt < TimeProcessor.getInstance().currentStep && !prisoned) {
             numberOfTap++;
-            lastAttempt = TimeProcessor.currentStep;
+            lastAttempt = TimeProcessor.getInstance().currentStep;
             if(numberOfTap >= numberOfTapNeed){
-                startTimeComplete = TimeProcessor.currentStep;
+                startTimeComplete = TimeProcessor.getInstance().currentStep;
                 prisoned = true;
                 wild.prison(true);
             }
@@ -44,7 +44,7 @@ public class Cage {
     }
 
     public boolean decreaseTap() {
-        if(TimeProcessor.currentStep - lastAttempt > 1) {
+        if(TimeProcessor.getInstance().currentStep - lastAttempt > 1) {
             numberOfTap --;
             if(numberOfTap <= 0) {
                 wild.setCage(false);
@@ -60,7 +60,7 @@ public class Cage {
     }
 
     public boolean free() {
-        if(TimeProcessor.currentStep >= startTimeComplete + MAXIMUM_FULL_CAGE)
+        if(TimeProcessor.getInstance().currentStep >= startTimeComplete + MAXIMUM_FULL_CAGE)
             return true;
         return false;
     }

@@ -22,7 +22,8 @@ public class User {
     public User(String name, String password) {
         this.userName = name;
         this.password = password;
-        this.numberOfCoins = 1;
+        this.numberOfCoins = 0;
+        this.unlockedLevels = 1;
     }
 
     public User() {

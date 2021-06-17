@@ -9,7 +9,7 @@ public class TimeProcessor {
     public static TimeProcessor getInstance(){
         if(timeInstance == null) {
             timeInstance = new TimeProcessor();
-            currentStep = 0;
+            currentStep = 1;
         }
         return timeInstance;
     }
@@ -21,9 +21,12 @@ public class TimeProcessor {
     }
 
     private void changeStep(Game game){//TODO make change in one step  in order to skip two or more steps make a for loop in game and call this method in loop
+        currentStep ++;
         game.workshopProducts();
         game.domesticProducts();
         game.feedAnimals();
+        game.domeHealth();
+        game.domeDie();
         game.appearWilds();
         game.disappearProducts();
         game.freeWilds();
@@ -32,38 +35,12 @@ public class TimeProcessor {
         game.catCatches();
         game.wildAttack();
         game.walk();
+        game.transport();
         game.showDetails();
         game.checkWin();
         //TODO
         //TODO after calling this method also check animal moves, dog attacks, cat catches, wild attacks, ...
-        currentStep ++;
-    }
-
-    private void decreaseCageResist() {
 
     }
 
-    private void freeWilds() {
-
-    }
-
-    private void disappearProducts() {
-
-    }
-
-    private void appearWilds() {
-
-    }
-
-    private void feedAnimals() {
-
-    }
-
-    private void domesticProducts() {
-
-    }
-
-    private void workshopProducts() {
-
-    }
 }

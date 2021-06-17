@@ -40,7 +40,7 @@ public class Domestic extends Animal {
     }
 
     public boolean needToEat(){
-        if(health <= HEALTH_DECREASE)
+        if(health <= HEALTH_TO_EAT)
             return true;
         return false;
     }
@@ -50,14 +50,14 @@ public class Domestic extends Animal {
     }
 
     public boolean isProduced() {
-        if(TimeProcessor.currentStep >= startTime + timeToProduce){
-            startTime = TimeProcessor.currentStep;
+        if(TimeProcessor.getInstance().currentStep >= startTime + timeToProduce){
+            startTime = TimeProcessor.getInstance().currentStep;
             return true;
         }
         return false;
     }
 
     public void eat() {
-        health += HEALTH_DECREASE;//TODO possible change
+        health = FULL_HEALTH;
     }
 }

@@ -87,6 +87,9 @@ public class Game {
 
 
     public void pickup(int x, int y) {
+        for (Product product : productsOnGround) {
+            System.out.println(product.getX() + "," + product.getY());
+        }
         boolean found = false;
         boolean fullWarehouse = false;
         HashSet<Product> products = new HashSet<>(productsOnGround);
@@ -216,12 +219,18 @@ public class Game {
         }
         for (Workshops workshop : Workshops.values()){
             if(workshop.name().equals(workshopName)) {
-                Workshop workshop1 = new Workshop(workshop);
-                workshops.add(workshop1);
-                System.out.println("Built successfully");
-                logger.setUseParentHandlers(false);
-                logger.info("his workshop is already built");
-                return;
+                if(coin >= workshop.getCost()) {
+                    Workshop workshop1 = new Workshop(workshop);
+                    workshops.add(workshop1);
+                    coin -= workshop.getCost();
+                    System.out.println("Built successfully");
+                    logger.setUseParentHandlers(false);
+                    logger.info("his workshop is already built");
+                    return;
+                } else{
+                    System.out.println("Not enough coin to build this workshop");
+                    return;
+                }
             }
         }
         System.out.println("Workshop is incorrect");
@@ -271,7 +280,7 @@ public class Game {
     public void domesticProducts() {
         for (Domestic domestic : domestics) {
             if(domestic.isProduced()){
-                System.out.println();//TODO change response or delete it
+                System.out.println("Domestic on "+ domestic.getX() + "," + domestic.getY() + " produced product");//TODO change response or delete it
                 productsOnGround.add(new Product(domestic.getProduct(),domestic.getX(),domestic.getY()));
             }
         }
@@ -296,7 +305,7 @@ public class Game {
 
     private boolean onGrass(Domestic domestic) {
         for (Grass grass : grasses) {
-            if(grass.getColumn() == domestic.getY() && grass.getRow() == domestic.getY()) {
+            if(grass.getColumn() == domestic.getX() && grass.getRow() == domestic.getY()) {
                 grass.addDome(domestic);
                 return true;
             }
@@ -314,7 +323,7 @@ public class Game {
 
     private void timeWild(Wilds wild, int[] ints) {
         for (int i = 0; i < ints.length; i++) {
-            if(ints[i] == TimeProcessor.currentStep)
+            if(ints[i] == TimeProcessor.getInstance().currentStep)
                 wilds.add(new Wild(wild));
         }
     }
@@ -433,5 +442,27 @@ public class Game {
 
     public void checkWin() {
         //TODO if user did all tasks of level
+    }
+
+    public void domeHealth() {
+        for (Domestic domestic : domestics)
+            domestic.tired();
+    }
+
+
+    public void domeDie() {
+        HashSet<Domestic> domesticHashSet = new HashSet<>(domestics);
+        for (Domestic domestic : domesticHashSet)
+            if(domestic.getHealth() <= 0)
+                domestics.remove(domestic);
+    }
+
+
+    public void transport() {
+        int price = truck.finishTransport();
+        if(price > 0) {
+            System.out.println("Your products sold " + price + "$");
+            coin += price;
+        }
     }
 }
