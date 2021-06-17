@@ -50,8 +50,8 @@ public class Domestic extends Animal {
     }
 
     public boolean isProduced() {
-        if(TimeProcessor.currentStep >= startTime + timeToProduce){
-            startTime = TimeProcessor.currentStep;
+        if(TimeProcessor.getInstance().currentStep >= startTime + timeToProduce){
+            startTime = TimeProcessor.getInstance().currentStep;
             return true;
         }
         return false;

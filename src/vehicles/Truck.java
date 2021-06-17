@@ -60,17 +60,18 @@ public class Truck {
         if(startToGo)
             return false;
         else {
-            this.startTime = TimeProcessor.currentStep;
+            this.startTime = TimeProcessor.getInstance().currentStep;
             this.startToGo = true;
             return true;
         }
     }
 
     public int finishTransport(){
-        if(TimeProcessor.currentStep >= startTime + TIME_OF_TRAVEL) {
+        if(TimeProcessor.getInstance().currentStep >= startTime + TIME_OF_TRAVEL) {
             this.startToGo = false;
+            int coin = price();
             amountOfProducts.clear();
-            return price();
+            return coin;
         } else
             return 0;
     }

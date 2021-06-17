@@ -9,7 +9,7 @@ public class TimeProcessor {
     public static TimeProcessor getInstance(){
         if(timeInstance == null) {
             timeInstance = new TimeProcessor();
-            currentStep = 0;
+            currentStep = 1;
         }
         return timeInstance;
     }
@@ -43,31 +43,4 @@ public class TimeProcessor {
 
     }
 
-    private void decreaseCageResist() {
-
-    }
-
-    private void freeWilds() {
-
-    }
-
-    private void disappearProducts() {
-
-    }
-
-    private void appearWilds() {
-
-    }
-
-    private void feedAnimals() {
-
-    }
-
-    private void domesticProducts() {
-
-    }
-
-    private void workshopProducts() {
-
-    }
 }
