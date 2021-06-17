@@ -83,7 +83,7 @@ public class Truck {
         Products[] products1 = products.toArray(new Products[0]);
         for (int i = 0; i < amountOfProducts.size(); i++) {
             quantity = amountOfProducts.get(products1[i]);
-            sum += quantity;
+            sum += quantity * products1[i].getPrice();
         }
         return sum;
     }
