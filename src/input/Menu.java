@@ -23,9 +23,10 @@ public class Menu {
 
  FileHandler handler=null;
     {
-        SimpleDateFormat format = new SimpleDateFormat("d-M_HHmmss");
+        SimpleDateFormat format = new SimpleDateFormat("d-M_HH mm ss");
+        String path = "resource\\log " + format.format(Calendar.getInstance().getTime()) + ".txt";
         try {
-            handler = new FileHandler("log.txt");
+            handler = new FileHandler(path);
 
             handler.setFormatter(new Formatter() {
                 @Override
