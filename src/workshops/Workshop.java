@@ -38,7 +38,7 @@ public class Workshop {
         } else{
             //TODO factory level2 will be added
             if(warehouse.enoughAmount(this.neededProduct, 1)) {
-                startTime = TimeProcessor.currentStep;
+                startTime = TimeProcessor.getInstance().currentStep;
                 busy = true;
                 return true;
             } else {
@@ -49,7 +49,7 @@ public class Workshop {
     }
 
     public boolean isProduced() {
-        if(TimeProcessor.currentStep >= startTime + timeToProduce){
+        if(TimeProcessor.getInstance().currentStep >= startTime + timeToProduce){
             busy = false;
             return true;
         }
