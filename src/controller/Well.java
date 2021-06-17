@@ -1,7 +1,7 @@
 package controller;
 
 import sharedClasses.TimeProcessor;
-
+import view.Game;
 public class Well {
     private final int HIGHEST_AMOUNT = 5;
     private final int TIME_TO_FULL = 3;
