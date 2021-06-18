@@ -476,7 +476,7 @@ public class Game {
                 grass[i][j] = 0;
         }
         for (Grass grass1 : grasses)
-            grass[grass1.getRow()][grass1.getColumn()] ++;
+            grass[grass1.getRow()-1][grass1.getColumn()-1] ++;
         for (int i = 0; i < Board.ROW.getLength(); i++) {
             for (int j = 0; j < Board.COLUMN.getLength(); j++)
                 System.out.print(grass[i][j] + "\t");

@@ -94,6 +94,9 @@ public class Input {
                 case "TRUCK GO":
                     game.truckGo();
                     break;
+                case "INQUIRY":
+                    game.showDetails();
+                    break;
                 case "EXIT":
                     exit = true;
                     break;
