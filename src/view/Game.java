@@ -164,23 +164,38 @@ public class Game {
 
     public void cage(int x, int y) {
         boolean found = false;
+        HashSet<Wild> wildHashSet = new HashSet<>(wilds);
         if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
             System.out.println("Coordinate is not on game board");
             logger.setUseParentHandlers(false);
             logger.info("Coordinate is not on game board!");
             return;
         }
-        for (Wild wild : wilds) {
+        for (Wild wild : wildHashSet) {
             if(wild.getX() == x && wild.getY() == y){
                 found = true;
-                System.out.println("Cage");
-                logger.setUseParentHandlers(false);
-                logger.info("Cage");
+
+                if(wild.isPrisoned()){
+                    warehouse.addProduct(Products.valueOf("CAUGHT_" + wild.getName()), 1);
+                    wilds.remove(wild);
+                    System.out.println("Wild " +  wild.getName() + " on" + wild.getX() + " " + wild.getY() + " has been caught");
+                    logger.setUseParentHandlers(false);
+                    logger.fine("Wild " +  wild.getName() + " on" + wild.getX() + " " + wild.getY() + " has been caught");
+                    return;
+                }
                 if(wild.isInCage()){
                     for (Cage cage : cages) {
                         if(cage.getX() == x && cage.getY() == y) {
-                            if(cage.increaseTap())
+                            if(cage.increaseTap()) {
                                 wild.increaseTap();
+                                System.out.println("Cage on" + cage.getX() + " " + cage.getY() + "resistance increased");
+                                logger.setUseParentHandlers(false);
+                                logger.fine("Cage on" + cage.getX() + " " + cage.getY() + "resistance increased");
+                            } else {
+                                System.out.println("Cage can't be used. You used it on this cage in this step");
+                                logger.setUseParentHandlers(false);
+                                logger.info("Cage can't be used. You used it on this cage in this step");
+                            }
                             //TODO sout needed in method
                             return;
                         }

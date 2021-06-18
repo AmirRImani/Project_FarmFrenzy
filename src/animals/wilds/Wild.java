@@ -2,6 +2,7 @@ package animals.wilds;
 
 import animals.Animal;
 import controller.Cage;
+import sharedClasses.TimeProcessor;
 
 public class Wild extends Animal {
     private String name;
