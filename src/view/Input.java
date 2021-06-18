@@ -2,6 +2,7 @@ package view;
 
 import animals.domestics.Domestics;
 import animals.helpers.Helpers;
+import input.User;
 import products.Products;
 
 import java.util.Scanner;
@@ -11,16 +12,16 @@ import java.util.regex.Pattern;
 public class Input {
 
 
-    public boolean commandGetter(Scanner scanner, Game game){
-        boolean exit = false;
+    public boolean commandGetter(Scanner scanner, Game game, User user){
+        boolean exit;
         String command;
         System.out.println("Please enter your command: ");
         command = scanner.nextLine();
-        exit = commandRecognizer(command.toUpperCase().trim(), game);
+        exit = commandRecognizer(command.toUpperCase().trim(), game, user);
         return exit;
     }
 
-    protected boolean commandRecognizer(String command, Game game){
+    protected boolean commandRecognizer(String command, Game game, User user){
         boolean exit = false;
         Pattern patternBuy = Pattern.compile("BUY (\\w+)");
         Matcher matcherBuy = patternBuy.matcher(command);
@@ -65,6 +66,8 @@ public class Input {
             game.cage(Integer.parseInt(matcherCage.group(1)), Integer.parseInt(matcherCage.group(2)));
         } else if(matcherTurn.find()) {
             exit = game.turn(Integer.parseInt(matcherTurn.group(1)));
+            if(exit)
+                user.nextLevel();
         } else if(matcherTruckLoad.find()) {
             for (Products product : Products.values()) {
                 if (product.name().equals(matcherTruckLoad.group(1))) {

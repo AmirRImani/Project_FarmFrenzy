@@ -167,6 +167,6 @@ public class LevelsOperation {
         Game game = new Game(level, user);
         Input input = new Input();
         while(!exit)
-            exit = input.commandGetter(scanner, game);
+            exit = input.commandGetter(scanner, game, user);
     }
 }

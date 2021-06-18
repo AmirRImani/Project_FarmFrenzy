@@ -505,8 +505,10 @@ public class Game {
                 }
             }
         }
-        if(win)
+        if(win) {
             System.out.println("Tasks completed");
+
+        }
         return win;
     }
 

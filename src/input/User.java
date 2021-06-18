@@ -40,4 +40,8 @@ public class User {
     public void clearCoins(){
         this.numberOfCoins = 0;
     }
+
+    public void nextLevel() {
+        unlockedLevels ++;
+    }
 }
