@@ -28,6 +28,8 @@ public class Level {
 
     public int getGoldTime() { return goldTime; }
 
+    public int getAward() { return award; }
+
     public int getStartCoin() { return startCoin; }
 
     public Level(int number, int goldTime, int award, int startCoin, HashMap<Wilds, int[]> timeOfWilds, HashSet<Task> tasks/*, HashSet<Workshops> neededFactories, HashMap<Workshops, Integer> factoriesLevel*/) {
