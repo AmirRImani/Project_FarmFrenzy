@@ -178,9 +178,9 @@ public class Game {
                 if(wild.isPrisoned()){
                     warehouse.addProduct(Products.valueOf("CAUGHT_" + wild.getName()), 1);
                     wilds.remove(wild);
-                    System.out.println("Wild " +  wild.getName() + " on" + wild.getX() + " " + wild.getY() + " has been caught");
+                    System.out.println("Wild " +  wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
                     logger.setUseParentHandlers(false);
-                    logger.fine("Wild " +  wild.getName() + " on" + wild.getX() + " " + wild.getY() + " has been caught");
+                    logger.fine("Wild " +  wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
                     return;
                 }
                 if(wild.isInCage()){
@@ -188,9 +188,9 @@ public class Game {
                         if(cage.getX() == x && cage.getY() == y) {
                             if(cage.increaseTap()) {
                                 wild.increaseTap();
-                                System.out.println("Cage on" + cage.getX() + " " + cage.getY() + "resistance increased");
+                                System.out.println("Cage on [ " + cage.getX() + " " + cage.getY() + " ] resistance increased");
                                 logger.setUseParentHandlers(false);
-                                logger.fine("Cage on" + cage.getX() + " " + cage.getY() + "resistance increased");
+                                logger.fine("Cage on [ " + cage.getX() + " " + cage.getY() + " ] resistance increased");
                             } else {
                                 System.out.println("Cage can't be used. You used it on this cage in this step");
                                 logger.setUseParentHandlers(false);
