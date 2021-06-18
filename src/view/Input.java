@@ -4,6 +4,7 @@ import animals.domestics.Domestics;
 import animals.helpers.Helpers;
 import input.User;
 import products.Products;
+import sharedClasses.TimeProcessor;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -66,8 +67,11 @@ public class Input {
             game.cage(Integer.parseInt(matcherCage.group(1)), Integer.parseInt(matcherCage.group(2)));
         } else if(matcherTurn.find()) {
             exit = game.turn(Integer.parseInt(matcherTurn.group(1)));
-            if(exit)
+            if(exit) {
                 user.nextLevel();
+                if(TimeProcessor.currentStep <= game.getGoldTime())
+                    user.award(game.getAward());
+            }
         } else if(matcherTruckLoad.find()) {
             for (Products product : Products.values()) {
                 if (product.name().equals(matcherTruckLoad.group(1))) {

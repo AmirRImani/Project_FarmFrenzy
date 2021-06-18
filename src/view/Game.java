@@ -37,13 +37,18 @@ public class Game {
     private Warehouse warehouse;
     private Truck truck;
     private int goldTime;
-    private int map;
+    private int award;
     private HashSet<Task> tasks;
+
+    public int getGoldTime() { return goldTime; }
+
+    public int getAward() { return award; }
 
     public Game(Level level, User user) {
         this.coin = level.getStartCoin() + user.getNumberOfCoins();
         user.clearCoins();
         this.goldTime = level.getGoldTime();
+        this.award = level.getAward();
         this.tasks = level.getTasks();
         this.wildsAppearance = level.getTimeOfWilds();
         //TODO
@@ -505,10 +510,8 @@ public class Game {
                 }
             }
         }
-        if(win) {
+        if(win)
             System.out.println("Tasks completed");
-
-        }
         return win;
     }
 

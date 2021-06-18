@@ -44,4 +44,8 @@ public class User {
     public void nextLevel() {
         unlockedLevels ++;
     }
+
+    public void award(int award) {
+        numberOfCoins += award;
+    }
 }
