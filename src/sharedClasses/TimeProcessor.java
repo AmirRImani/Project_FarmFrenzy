@@ -25,6 +25,7 @@ public class TimeProcessor {
     private boolean changeStep(Game game){//TODO make change in one step  in order to skip two or more steps make a for loop in game and call this method in loop
         boolean exit;
         currentStep ++;
+        game.walk();
         game.workshopProducts();
         game.domesticProducts();
         game.feedAnimals();
@@ -37,7 +38,6 @@ public class TimeProcessor {
         game.dogAttack();
         game.catCatches();
         game.wildAttack();
-        game.walk();
         game.transport();
         game.showDetails();
         exit = game.checkWin();

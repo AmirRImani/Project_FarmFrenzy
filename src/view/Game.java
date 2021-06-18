@@ -151,7 +151,7 @@ public class Game {
         for (Workshop workshop : workshops) {
             if(workshop.getName().equals(nameOfWorkshop)){
                 if(workshop.work(warehouse))
-                    System.out.println("Workshop " + workshop.getName() + " started to produce" /* + workshop.getProduct().getName()*/);
+                    System.out.println("Workshop " + workshop.getName() + " started to produce");
                 logger.setUseParentHandlers(false);
                 logger.fine("Workshop " + workshop.getName() + " started to produce");//TODO
                 return;
@@ -163,6 +163,7 @@ public class Game {
     }
 
     public void cage(int x, int y) {
+        boolean found = false;
         if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
             System.out.println("Coordinate is not on game board");
             logger.setUseParentHandlers(false);
@@ -170,7 +171,8 @@ public class Game {
             return;
         }
         for (Wild wild : wilds) {
-            if(wild.getX() == x && wild.getX() == y){
+            if(wild.getX() == x && wild.getY() == y){
+                found = true;
                 System.out.println("Cage");
                 logger.setUseParentHandlers(false);
                 logger.info("Cage");
@@ -195,9 +197,11 @@ public class Game {
                 }
             }
         }
-        System.out.println("There isn't any wild animal in this coordinate");
-        logger.setUseParentHandlers(false);
-        logger.info("There isn't any wild animal in this coordinate");
+        if(!found) {
+            System.out.println("There isn't any wild animal in this coordinate");
+            logger.setUseParentHandlers(false);
+            logger.info("There isn't any wild animal in this coordinate");
+        }
     }
 
     public boolean turn(int turnNumber) {
@@ -286,10 +290,8 @@ public class Game {
 
     public void domesticProducts() {
         for (Domestic domestic : domestics) {
-            if(domestic.isProduced()){
-                System.out.println("Domestic on "+ domestic.getX() + "," + domestic.getY() + " produced product");//TODO change response or delete it
+            if(domestic.isProduced())
                 productsOnGround.add(new Product(domestic.getProduct(),domestic.getX(),domestic.getY()));
-            }
         }
     }
 
