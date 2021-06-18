@@ -17,6 +17,7 @@ import products.Products;
 import sharedClasses.TimeProcessor;
 import vehicles.Truck;
 
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -36,13 +37,18 @@ public class Game {
     private Warehouse warehouse;
     private Truck truck;
     private int goldTime;
-    private int map;
+    private int award;
     private HashSet<Task> tasks;
+
+    public int getGoldTime() { return goldTime; }
+
+    public int getAward() { return award; }
 
     public Game(Level level, User user) {
         this.coin = level.getStartCoin() + user.getNumberOfCoins();
         user.clearCoins();
         this.goldTime = level.getGoldTime();
+        this.award = level.getAward();
         this.tasks = level.getTasks();
         this.wildsAppearance = level.getTimeOfWilds();
         //TODO
@@ -87,9 +93,6 @@ public class Game {
 
 
     public void pickup(int x, int y) {
-        for (Product product : productsOnGround) {
-            System.out.println(product.getX() + "," + product.getY());
-        }
         boolean found = false;
         boolean fullWarehouse = false;
         HashSet<Product> products = new HashSet<>(productsOnGround);
@@ -148,7 +151,7 @@ public class Game {
         for (Workshop workshop : workshops) {
             if(workshop.getName().equals(nameOfWorkshop)){
                 if(workshop.work(warehouse))
-                    System.out.println("Workshop " + workshop.getName() + " started to produce" /* + workshop.getProduct().getName()*/);
+                    System.out.println("Workshop " + workshop.getName() + " started to produce");
                 logger.setUseParentHandlers(false);
                 logger.fine("Workshop " + workshop.getName() + " started to produce");//TODO
                 return;
@@ -160,21 +163,39 @@ public class Game {
     }
 
     public void cage(int x, int y) {
+        boolean found = false;
+        HashSet<Wild> wildHashSet = new HashSet<>(wilds);
         if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
             System.out.println("Coordinate is not on game board");
             logger.setUseParentHandlers(false);
             logger.info("Coordinate is not on game board!");
             return;
         }
-        for (Wild wild : wilds) {
-            if(wild.getX() == x && wild.getX() == y){
-                System.out.println("Cage");
-                logger.setUseParentHandlers(false);
-                logger.info("Cage");
+        for (Wild wild : wildHashSet) {
+            if(wild.getX() == x && wild.getY() == y){
+                found = true;
+
+                if(wild.isPrisoned()){
+                    warehouse.addProduct(Products.valueOf("CAUGHT_" + wild.getName()), 1);
+                    wilds.remove(wild);
+                    System.out.println("Wild " +  wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
+                    logger.setUseParentHandlers(false);
+                    logger.fine("Wild " +  wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
+                    return;
+                }
                 if(wild.isInCage()){
                     for (Cage cage : cages) {
                         if(cage.getX() == x && cage.getY() == y) {
-                            cage.increaseTap();
+                            if(cage.increaseTap()) {
+                                wild.increaseTap();
+                                System.out.println("Cage on [ " + cage.getX() + " " + cage.getY() + " ] resistance increased");
+                                logger.setUseParentHandlers(false);
+                                logger.fine("Cage on [ " + cage.getX() + " " + cage.getY() + " ] resistance increased");
+                            } else {
+                                System.out.println("Cage can't be used. You used it on this cage in this step");
+                                logger.setUseParentHandlers(false);
+                                logger.info("Cage can't be used. You used it on this cage in this step");
+                            }
                             //TODO sout needed in method
                             return;
                         }
@@ -183,6 +204,7 @@ public class Game {
                     Cage newCage = new Cage(wild);
                     wild.setCage(true);
                     cages.add(newCage);
+                    wild.increaseTap();
                     System.out.println("New cage on " + wild.getX() + ", " + wild.getY());
                     logger.setUseParentHandlers(false);
                     logger.fine("New cage on " + wild.getX() + ", " + wild.getY());
@@ -190,14 +212,18 @@ public class Game {
                 }
             }
         }
-        System.out.println("There isn't any wild animal in this coordinate");
-        logger.setUseParentHandlers(false);
-        logger.info("There isn't any wild animal in this coordinate");
+        if(!found) {
+            System.out.println("There isn't any wild animal in this coordinate");
+            logger.setUseParentHandlers(false);
+            logger.info("There isn't any wild animal in this coordinate");
+        }
     }
 
-    public void turn(int turnNumber) {
+    public boolean turn(int turnNumber) {
+        boolean exit;
         TimeProcessor timeProcessor = TimeProcessor.getInstance();
-        timeProcessor.changeSteps(turnNumber,this);
+        exit = timeProcessor.changeSteps(turnNumber,this);
+        return exit;
     }
 
     public void truckLoad(String productName) {
@@ -279,10 +305,8 @@ public class Game {
 
     public void domesticProducts() {
         for (Domestic domestic : domestics) {
-            if(domestic.isProduced()){
-                System.out.println("Domestic on "+ domestic.getX() + "," + domestic.getY() + " produced product");//TODO change response or delete it
+            if(domestic.isProduced())
                 productsOnGround.add(new Product(domestic.getProduct(),domestic.getX(),domestic.getY()));
-            }
         }
     }
 
@@ -343,6 +367,7 @@ public class Game {
                 if (cage.free()) {
                     cages.remove(cage);
                     wilds.remove(cage.getWild());
+                    cage.getWild().free();
                     System.out.println("Wild on " + cage.getX() + "," + cage.getY() + " was freed");
                     logger.setUseParentHandlers(false);
                     logger.info("Wild on " + cage.getX() + "," + cage.getY() + " was freed");
@@ -354,8 +379,11 @@ public class Game {
     public void decreaseCageResist() {
         HashSet<Cage> cageHashSet = new HashSet<>(cages);
         for (Cage cage : cageHashSet) {
-            if(cage.decreaseTap())
+            cage.getWild().decreaseTap();
+            if(cage.decreaseTap()) {
                 cages.remove(cage);
+                cage.getWild().free();
+            }
         }
     }
 
@@ -407,9 +435,8 @@ public class Game {
 
     public void wildAttack() {
         for (Wild wild : wilds) {
-            if(!wild.isInCage()){
+            if(!wild.isInCage())
                 onDome(wild.getX(), wild.getY());//TODO
-            }
         }
     }
 
@@ -437,11 +464,79 @@ public class Game {
     }
 
     public void showDetails() {
-        //TODO to show information after time change
+        System.out.println("TURN: " + TimeProcessor.currentStep);
+        showGrass();
+        for (Domestic domestic : domestics)
+            System.out.println(domestic.getName() + " " + domestic.getHealth() + "% [" + domestic.getX() + " " + domestic.getY() + "]");
+        for (Helper helper : helpers)
+            System.out.println(helper.getName()+ " [" + helper.getX() + " " + helper.getY() + "]");
+        for (Wild wild : wilds)
+            System.out.println(wild.getName() + " " + "Cage need: " + wild.getTapNeeded() + " " + " [" + wild.getX() + " " + wild.getY() + "]");
+        for (Product product : productsOnGround)
+            System.out.println(product.getNameOfProduct() + " [" + product.getX() + " " + product.getY() + "]");
+        taskPrint();
     }
 
-    public void checkWin() {
+    private void taskPrint() {
+        for (Task task : tasks) {
+            if (task.getType().equals("COIN"))
+                System.out.println("COIN: " + coin + "/" + task.getTarget());
+            else if (task.getType().equals("CATCH"))
+                System.out.println(task.getTypeOfProduct().name() + " " + warehouse.amount(task.getTypeOfProduct()) + "/" + task.getTarget());
+            else if (task.getType().equals("DOMESTIC"))
+                System.out.println(task.getTypeOfDomestic().name() + " " + domeAmount(task.getTypeOfDomestic()) + "/" + task.getTarget());
+        }
+    }
+
+    private void showGrass() {
+        int[][] grass = new int[Board.ROW.getLength()][Board.COLUMN.getLength()];
+        for (int i = 0; i < Board.ROW.getLength(); i++) {
+            for (int j = 0; j < Board.COLUMN.getLength(); j++)
+                grass[i][j] = 0;
+        }
+        for (Grass grass1 : grasses)
+            grass[grass1.getRow()-1][grass1.getColumn()-1] ++;
+        for (int i = 0; i < Board.ROW.getLength(); i++) {
+            for (int j = 0; j < Board.COLUMN.getLength(); j++)
+                System.out.print(grass[i][j] + "\t");
+            System.out.println();
+        }
+    }
+
+    public boolean checkWin() {
         //TODO if user did all tasks of level
+        boolean win = true;
+        for (Task task : tasks) {
+            if (task.getType().equals("COIN")) {
+                if (task.getTarget() != coin) {
+                    win = false;
+                    return win;
+                }
+            } else if (task.getType().equals("CATCH")) {
+                if (task.getTarget() < warehouse.amount(task.getTypeOfProduct())) {
+                    win = false;
+                    return win;
+                }
+            } else if (task.getType().equals("DOMESTIC")) {
+                if (task.getTarget() < domeAmount(task.getTypeOfDomestic())) {
+                    win = false;
+                    return win;
+                }
+            }
+        }
+        if(win)
+            System.out.println("Tasks completed");
+        return win;
+    }
+
+    private int domeAmount(Domestics typeOfDomestic) {
+        String name = typeOfDomestic.name();
+        int amount = 0;
+        for (Domestic domestic : domestics) {
+            if(domestic.getName().equals(name))
+                amount ++;
+        }
+        return amount;
     }
 
     public void domeHealth() {
@@ -466,3 +561,5 @@ public class Game {
         }
     }
 }
+
+

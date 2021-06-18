@@ -5,6 +5,7 @@ import products.Products;
 import sharedClasses.TimeProcessor;
 
 public class Domestic extends Animal {
+    private String name;
     private int value;
     private final int FULL_HEALTH = 100;
     private final int HEALTH_TO_EAT = 50;
@@ -15,12 +16,15 @@ public class Domestic extends Animal {
     private int timeToProduce;
     private int startTime;//TODO start to produce
 
+    public String getName() { return name; }
+
     public Products getProduct() { return product; }
 
     public int getHealth() { return health; }
 
     public Domestic(Domestics domestic) {
         super(domestic.getSpeed());//TODO
+        this.name = domestic.name();
         this.value = domestic.getValue();
         this.health = 100;
         this.wantToEat = false;
