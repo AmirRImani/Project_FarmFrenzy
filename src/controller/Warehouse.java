@@ -62,4 +62,8 @@ public class Warehouse {
         }
     }
 
+    public int amount(Products product){
+        return amountOfProduct.get(product);
+    }
+
 }

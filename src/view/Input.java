@@ -11,14 +11,17 @@ import java.util.regex.Pattern;
 public class Input {
 
 
-    public void commandGetter(Scanner scanner, Game game){
+    public boolean commandGetter(Scanner scanner, Game game){
+        boolean exit = false;
         String command;
         System.out.println("Please enter your command: ");
         command = scanner.nextLine();
-        commandRecognizer(command.toUpperCase().trim(), game);
+        exit = commandRecognizer(command.toUpperCase().trim(), game);
+        return exit;
     }
 
-    protected void commandRecognizer(String command, Game game){
+    protected boolean commandRecognizer(String command, Game game){
+        boolean exit = false;
         Pattern patternBuy = Pattern.compile("BUY (\\w+)");
         Matcher matcherBuy = patternBuy.matcher(command);
         Pattern patternPickup = Pattern.compile("PICKUP (\\d+) (\\d+)");
@@ -42,39 +45,39 @@ public class Input {
             for (Domestics domestic : Domestics.values()) {
                 if (domestic.name().equals(matcherBuy.group(1))) {
                     game.buyDome(Domestics.valueOf(matcherBuy.group(1)));
-                    return;
+                    return exit;
                 }
             }
             for (Helpers helper : Helpers.values()) {
                 if(helper.name().equals(matcherBuy.group(1))){
                     game.buyHelper(Helpers.valueOf(matcherBuy.group(1)));
-                    return;
+                    return exit;
                 }
             }
             System.out.println("Domestic name isn't correct");
-        }else if(matcherPickup.find()) {
+        } else if(matcherPickup.find()) {
             game.pickup(Integer.parseInt(matcherPickup.group(1)), Integer.parseInt(matcherPickup.group(2)));
-        }else if(matcherPlant.find()) {
+        } else if(matcherPlant.find()) {
             game.plant(Integer.parseInt(matcherPlant.group(1)), Integer.parseInt(matcherPlant.group(2)));
-        }else if(matcherWork.find()){
+        } else if(matcherWork.find()){
             game.work(matcherWork.group(1));
-        }else if(matcherCage.find()) {
+        } else if(matcherCage.find()) {
             game.cage(Integer.parseInt(matcherCage.group(1)), Integer.parseInt(matcherCage.group(2)));
-        }else if(matcherTurn.find()) {
-            game.turn(Integer.parseInt(matcherTurn.group(1)));
-        }else if(matcherTruckLoad.find()) {
+        } else if(matcherTurn.find()) {
+            exit = game.turn(Integer.parseInt(matcherTurn.group(1)));
+        } else if(matcherTruckLoad.find()) {
             for (Products product : Products.values()) {
                 if (product.name().equals(matcherTruckLoad.group(1))) {
                     game.truckLoad(matcherTruckLoad.group(1));
-                    return;
+                    return exit;
                 }
             }
             System.out.println("Product name isn't correct");
-        }else if(matcherTruckUnload.find()) {
+        } else if(matcherTruckUnload.find()) {
             for (Products product : Products.values()) {
                 if (product.name().equals(matcherTruckUnload.group(1))) {
                     game.truckUnload(matcherTruckUnload.group(1));
-                    return;
+                    return exit;
                 }
             }
             System.out.println("Product name isn't correct");
@@ -88,11 +91,13 @@ public class Input {
                 case "TRUCK GO":
                     game.truckGo();
                     break;
+                case "EXIT":
+                    exit = true;
+                    break;
                 default:
                     System.out.println("Wrong command");
-                    ;
             }
         }
-
+        return exit;
     }
 }

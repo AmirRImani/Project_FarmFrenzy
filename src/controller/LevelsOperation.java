@@ -163,11 +163,10 @@ public class LevelsOperation {
 
     public void startLevel(Level level, User user, Scanner scanner){
         //TODO
-        HashSet<Task> tasks = level.getTasks();
+        boolean exit = false;
         Game game = new Game(level, user);
         Input input = new Input();
-        while(true){
-            input.commandGetter(scanner, game);
-        }
+        while(!exit)
+            exit = input.commandGetter(scanner, game);
     }
 }
