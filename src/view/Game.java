@@ -93,9 +93,6 @@ public class Game {
 
 
     public void pickup(int x, int y) {
-        for (Product product : productsOnGround) {
-            System.out.println(product.getX() + "," + product.getY());
-        }
         boolean found = false;
         boolean fullWarehouse = false;
         HashSet<Product> products = new HashSet<>(productsOnGround);
