@@ -5,14 +5,14 @@ import products.Products;
 import sharedClasses.TimeProcessor;
 
 public class Workshop {
-    //protected int levelUpPrice;
-    //protected int currentLevel;
+    private int currentLevel;
     private String name;
     private int costToBuild;
     private int timeToProduce;
     private Products neededProduct;
     private Products producedProduct;
     private int startTime;//TODO start to produce
+    private int costToUpgrade;
     private boolean busy;
 
     public String getName() { return name; }
@@ -22,11 +22,13 @@ public class Workshop {
     public boolean isBusy() { return busy; }
 
     public Workshop(Workshops workshop) {
+        this.currentLevel = 1;
         this.name = workshop.name();
         this.costToBuild = workshop.getCost();
         this.timeToProduce = workshop.getTime();
         this.neededProduct = workshop.getNeededProduct();
         this.producedProduct = workshop.getProducedProduct();
+        this.costToUpgrade = workshop.getCostToUpgrade();
         this.startTime = 0;
         this.busy = false;
     }
@@ -56,4 +58,17 @@ public class Workshop {
         return false;
     }
 
+    public int getCostToUpgrade() {
+        return costToUpgrade;
+    }
+
+    public void increaseLevel() {
+        currentLevel ++;
+    }
+
+    public boolean maxLevel() {
+        if(currentLevel >= 2)
+            return true;
+        return false;
+    }
 }

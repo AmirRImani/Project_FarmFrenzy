@@ -266,23 +266,24 @@ public class Game {
     }
     public void upgradeWorkshop(String workshopName) {
         for (Workshop workshop : workshops) {
-            if (workshop.name().equals(workshopName)) {
-                if (coin >= workshop.getCostToUpgrade()) {
-                    workshop.getLevel() = +1;
-                }
-            }
-            for (Workshops workshop : Workshops.values()) {
-                if (workshop.name().equals(workshopName)) {
-                    System.out.println("There isn't" + workshopName + "to upgrade");
-                    logger.setUseParentHandlers(false);
-                    logger.info("There isn't" + workshopName + "to upgrade");
+            if (workshop.getName().equals(workshopName)) {
+                if (coin >= workshop.getCostToUpgrade() && !workshop.maxLevel()) {
+                    workshop.increaseLevel();
                     return;
                 }
             }
-            System.out.println("Workshop is incorrect");
-            logger.setUseParentHandlers(false);
-            logger.info("Workshop is incorrect");
         }
+        for (Workshops workshop1 : Workshops.values()) {
+            if (workshop1.name().equals(workshopName)) {
+                System.out.println("There isn't" + workshopName + "to upgrade");
+                logger.setUseParentHandlers(false);
+                logger.info("There isn't" + workshopName + "to upgrade");
+                return;
+            }
+        }
+        System.out.println("Workshop is incorrect");
+        logger.setUseParentHandlers(false);
+        logger.info("Workshop is incorrect");
     }
 
     public void well() {
