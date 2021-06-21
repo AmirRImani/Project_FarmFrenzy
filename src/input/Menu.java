@@ -49,13 +49,13 @@ public class Menu {
         logger.setLevel(Level.ALL);
 
     }
-    class MyLevel extends Level {
+   /* class MyLevel extends Level {
         public final Level DISASTER = new MyLevel("DISASTER", Level.SEVERE.intValue() + 1);
 
         public MyLevel(String name, int value) {
             super(name, value);
         }
-    }
+    }*/
     private HashSet<User> users;
 
     public Menu() {
@@ -122,7 +122,8 @@ public class Menu {
         while (!rightCommand) {
             System.out.println("LOG IN or SIGNUP or EXIT: ");
             command = scanner.nextLine();
-
+            logger.setUseParentHandlers(false);
+            logger.info("This file has made.");
             if (command.toUpperCase().trim().equals("LOG IN")) {
                 logger.setUseParentHandlers(false);
                 logger.info("A user chose 'LOG IN'!");

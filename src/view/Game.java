@@ -9,15 +9,14 @@ import animals.helpers.Helpers;
 import animals.wilds.Wild;
 import animals.wilds.Wilds;
 import controller.*;
-import workshops.Workshop;
-import workshops.Workshops;
 import input.User;
 import products.Product;
 import products.Products;
 import sharedClasses.TimeProcessor;
 import vehicles.Truck;
+import workshops.Workshop;
+import workshops.Workshops;
 
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -251,10 +250,12 @@ public class Game {
                     coin -= workshop.getCost();
                     System.out.println("Built successfully");
                     logger.setUseParentHandlers(false);
-                    logger.info("his workshop is already built");
+                    logger.info("This workshop is already built");
                     return;
                 } else{
                     System.out.println("Not enough coin to build this workshop");
+                    logger.setUseParentHandlers(false);
+                    logger.info("Not enough coin to build this workshop!");
                     return;
                 }
             }
@@ -262,6 +263,26 @@ public class Game {
         System.out.println("Workshop is incorrect");
         logger.setUseParentHandlers(false);
         logger.info("Workshop is incorrect");
+    }
+    public void upgradeWorkshop(String workshopName) {
+        for (Workshop workshop : workshops) {
+            if (workshop.name().equals(workshopName)) {
+                if (coin >= workshop.getCostToUpgrade()) {
+                    workshop.getLevel() = +1;
+                }
+            }
+            for (Workshops workshop : Workshops.values()) {
+                if (workshop.name().equals(workshopName)) {
+                    System.out.println("There isn't" + workshopName + "to upgrade");
+                    logger.setUseParentHandlers(false);
+                    logger.info("There isn't" + workshopName + "to upgrade");
+                    return;
+                }
+            }
+            System.out.println("Workshop is incorrect");
+            logger.setUseParentHandlers(false);
+            logger.info("Workshop is incorrect");
+        }
     }
 
     public void well() {
@@ -560,6 +581,8 @@ public class Game {
             coin += price;
         }
     }
+
+
 }
 
 

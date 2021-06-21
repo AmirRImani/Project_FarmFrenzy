@@ -26,6 +26,8 @@ public class Input {
         boolean exit = false;
         Pattern patternBuy = Pattern.compile("BUY (\\w+)");
         Matcher matcherBuy = patternBuy.matcher(command);
+        Pattern patternUpgrade = Pattern.compile("Upgrade (\\w+)");
+        Matcher matcherUpgrade = patternBuy.matcher(command);
         Pattern patternPickup = Pattern.compile("PICKUP (\\d+) (\\d+)");
         Matcher matcherPickup = patternPickup.matcher(command);
         Pattern patternPlant = Pattern.compile("PLANT (\\d+) (\\d+)");
@@ -90,10 +92,14 @@ public class Input {
             System.out.println("Product name isn't correct");
         }else if(matcherBuild.find()) {
             game.build(matcherBuild.group(1));
-        } else {
+        } else if(matcherUpgrade.find()){
+            game.upgradeWorkshop(matcherUpgrade.group(1));
+        }
+        else {
             switch (command) {
                 case "WELL":
                     game.well();
+
                     break;
                 case "TRUCK GO":
                     game.truckGo();
