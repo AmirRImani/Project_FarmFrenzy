@@ -39,6 +39,7 @@ public class TimeProcessor {
         game.catCatches();
         game.wildAttack();
         game.transport();
+        game.grassAlarm();
         game.showDetails();
         exit = game.checkWin();
         //TODO
