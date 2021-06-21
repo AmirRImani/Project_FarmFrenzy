@@ -584,6 +584,10 @@ public class Game {
     }
 
 
+    public void grassAlarm() {
+        if(grasses.isEmpty())
+            System.out.println("Not any grass on board");
+    }
 }
 
 
