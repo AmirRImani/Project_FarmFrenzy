@@ -475,10 +475,18 @@ public class Game {
     }
 
     public void walk() {
-        for (Domestic domestic : domestics)
-            domestic.walk();
-        for (Helper helper : helpers)
-            helper.walk();
+        for (Domestic domestic : domestics){
+            if(domestic.isHungry())
+                domestic.hungryWalk(grasses);
+            else
+                domestic.walk();
+        }
+        for (Helper helper : helpers) {
+            if(helper instanceof Cat)
+                ((Cat) helper).findWalk(productsOnGround);
+            else
+                helper.walk();
+        }
         for (Wild wild : wilds) {
             if(!wild.isPrisoned())
                 wild.walk();
