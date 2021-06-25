@@ -45,6 +45,10 @@ public class Warehouse {
             int amount = truck.getCapacity() / product.getSpace();
             int availableAmount = amountOfProduct.get(product);
             int quantity = Math.min(amount, availableAmount);
+            if(truck.onRoad()){
+                System.out.println("Truck is on road");
+                return false;
+            }
             if(amount == 0) {
                 System.out.println("Truck doesn't have enough space");
                 return false;

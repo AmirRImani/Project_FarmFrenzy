@@ -174,17 +174,23 @@ public class Game {
             if(wild.getX() == x && wild.getY() == y){
                 found = true;
 
-                if(wild.isPrisoned()){
-                    warehouse.addProduct(Products.valueOf("CAUGHT_" + wild.getName()), 1);
-                    wilds.remove(wild);
-                    System.out.println("Wild " +  wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
-                    logger.setUseParentHandlers(false);
-                    logger.fine("Wild " +  wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
-                    return;
-                }
+
                 if(wild.isInCage()){
                     for (Cage cage : cages) {
                         if(cage.getX() == x && cage.getY() == y) {
+                            if(wild.isPrisoned()){
+                                if(warehouse.addProduct(Products.valueOf("CAUGHT_" + wild.getName()), 1)) {
+                                wilds.remove(wild);
+                                cages.remove(cage);
+                                System.out.println("Wild " + wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
+                                logger.setUseParentHandlers(false);
+                                logger.fine("Wild " + wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
+                            } else
+                                System.out.println("Not enough space in warehouse");
+                            return;
+                        }
+                            System.out.println(cage.isPrisoned());
+                            System.out.println(wild.isPrisoned());
                             if(cage.increaseTap()) {
                                 wild.increaseTap();
                                 System.out.println("Cage on [ " + cage.getX() + " " + cage.getY() + " ] resistance increased");
