@@ -319,7 +319,10 @@ public class Game {
                     logger.setUseParentHandlers(false);
                     logger.info(workshop.getName() + "'s work is done");
                     //TODO change response or delete it
-                    productsOnGround.add(new Product(workshop.getProducedProduct()));
+                    for (int i = 0; i < workshop.getAmountPro(); i++) {
+                        productsOnGround.add(new Product(workshop.getProducedProduct()));
+                    }
+
                 }
             }
         }
@@ -531,6 +534,7 @@ public class Game {
                 System.out.print(grass[i][j] + "\t");
             System.out.println();
         }
+        System.out.println();
     }
 
     public boolean checkWin() {
@@ -594,7 +598,7 @@ public class Game {
 
     public void grassAlarm() {
         if(grasses.isEmpty())
-            System.out.println("Not any grass on board");
+            System.err.println("Not any grass on board");
     }
 }
 
