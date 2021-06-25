@@ -15,14 +15,17 @@ public class TimeProcessor {
     }
 
     public boolean changeSteps(int step, Game game){
+        boolean last = false;
         for (int i = 0; i < step; i++) {
-            if(changeStep(game))
+            if (i == step - 1)
+                last = true;
+            if(changeStep(game, last))
                 return true;
         }
         return false;
     }
 
-    private boolean changeStep(Game game){//TODO make change in one step  in order to skip two or more steps make a for loop in game and call this method in loop
+    private boolean changeStep(Game game, boolean last){//TODO make change in one step  in order to skip two or more steps make a for loop in game and call this method in loop
         boolean exit;
         currentStep ++;
         game.walk();
@@ -39,8 +42,8 @@ public class TimeProcessor {
         game.catCatches();
         game.wildAttack();
         game.transport();
-        game.grassAlarm();
-        game.showDetails();
+        game.grassAlarm(last);
+        game.showDetails(last);
         exit = game.checkWin();
         //TODO
         //TODO after calling this method also check animal moves, dog attacks, cat catches, wild attacks, ...

@@ -16,7 +16,7 @@ public class Input {
     public boolean commandGetter(Scanner scanner, Game game, User user){
         boolean exit;
         String command;
-        System.out.println("Please enter your command: ");
+        System.out.println("\nPlease enter your command: ");
         command = scanner.nextLine();
         exit = commandRecognizer(command.toUpperCase().trim(), game, user);
         return exit;
@@ -26,8 +26,8 @@ public class Input {
         boolean exit = false;
         Pattern patternBuy = Pattern.compile("BUY (\\w+)");
         Matcher matcherBuy = patternBuy.matcher(command);
-        Pattern patternUpgrade = Pattern.compile("Upgrade (\\w+)");
-        Matcher matcherUpgrade = patternBuy.matcher(command);
+        Pattern patternUpgrade = Pattern.compile("UPGRADE (\\w+)");
+        Matcher matcherUpgrade = patternUpgrade.matcher(command);
         Pattern patternPickup = Pattern.compile("PICKUP (\\d+) (\\d+)");
         Matcher matcherPickup = patternPickup.matcher(command);
         Pattern patternPlant = Pattern.compile("PLANT (\\d+) (\\d+)");
@@ -105,7 +105,7 @@ public class Input {
                     game.truckGo();
                     break;
                 case "INQUIRY":
-                    game.showDetails();
+                    game.showDetails(true);
                     break;
                 case "EXIT":
                     exit = true;

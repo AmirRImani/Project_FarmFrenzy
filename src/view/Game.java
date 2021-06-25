@@ -269,15 +269,17 @@ public class Game {
             if (workshop.getName().equals(workshopName)) {
                 if (coin >= workshop.getCostToUpgrade() && !workshop.maxLevel()) {
                     workshop.increaseLevel();
+                    coin -= workshop.getCostToUpgrade();
+                    System.out.println("Upgraded successfully");
                     return;
                 }
             }
         }
         for (Workshops workshop1 : Workshops.values()) {
             if (workshop1.name().equals(workshopName)) {
-                System.out.println("There isn't" + workshopName + "to upgrade");
+                System.out.println("There isn't " + workshopName + " to upgrade");
                 logger.setUseParentHandlers(false);
-                logger.info("There isn't" + workshopName + "to upgrade");
+                logger.info("There isn't " + workshopName + " to upgrade");
                 return;
             }
         }
@@ -315,7 +317,7 @@ public class Game {
         for (Workshop workshop : workshops) {
             if (workshop.isBusy()) {
                 if (workshop.isProduced()) {
-                    System.out.println(workshop.getName() + "'s work is done");
+                    System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " + workshop.getName() + "'s work is done");
                     logger.setUseParentHandlers(false);
                     logger.info(workshop.getName() + "'s work is done");
                     //TODO change response or delete it
@@ -393,7 +395,7 @@ public class Game {
                     cages.remove(cage);
                     wilds.remove(cage.getWild());
                     cage.getWild().free();
-                    System.out.println("Wild on " + cage.getX() + "," + cage.getY() + " was freed");
+                    System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " + "Wild on " + cage.getX() + "," + cage.getY() + " was freed");
                     logger.setUseParentHandlers(false);
                     logger.info("Wild on " + cage.getX() + "," + cage.getY() + " was freed");
                 }
@@ -427,7 +429,7 @@ public class Game {
         for (Wild wild : wildHashSet) {
             if(!wild.isInCage()){
                 if(wild.getX() == helper.getX() && wild.getY() == helper.getY()){
-                    System.out.println("Dog on " + helper.getX() + "," + helper.getY() + " attacked a wild");
+                    System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " +"Dog on " + helper.getX() + "," + helper.getY() + " attacked a wild");
                     logger.setUseParentHandlers(false);
                     logger.info("Dog on " + helper.getX() + "," + helper.getY() + " attacked a wild");
                     wilds.remove(wild);
@@ -449,7 +451,7 @@ public class Game {
         HashSet<Product> products = new HashSet<>(productsOnGround);
         for (Product product : products) {
             if(product.getX() == x && product.getY() == y){
-                System.out.println("Product on " + x + "," + y + " moved to warehouse by cat");
+                System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " +"Product on " + x + "," + y + " moved to warehouse by cat");
                 logger.setUseParentHandlers(false);
                 logger.info("Product on " + x + "," + y + " moved to warehouse by cat");
                 productsOnGround.remove(product);
@@ -469,7 +471,7 @@ public class Game {
         HashSet<Domestic> domesticHashSet = new HashSet<>(domestics);
         for (Domestic domestic : domesticHashSet) {
             if(domestic.getX() == x && domestic.getY() == y){
-                System.out.println("Wild on " + x + "," + y + " attacked a domestic");
+                System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " +"Wild on " + x + "," + y + " attacked a domestic");
                 logger.setUseParentHandlers(false);
                 logger.info("Wild on " + x + "," + y + " attacked a domestic");
                 domestics.remove(domestic);
@@ -496,18 +498,20 @@ public class Game {
         }
     }
 
-    public void showDetails() {
-        System.out.println("TURN: " + TimeProcessor.currentStep);
-        showGrass();
-        for (Domestic domestic : domestics)
-            System.out.println(domestic.getName() + " " + domestic.getHealth() + "% [" + domestic.getX() + " " + domestic.getY() + "]");
-        for (Helper helper : helpers)
-            System.out.println(helper.getName()+ " [" + helper.getX() + " " + helper.getY() + "]");
-        for (Wild wild : wilds)
-            System.out.println(wild.getName() + " " + "Cage need: " + wild.getTapNeeded() + " " + " [" + wild.getX() + " " + wild.getY() + "]");
-        for (Product product : productsOnGround)
-            System.out.println(product.getNameOfProduct() + " [" + product.getX() + " " + product.getY() + "]");
-        taskPrint();
+    public void showDetails(boolean print) {
+        if(print) {
+            System.out.println("TURN: " + TimeProcessor.currentStep);
+            showGrass();
+            for (Domestic domestic : domestics)
+                System.out.println(domestic.getName() + " " + domestic.getHealth() + "% [" + domestic.getX() + " " + domestic.getY() + "]");
+            for (Helper helper : helpers)
+                System.out.println(helper.getName() + " [" + helper.getX() + " " + helper.getY() + "]");
+            for (Wild wild : wilds)
+                System.out.println(wild.getName() + " " + "Cage need: " + wild.getTapNeeded() + " " + " [" + wild.getX() + " " + wild.getY() + "]");
+            for (Product product : productsOnGround)
+                System.out.println(product.getNameOfProduct() + " [" + product.getX() + " " + product.getY() + "]");
+            taskPrint();
+        }
     }
 
     private void taskPrint() {
@@ -528,7 +532,7 @@ public class Game {
                 grass[i][j] = 0;
         }
         for (Grass grass1 : grasses)
-            grass[grass1.getRow()-1][grass1.getColumn()-1] ++;
+            grass[Board.ROW.getLength() - grass1.getRow()][grass1.getColumn()-1] ++;
         for (int i = 0; i < Board.ROW.getLength(); i++) {
             for (int j = 0; j < Board.COLUMN.getLength(); j++)
                 System.out.print(grass[i][j] + "\t");
@@ -559,7 +563,7 @@ public class Game {
             }
         }
         if(win)
-            System.out.println("Tasks completed");
+            System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " + "Tasks completed\nYou WON");
         return win;
     }
 
@@ -590,15 +594,17 @@ public class Game {
     public void transport() {
         int price = truck.finishTransport();
         if(price > 0) {
-            System.out.println("Your products sold " + price + "$");
+            System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " +"Your products sold " + price + "$");
             coin += price;
         }
     }
 
 
-    public void grassAlarm() {
-        if(grasses.isEmpty())
-            System.err.println("Not any grass on board");
+    public void grassAlarm(boolean print) {
+        if(print) {
+            if (grasses.isEmpty())
+                System.err.println("Not any grass on board");
+        }
     }
 }
 
