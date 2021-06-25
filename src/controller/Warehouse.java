@@ -1,5 +1,6 @@
 package controller;
 
+import products.Product;
 import products.Products;
 import vehicles.Truck;
 
@@ -63,7 +64,14 @@ public class Warehouse {
     }
 
     public int amount(Products product){
-        return amountOfProduct.get(product);
+        if(amountOfProduct.containsKey(product))
+            return amountOfProduct.get(product);
+        else
+            return 0;
+    }
+
+    public void decreaseAmount(Products product, int amount){
+        amountOfProduct.replace(product, amountOfProduct.get(product) - amount);
     }
 
 }

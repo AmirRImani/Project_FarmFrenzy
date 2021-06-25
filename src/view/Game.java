@@ -9,15 +9,14 @@ import animals.helpers.Helpers;
 import animals.wilds.Wild;
 import animals.wilds.Wilds;
 import controller.*;
-import workshops.Workshop;
-import workshops.Workshops;
 import input.User;
 import products.Product;
 import products.Products;
 import sharedClasses.TimeProcessor;
 import vehicles.Truck;
+import workshops.Workshop;
+import workshops.Workshops;
 
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -251,12 +250,35 @@ public class Game {
                     coin -= workshop.getCost();
                     System.out.println("Built successfully");
                     logger.setUseParentHandlers(false);
-                    logger.info("his workshop is already built");
+                    logger.info("This workshop is already built");
                     return;
                 } else{
                     System.out.println("Not enough coin to build this workshop");
+                    logger.setUseParentHandlers(false);
+                    logger.info("Not enough coin to build this workshop!");
                     return;
                 }
+            }
+        }
+        System.out.println("Workshop is incorrect");
+        logger.setUseParentHandlers(false);
+        logger.info("Workshop is incorrect");
+    }
+    public void upgradeWorkshop(String workshopName) {
+        for (Workshop workshop : workshops) {
+            if (workshop.getName().equals(workshopName)) {
+                if (coin >= workshop.getCostToUpgrade() && !workshop.maxLevel()) {
+                    workshop.increaseLevel();
+                    return;
+                }
+            }
+        }
+        for (Workshops workshop1 : Workshops.values()) {
+            if (workshop1.name().equals(workshopName)) {
+                System.out.println("There isn't" + workshopName + "to upgrade");
+                logger.setUseParentHandlers(false);
+                logger.info("There isn't" + workshopName + "to upgrade");
+                return;
             }
         }
         System.out.println("Workshop is incorrect");
@@ -297,7 +319,10 @@ public class Game {
                     logger.setUseParentHandlers(false);
                     logger.info(workshop.getName() + "'s work is done");
                     //TODO change response or delete it
-                    productsOnGround.add(new Product(workshop.getProducedProduct()));
+                    for (int i = 0; i < workshop.getAmountPro(); i++) {
+                        productsOnGround.add(new Product(workshop.getProducedProduct()));
+                    }
+
                 }
             }
         }
@@ -453,10 +478,18 @@ public class Game {
     }
 
     public void walk() {
-        for (Domestic domestic : domestics)
-            domestic.walk();
-        for (Helper helper : helpers)
-            helper.walk();
+        for (Domestic domestic : domestics){
+            if(domestic.isHungry())
+                domestic.hungryWalk(grasses);
+            else
+                domestic.walk();
+        }
+        for (Helper helper : helpers) {
+            if(helper instanceof Cat)
+                ((Cat) helper).findWalk(productsOnGround);
+            else
+                helper.walk();
+        }
         for (Wild wild : wilds) {
             if(!wild.isPrisoned())
                 wild.walk();
@@ -501,6 +534,7 @@ public class Game {
                 System.out.print(grass[i][j] + "\t");
             System.out.println();
         }
+        System.out.println();
     }
 
     public boolean checkWin() {
@@ -559,6 +593,12 @@ public class Game {
             System.out.println("Your products sold " + price + "$");
             coin += price;
         }
+    }
+
+
+    public void grassAlarm() {
+        if(grasses.isEmpty())
+            System.err.println("Not any grass on board");
     }
 }
 
