@@ -17,10 +17,8 @@ import sharedClasses.TimeProcessor;
 import tasks.Task;
 import workshops.Workshop;
 import workshops.Workshops;
-
 import java.util.HashMap;
 import java.util.HashSet;
-
 import static entry.EnterProcess.logger;
 
 public class Game {

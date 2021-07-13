@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LevelsOperation {
-    public static final int NUMBER_OF_LEVELS = 95;
+    public static final int NUMBER_OF_LEVELS = 2;
     private ArrayList<Level> levels;
 
     private static LevelsOperation levelsInstance;
@@ -146,17 +146,8 @@ public class LevelsOperation {
         return false;
     }
 
-    public boolean getLevel(int level, User user, Scanner scanner){
-        System.out.println();
-        if(startLevelPossible(level, user)) {
-            System.out.println("Level " + level + " started");
-            startLevel(levels.get(level - 1), user, scanner);
-            return true;
-        } else {
-            System.out.println("This level is locked for you");
-            //TODO
-            return false;
-        }
+    public Level getLevel(int level){
+        return levels.get(level - 1);
     }
 
 

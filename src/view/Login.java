@@ -53,7 +53,7 @@ public class Login {
         root = loader.load();
 
         LevelChooser levelChooser = loader.getController();
-        levelChooser.setUser(user);
+        levelChooser.setInitial(user);
 
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
