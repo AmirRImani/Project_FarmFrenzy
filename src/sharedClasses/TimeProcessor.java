@@ -41,7 +41,7 @@ public class TimeProcessor {
         game.dogAttack();
         game.catCatches();
         game.wildAttack();
-        game.transport();
+        game.transportCompleted();
         game.grassAlarm(last);
         game.showDetails(last);
         exit = game.checkWin();

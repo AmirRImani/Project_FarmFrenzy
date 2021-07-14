@@ -1,11 +1,11 @@
 .button {
     -fx-shape: "M25,0 C60,0, 60,50, 25,50 C-10,50, -10,0, 25,0";
-    -fx-background-image: url("/images/buttonLevel2.png");
+    -fx-background-image: url("/images/buttonLevel/on/buttonLevel2.png");
 }
 
 .button:hover{
-    -fx-background-image: url("/images/buttonLevelOn2.png");
+    -fx-background-image: url("/images/buttonLevel/off/buttonLevelOff2.png");
 }
 .button:pressed{
-    -fx-background-image: url("/images/buttonLevelPressed2.png");
+    -fx-background-image: url("/images/buttonLevel/pressed/buttonLevelPressed2.png");
 }

@@ -32,30 +32,30 @@ public class Truck {
             amountOfProducts.put(product, quantity);
     }
 
-    public boolean unload(Products product, Warehouse warehouse) {
+    public int unload(Products product, Warehouse warehouse) {
         if(startToGo){
             System.out.println("Truck is on road");
-            return false;
+            return 0;
         }
         if(amountOfProducts.containsKey(product)) {
             int amount = amountOfProducts.get(product);
             int availableAmount = warehouse.getSpace();
             int quantity = Math.min(amount, availableAmount);
             if(amount == 0) {
-                System.out.println("This product isn't available");
-                return false;
+                //System.out.println("This product isn't available");
+                return 1;
             } else if(availableAmount == 0){
-                System.out.println("Warehouse doesn't have enough space");
-                return false;
+                //System.out.println("Warehouse doesn't have enough space");
+                return 2;
             } else{
                 this.remainedCapacity += quantity * product.getSpace();
                 warehouse.addProduct(product, quantity);
-                System.out.println("Truck unloaded " + quantity + " " + product.name());
-                return true;
+                //System.out.println("Truck unloaded " + quantity + " " + product.name());
+                return 3;
             }
         } else {
-            System.out.println("Not Found");
-            return false;
+            //System.out.println("Not Found");
+            return 4;
         }
     }
 

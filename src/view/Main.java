@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Image icon = new Image(getClass().getResourceAsStream("/images/farmFrenzyIcon.jpg"));
+        Image icon = new Image(getClass().getResourceAsStream("/images/iconsAndLabels/farmFrenzyIcon.jpg"));
         Parent root = FXMLLoader.load(getClass().getResource("entryPage.fxml"));
         primaryStage.setTitle("Farm Frenzy - Sharif edition");
         primaryStage.setScene(new Scene(root));

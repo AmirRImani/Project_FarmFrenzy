@@ -42,7 +42,7 @@ public class Forget {
         else if(enterProcess.validity(txtUsername.getText(), txtEmail.getText())){
             labelReset.setText("Enter your new password");
 
-            imageView.setImage(new Image(getClass().getResourceAsStream("/images/password.jpg")));
+            imageView.setImage(new Image(getClass().getResourceAsStream("/images/iconsAndLabels/password.jpg")));
 
             labelUsername.setVisible(false);
             txtUsername.setVisible(false);
