@@ -22,7 +22,7 @@ public class Pause {
         this.game = game;
     }
 
-    public void backToGame(ActionEvent actionEvent) throws IOException {
+    public void resume(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("gameViewPage.fxml"));
         root = loader.load();
@@ -37,26 +37,64 @@ public class Pause {
     }
 
 
+    public void restart(ActionEvent actionEvent) throws IOException {
+        Alert aLert = new Alert(Alert.AlertType.NONE);
+        aLert.setTitle("Restart");
+        aLert.setHeaderText("You're about to restart the game");
+        aLert.setContentText("Are you sure?");
+        aLert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+
+        if(aLert.showAndWait().get() == ButtonType.YES) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gameViewPage.fxml"));
+            root = loader.load();
+
+            GameView gameView = loader.getController();
+            gameView.setInitial(game.getLevel(), game.getUser());
+
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+
     public void back(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("levelChooserPage.fxml"));
-        root = loader.load();
+        Alert aLert = new Alert(Alert.AlertType.NONE);
+        aLert.setTitle("Back to Level Menu");
+        aLert.setHeaderText("You're about to go to level menu");
+        aLert.setContentText("Are you sure?");
+        aLert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
 
-        LevelChooser levelChooser = loader.getController();
-        levelChooser.setInitial(game.getUser());
+        if(aLert.showAndWait().get() == ButtonType.YES) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("levelChooserPage.fxml"));
+            root = loader.load();
 
-        stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            LevelChooser levelChooser = loader.getController();
+            levelChooser.setInitial(game.getUser());
+
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void toFirstPage(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("entryPage.fxml"));
-        stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Alert aLert = new Alert(Alert.AlertType.NONE);
+        aLert.setTitle("Back to Main Menu");
+        aLert.setHeaderText("You're about to go to main menu");
+        aLert.setContentText("Are you sure?");
+        aLert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+
+        if(aLert.showAndWait().get() == ButtonType.YES) {
+            root = FXMLLoader.load(getClass().getResource("entryPage.fxml"));
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void exit(ActionEvent actionEvent) {
@@ -70,5 +108,4 @@ public class Pause {
             System.exit(1);
         }
     }
-
 }

@@ -23,6 +23,7 @@ import static entry.EnterProcess.logger;
 
 public class Game {
     private User user;
+    private Level level;
     private int coin;
     private HashSet<Domestic> domestics;
     private HashSet<Workshop> workshops;
@@ -39,6 +40,8 @@ public class Game {
     private int award;
     private HashSet<Task> tasks;
 
+    public Level getLevel() { return level; }
+
     public User getUser() { return user; }
 
     public int getGoldTime() { return goldTime; }
@@ -47,6 +50,7 @@ public class Game {
 
     public Game(Level level, User user) {
         this.user = user;
+        this.level = level;
         this.coin = level.getStartCoin() + user.getNumberOfCoins();
         user.clearCoins(); //TODO maybe shouldn't clear coins here
         this.goldTime = level.getGoldTime();
@@ -242,6 +246,7 @@ public class Game {
         TimeProcessor timeProcessor = TimeProcessor.getInstance();
         exit = timeProcessor.changeSteps(turnNumber,this);
         return exit;
+        //TODO a path for exit after win in code should be added
     }
 
     public int truckLoad(String productName) {

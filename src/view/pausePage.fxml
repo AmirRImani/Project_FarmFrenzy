@@ -11,8 +11,8 @@
          <children>
             <VBox alignment="TOP_CENTER" layoutX="50.0" layoutY="25.0" prefHeight="400.0" prefWidth="400.0" spacing="25.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#backToGame" prefHeight="50.0" prefWidth="250.0" styleClass="continue-button" textFill="WHITE" />
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" styleClass="restart-button" />
+                  <Button mnemonicParsing="false" onAction="#resume" prefHeight="50.0" prefWidth="250.0" styleClass="continue-button" textFill="WHITE" />
+                  <Button mnemonicParsing="false" onAction="#restart" prefHeight="50.0" prefWidth="250.0" styleClass="restart-button" />
                   <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" styleClass="option-button" />
                   <Button mnemonicParsing="false" onAction="#back" prefHeight="50.0" prefWidth="250.0" styleClass="levels-button" />
                   <Button mnemonicParsing="false" onAction="#toFirstPage" prefHeight="50.0" prefWidth="250.0" styleClass="mainMenu-button" />
