@@ -149,7 +149,7 @@ public class Game {
             return false;
     }
 
-    //TODO maib
+    //TODO maybe this function should be written again
     public boolean work(String nameOfWorkshop) { //TODO initial variables should be changed
         for (Workshop workshop : workshops) {
             if(workshop.getName().equals(nameOfWorkshop)){

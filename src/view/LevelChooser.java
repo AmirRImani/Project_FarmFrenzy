@@ -92,7 +92,7 @@ public class LevelChooser implements Initializable {
         Level level = LevelsOperation.getInstance().getLevel(levelNumber);
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("gamePage.fxml"));
+        loader.setLocation(getClass().getResource("gameViewPage.fxml"));
         root = loader.load();
 
         GameView gameView = loader.getController();
