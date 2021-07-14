@@ -2,3 +2,27 @@
     -fx-background-image: url("/images/backgrounds/backgroundGame.png");
     -fx-background-size: 100% 100%;
 }
+
+.first-imageView {
+    -fx-image: url("/images/iconsAndLabels/underBar.png");
+    -fx-pref-width: 800;
+    -fx-pref-height: 150;
+}
+
+.menu-button {
+    -fx-shape: "M25,0 C60,0, 60,50, 25,50 C-10,50, -10,0, 25,0";
+    -fx-background-image: url("/images/iconsAndLabels/menuButton.png");
+    -fx-background-size: 100% 100%;
+}
+
+.menu-button:hover {
+    -fx-shape: "M25,0 C60,0, 60,50, 25,50 C-10,50, -10,0, 25,0";
+    -fx-background-image: url("/images/iconsAndLabels/menuButtonOn.png");
+    -fx-background-size: 100% 100%;
+}
+
+.menu-button:pressed {
+    -fx-shape: "M25,0 C60,0, 60,50, 25,50 C-10,50, -10,0, 25,0";
+    -fx-background-image: url("/images/iconsAndLabels/menuButtonPressed.png");
+    -fx-background-size: 100% 100%;
+}

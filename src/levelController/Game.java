@@ -22,6 +22,7 @@ import java.util.HashSet;
 import static entry.EnterProcess.logger;
 
 public class Game {
+    private User user;
     private int coin;
     private HashSet<Domestic> domestics;
     private HashSet<Workshop> workshops;
@@ -38,13 +39,16 @@ public class Game {
     private int award;
     private HashSet<Task> tasks;
 
+    public User getUser() { return user; }
+
     public int getGoldTime() { return goldTime; }
 
     public int getAward() { return award; }
 
     public Game(Level level, User user) {
+        this.user = user;
         this.coin = level.getStartCoin() + user.getNumberOfCoins();
-        user.clearCoins();
+        user.clearCoins(); //TODO maybe shouldn't clear coins here
         this.goldTime = level.getGoldTime();
         this.award = level.getAward();
         this.tasks = level.getTasks();
