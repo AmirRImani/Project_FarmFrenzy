@@ -1,0 +1,51 @@
+.main-anchorPane {
+    -fx-background-image: url("/images/backgrounds/backgroundGameBlur.png");
+    -fx-background-size: 100% 100%;
+}
+
+.pause-anchorPane {
+    -fx-background-image: url("/images/backgrounds/backgroundMenu.png");
+    -fx-background-size: 100% 100%;
+}
+
+.button {
+    -fx-background-color: #bd994c;
+}
+
+.button:hover {
+    -fx-background-color: #cdb075;
+}
+
+.button:pressed {
+    -fx-background-color: #c2b393;
+}
+
+.continue-button {
+    -fx-background-image: url("/images/pauseButtons/continueButton.png");
+    -fx-background-size: 100% 100%;
+}
+
+.restart-button {
+    -fx-background-image: url("/images/pauseButtons/restartButton.png");
+    -fx-background-size: 100% 100%;
+}
+
+.option-button {
+    -fx-background-image: url("/images/pauseButtons/optionsButton.png");
+    -fx-background-size: 100% 100%;
+}
+
+.levels-button {
+    -fx-background-image: url("/images/pauseButtons/levelsButton.png");
+    -fx-background-size: 100% 100%;
+}
+
+.mainMenu-button {
+    -fx-background-image: url("/images/pauseButtons/gameMainMenuButton.png");
+    -fx-background-size: 100% 100%;
+}
+
+.exit-button {
+    -fx-background-image: url("/images/pauseButtons/exitButton.png");
+    -fx-background-size: 100% 100%;
+}

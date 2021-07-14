@@ -1,0 +1,11 @@
+.button {
+    -fx-shape: "M25,0 C60,0, 60,50, 25,50 C-10,50, -10,0, 25,0";
+    -fx-background-image: url("/images/levelButtons/on/buttonLevel1.png");
+}
+
+.button:hover{
+    -fx-background-image: url("/images/levelButtons/off/buttonLevelOff1.png");
+}
+.button:pressed{
+    -fx-background-image: url("/images/levelButtons/pressed/buttonLevelPressed1.png");
+}
