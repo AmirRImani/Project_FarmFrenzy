@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="bodybg" stylesheets="@styles/backgrounds/backgroundGame.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GameView">
    <children>
       <ImageView fitHeight="150.0" fitWidth="800.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true" styleClass="first-imageView" />
       <Button layoutX="14.0" layoutY="547.0" mnemonicParsing="false" onAction="#pause" prefHeight="38.0" prefWidth="40.0" styleClass="menu-button" />
+      <HBox layoutX="422.0" prefHeight="80.0" prefWidth="363.0" spacing="10.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <children>
+            <ImageView fx:id="imgHen" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="hen-imageView" />
+            <ImageView fx:id="imgTurkey" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="dog-imageView" />
+            <ImageView fx:id="imgBuffalo" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="dog-imageView" />
+            <ImageView fx:id="imgDog" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="dog-imageView" />
+            <ImageView fx:id="imgCat" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="cat-imageView" />
+         </children>
+      </HBox>
+      <AnchorPane layoutX="160.0" layoutY="157.0" prefHeight="330.0" prefWidth="480.0" />
+      <Button layoutX="711.0" layoutY="488.0" mnemonicParsing="false" onAction="#turn" prefHeight="38.0" prefWidth="75.0" style="-fx-background-color: green;" text="Turn" textFill="YELLOW">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

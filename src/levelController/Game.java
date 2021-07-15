@@ -74,13 +74,13 @@ public class Game {
             domestics.add(new Domestic(domestic));
             //System.out.println("Buying has been done");
             logger.setUseParentHandlers(false);
-            logger.fine("Buying has been done! ");
+            logger.fine("Buying has been done!");
             this.coin -= domestic.getValue();
             return true;
         } else
             //System.out.println("Not enough coin to buy");
             logger.setUseParentHandlers(false);
-            logger.info("Not enough coin to buy! ");
+            logger.info("Not enough coin to buy!");
             return false;
     }
 
