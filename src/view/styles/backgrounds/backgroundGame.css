@@ -62,3 +62,13 @@
 .cat-imageView:pressed {
     -fx-image: url("/images/iconsAndLabels/catButtonPressed.png");
 }
+
+.turn-imageView{
+    -fx-image: url("/images/iconsAndLabels/turnButton.png");
+}
+.turn-imageView:hover{
+    -fx-image: url("/images/iconsAndLabels/turnButtonOn.png");
+}
+.turn-imageView:pressed{
+    -fx-image: url("/images/iconsAndLabels/turnButtonPressed.png");
+}

@@ -28,7 +28,7 @@ public class GameView implements Initializable {
     private Game game;
 
     @FXML
-    ImageView imgHen, imgTurkey, imgBuffalo, imgDog, imgCat;
+    ImageView imgHen, imgTurkey, imgBuffalo, imgDog, imgCat, imgTurn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,6 +46,9 @@ public class GameView implements Initializable {
         });
         imgCat.setOnMouseClicked(event -> {
             addCat(new ActionEvent());
+        });
+        imgTurn.setOnMouseClicked(event -> {
+            turn(new ActionEvent());
         });
     }
 
@@ -120,20 +123,20 @@ public class GameView implements Initializable {
         ImageView imageView = new ImageView(new Image("/images/animals/" + animal /*...*/  ));//TODO
     }
 
-    private void addWild(String wildName) {
-        //TODO set on action about cage
-        Wild wild = game.addWild(Wilds.valueOf(wildName.toUpperCase()));
-        ImageView imageView = new ImageView(new Image("/images/animals/" + wildName /*...*/  ));
-        imageView.setOnMouseClicked(event -> {
-            //TODO
-            game.cage(wild);
-        });
-    }
+//    private void addWild(String wildName) {
+//        //TODO set on action about cage
+//        Wild wild = game.addWild(Wilds.valueOf(wildName.toUpperCase()));
+//        ImageView imageView = new ImageView(new Image("/images/animals/" + wildName /*...*/  ));
+//        imageView.setOnMouseClicked(event -> {
+//            //TODO
+//            game.cage(wild);
+//        });
+//    }
 
     public void turn(ActionEvent actionEvent) {
         //TODO
         game.turn(1);
-        show();
+        //show();
     }
 
 

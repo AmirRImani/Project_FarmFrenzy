@@ -22,6 +22,7 @@
             <ImageView fx:id="imgCat" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="cat-imageView" />
          </children>
       </HBox>
-      <AnchorPane layoutX="160.0" layoutY="143.0" prefHeight="342.0" prefWidth="480.0" styleClass="bodybg" />
+      <AnchorPane layoutX="160.0" layoutY="157.0" prefHeight="330.0" prefWidth="480.0" />
+      <ImageView fx:id="imgTurn" fitHeight="30.0" fitWidth="80.0" layoutX="708.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true" styleClass="turn-imageView" />
    </children>
 </AnchorPane>
