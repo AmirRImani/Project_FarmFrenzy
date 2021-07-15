@@ -26,3 +26,39 @@
     -fx-background-image: url("/images/iconsAndLabels/menuButtonPressed.png");
     -fx-background-size: 100% 100%;
 }
+
+.hen-imageView {
+    -fx-image: url("/images/iconsAndLabels/henButton.png");
+}
+
+.hen-imageView:hover {
+    -fx-image: url("/images/iconsAndLabels/henButtonOn.png");
+}
+
+.hen-imageView:pressed {
+    -fx-image: url("/images/iconsAndLabels/henButtonPressed.png");
+}
+
+.dog-imageView {
+    -fx-image: url("/images/iconsAndLabels/dogButton.png");
+}
+
+.dog-imageView:hover {
+    -fx-image: url("/images/iconsAndLabels/dogButtonOn.png");
+}
+
+.dog-imageView:pressed {
+    -fx-image: url("/images/iconsAndLabels/dogButtonPressed.png");
+}
+
+.cat-imageView {
+    -fx-image: url("/images/iconsAndLabels/catButton.png");
+}
+
+.cat-imageView:hover {
+    -fx-image: url("/images/iconsAndLabels/catButtonOn.png");
+}
+
+.cat-imageView:pressed {
+    -fx-image: url("/images/iconsAndLabels/catButtonPressed.png");
+}
