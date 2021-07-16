@@ -15,6 +15,8 @@ import products.Product;
 import products.Products;
 import sharedClasses.TimeProcessor;
 import tasks.Task;
+import view.GameView;
+import workshops.Incubator;
 import workshops.Workshop;
 import workshops.Workshops;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ public class Game {
     private int coin;
     private HashSet<Domestic> domestics;
     private HashSet<Workshop> workshops;
+    private Incubator incubator;
     private HashMap<Wilds, int[]> wildsAppearance;
     private HashSet<Wild> wilds;
     private HashSet<Helper> helpers;
@@ -136,6 +139,21 @@ public class Game {
 //        }
 //    }
 
+    public boolean pickup(Product product) {
+        if(this.warehouse.addProduct(Products.valueOf(product.getNameOfProduct()), 1)) {
+            this.productsOnGround.remove(product);
+            // System.out.println("Product " + product.getNameOfProduct() + " transferred to warehouse");
+            logger.setUseParentHandlers(false);
+            logger.info("There isn't any product on this coordinate ");
+            return true;
+        } else {
+//            System.out.println("There isn't enough space in warehouse");
+            logger.setUseParentHandlers(false);
+            logger.info("There isn't enough space in warehouse!");
+            return false;
+        }
+    }
+
     public boolean plant(int x, int y) { //TODO initial variables should be changed
 //        if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
 //            System.out.println("Coordinate is not on game board");
@@ -159,6 +177,14 @@ public class Game {
 
     //TODO maybe this function should be written again
     public boolean work(String nameOfWorkshop) { //TODO initial variables should be changed
+        if (nameOfWorkshop.equals("INCUBATOR")) {
+            if(incubator.work(warehouse)) {
+                //System.out.println("Workshop " + workshop.getName() + " started to produce");
+                logger.setUseParentHandlers(false);
+                logger.fine("Incubator started to produce");
+                return true;
+            }
+        }
         for (Workshop workshop : workshops) {
             if(workshop.getName().equals(nameOfWorkshop)){
                 if(workshop.work(warehouse)) {
@@ -241,10 +267,10 @@ public class Game {
 //        }
 //    }
 
-    public boolean turn(int turnNumber) {
+    public boolean turn(int turnNumber, GameView gameView) {
         boolean exit;
         TimeProcessor timeProcessor = TimeProcessor.getInstance();
-        exit = timeProcessor.changeSteps(turnNumber,this);
+        exit = timeProcessor.changeSteps(turnNumber,this, gameView);
         return exit;
         //TODO a path for exit after win in code should be added
     }
@@ -266,6 +292,23 @@ public class Game {
 //                return;
 //            }
 //        }
+
+        if (workshopName.equals("INCUBATOR")) {
+            incubator = new Incubator();
+            if(coin >= incubator.getCost()) {
+                coin -= incubator.getCost();
+                //System.out.println("Built successfully");
+                logger.setUseParentHandlers(false);
+                logger.info("Built successfully");
+                return true;
+            } else{
+                //System.out.println("Not enough coin to build this workshop");
+                logger.setUseParentHandlers(false);
+                logger.info("Not enough coin to build this workshop!");
+                return false;
+            }
+        }
+
         for (Workshops workshop : Workshops.values()){
             if(workshop.name().equals(workshopName)) {
                 if(coin >= workshop.getCost()) {
@@ -291,6 +334,17 @@ public class Game {
     }
 
     public boolean upgradeWorkshop(String workshopName) {
+        if (workshopName.equals("INCUBATOR")) {
+            if (coin >= incubator.getCostToUpgrade() /* && !workshop.maxLevel() */) { //TODO when workshop is maxLevel
+                incubator.increaseLevel();                                                 //TODO button should be disabled
+                coin -= incubator.getCostToUpgrade();
+                //System.out.println("Upgraded successfully");
+                logger.setUseParentHandlers(false);
+                logger.info("Upgraded successfully");
+                return true;
+            }
+        }
+
         for (Workshop workshop : workshops) {
             if (workshop.getName().equals(workshopName)) {
                 if (coin >= workshop.getCostToUpgrade() /* && !workshop.maxLevel() */) { //TODO when workshop is maxLevel
@@ -345,7 +399,7 @@ public class Game {
         }
     }
 
-    public boolean workshopProducts() {
+    public void workshopProducts(GameView gameView) {
         for (Workshop workshop : workshops) {
             if (workshop.isBusy()) {
                 if (workshop.isProduced()) {
@@ -353,20 +407,32 @@ public class Game {
                     logger.setUseParentHandlers(false);
                     logger.info(workshop.getName() + "'s work is done");
 
-                    for (int i = 0; i < workshop.getAmountPro(); i++)
-                        productsOnGround.add(new Product(workshop.getProducedProduct()));
-
-                    return true;
+                    for (int i = 0; i < workshop.getAmountPro(); i++) {
+                        Product product = new Product(workshop.getProducedProduct());
+                        productsOnGround.add(product);
+                        gameView.addProduct(product);
+                    }
                 }
             }
         }
-        return false;
+        if (incubator != null) {
+            if (incubator.isProduced()) {
+                logger.setUseParentHandlers(false);
+                logger.info("Incubator's work is done");
+
+                //TODO add hen  show graphically
+                for (int i = 0; i < incubator.getAmountPro(); i++)
+                    domestics.add(new Domestic(Domestics.HEN));
+            }
+        }
     }
 
-    public boolean domesticProducts() {
+    public boolean domesticProducts(GameView gameView) {
         for (Domestic domestic : domestics) {
             if(domestic.isProduced()) {
-                productsOnGround.add(new Product(domestic.getProduct(),domestic.getX(),domestic.getY()));
+                Product product = new Product(domestic.getProduct(),domestic.getX(),domestic.getY());
+                productsOnGround.add(product);
+                gameView.addProduct(product);
                 return true;
             }
         }

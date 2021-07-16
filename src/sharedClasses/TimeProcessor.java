@@ -1,6 +1,7 @@
 package sharedClasses;
 
 import levelController.Game;
+import view.GameView;
 
 public class TimeProcessor {
     public static int currentStep;
@@ -14,23 +15,23 @@ public class TimeProcessor {
         return timeInstance;
     }
 
-    public boolean changeSteps(int step, Game game){
+    public boolean changeSteps(int step, Game game, GameView gameView){
         boolean last = false;
         for (int i = 0; i < step; i++) {
             if (i == step - 1)
                 last = true;
-            if(changeStep(game, last))
+            if(changeStep(game, gameView, last))
                 return true;
         }
         return false;
     }
 
-    private boolean changeStep(Game game, boolean last){//TODO make change in one step  in order to skip two or more steps make a for loop in game and call this method in loop
+    private boolean changeStep(Game game, GameView gameView, boolean last){//TODO make change in one step  in order to skip two or more steps make a for loop in game and call this method in loop
         boolean exit;
         currentStep ++;
         game.walk();
-        game.workshopProducts();
-        game.domesticProducts();
+        game.workshopProducts(gameView);
+        game.domesticProducts(gameView);
         game.feedAnimals();
         game.domeHealth();
         game.domeDie();

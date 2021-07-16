@@ -5,6 +5,7 @@ import animals.helpers.Helpers;
 import animals.wilds.Wild;
 import animals.wilds.Wilds;
 import entry.User;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,9 +15,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import levelController.Game;
 import levels.Level;
+import products.Product;
+import products.Products;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,6 +33,12 @@ public class GameView implements Initializable {
     private Scene scene;
     private Parent root;
     private Game game;
+
+    @FXML
+    AnchorPane gameBoard;
+
+    @FXML
+    VBox warehouse1, warehouse2, warehouse3, warehouse4, warehouse5;
 
     @FXML
     ImageView imgHen, imgTurkey, imgBuffalo, imgDog, imgCat, imgTurn;
@@ -58,6 +71,46 @@ public class GameView implements Initializable {
 
     public void setInitial(Game game) {
         this.game = game;
+    }
+
+    public void addProduct(Product product) {
+        ImageView image = new ImageView("/images/products/" + product.getNameOfProduct() + ".png");
+        image.setLayoutX(40 + (product.getX()-1) * 80);
+        image.setLayoutY(27.5 + (product.getY()-1) * 55);
+        image.setFitWidth(40);
+        image.setFitHeight(40);
+
+        gameBoard.getChildren().add(image);
+
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(2), image);
+        transition.setToX(400);
+        transition.setToY(450);
+        transition.setCycleCount(1);
+
+        image.setOnMouseClicked(event -> {
+            if (game.pickup(product)) {
+                transition.play();
+                toWarehouse(product);
+                gameBoard.getChildren().remove(image);
+            }
+        });
+    }
+
+    private void toWarehouse(Product product) {
+        ImageView image = new ImageView("/images/warehouseItems/" + product.getNameOfProduct() + ".png");
+        image.setFitWidth(24);
+        image.setFitHeight(24);
+
+        if (warehouse1.getChildren().size() < 3)
+            warehouse1.getChildren().add(image);
+        else if (warehouse2.getChildren().size() < 3)
+            warehouse2.getChildren().add(image);
+        else if (warehouse3.getChildren().size() < 3)
+            warehouse3.getChildren().add(image);
+        else if (warehouse4.getChildren().size() < 3)
+            warehouse4.getChildren().add(image);
+        else
+            warehouse5.getChildren().add(image);
     }
 
     public void addHen(ActionEvent actionEvent) {
@@ -135,7 +188,7 @@ public class GameView implements Initializable {
 
     public void turn(ActionEvent actionEvent) {
         //TODO
-        game.turn(1);
+        game.turn(1, this);
         //show();
     }
 

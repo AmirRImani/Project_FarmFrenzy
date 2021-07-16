@@ -4,7 +4,7 @@ public enum Products {
     EGG(1,4,15),
     FEATHER(1,4,20),
     MILK(1,4,25),
-    FLOOR(2,5,40),
+    FLOUR(2,5,40),
     FABRIC(2,5,50),
     POCKET_MILK(2,5,60),
     BREAD(4,6,80),

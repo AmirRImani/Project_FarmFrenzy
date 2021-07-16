@@ -2,9 +2,11 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="bodybg" stylesheets="@styles/backgrounds/backgroundGame.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GameView">
    <children>
@@ -22,7 +24,17 @@
             <ImageView fx:id="imgCat" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="cat-imageView" />
          </children>
       </HBox>
-      <AnchorPane layoutX="160.0" layoutY="157.0" prefHeight="330.0" prefWidth="480.0" />
+      <AnchorPane fx:id="gameBoard" layoutX="168.0" layoutY="135.0" prefHeight="330.0" prefWidth="480.0" />
       <ImageView fx:id="imgTurn" fitHeight="30.0" fitWidth="80.0" layoutX="708.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true" styleClass="turn-imageView" />
+      <ImageView fitHeight="139.0" fitWidth="244.0" layoutX="312.0" layoutY="456.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/objects/Warehouse.png" />
+         </image>
+      </ImageView>
+      <VBox fx:id="warehouse1" alignment="BOTTOM_LEFT" layoutX="364.0" layoutY="500.0" prefHeight="72.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse2" alignment="BOTTOM_LEFT" layoutX="388.0" layoutY="500.0" prefHeight="72.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse3" alignment="BOTTOM_LEFT" layoutX="408.0" layoutY="500.0" prefHeight="72.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse4" alignment="BOTTOM_LEFT" layoutX="431.0" layoutY="500.0" prefHeight="72.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse5" alignment="BOTTOM_LEFT" layoutX="455.0" layoutY="500.0" prefHeight="72.0" prefWidth="24.0" />
    </children>
 </AnchorPane>

@@ -3,10 +3,10 @@ package workshops;
 import products.Products;
 
 public enum Workshops {
-    MILL(150,200, 4, Products.EGG, Products.FLOOR),
+    MILL(150,200, 4, Products.EGG, Products.FLOUR),
     WEAVING(250,300, 5, Products.FEATHER, Products.FABRIC),
     MILK_PACKING(400,450, 6, Products.MILK, Products.POCKET_MILK),
-    BAKERY(250,300, 5, Products.FLOOR, Products.BREAD),
+    BAKERY(250,300, 5, Products.FLOUR, Products.BREAD),
     SEWING(400,450, 6, Products.FABRIC, Products.SHIRT),
     ICE_CREAM_SHOP(550,600, 7, Products.POCKET_MILK, Products.ICE_CREAM);
 
