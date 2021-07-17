@@ -34,7 +34,7 @@ public class TimeProcessor {
         game.domesticProducts(gameView);
         game.feedAnimals();
         game.domeHealth();
-        game.domeDie();
+        game.domeDie(gameView);
         game.appearWilds(gameView);
         game.disappearProducts(gameView);
         game.freeWilds(gameView);

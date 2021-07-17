@@ -230,7 +230,7 @@ public class Game {
                             logger.fine("Wild " + wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
                             return 0;
                         } else {
-                            System.out.println("Not enough space in warehouse");
+                            //System.out.println("Not enough space in warehouse");
                             return 1;
                         }
                     }
@@ -704,11 +704,13 @@ public class Game {
     }
 
 
-    public void domeDie() { //TODO
+    public void domeDie(GameView gameView) { //TODO
         HashSet<Domestic> domesticHashSet = new HashSet<>(domestics);
         for (Domestic domestic : domesticHashSet)
-            if (domestic.getHealth() <= 0)
+            if (domestic.getHealth() <= 0) {
                 domestics.remove(domestic);
+                gameView.domeDie(domestic);
+            }
     }
 
 

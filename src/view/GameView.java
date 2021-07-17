@@ -25,6 +25,7 @@ import javafx.util.Duration;
 import levelController.Game;
 import levels.Level;
 import products.Product;
+import products.Products;
 
 import java.io.File;
 import java.io.IOException;
@@ -233,14 +234,17 @@ public class GameView implements Initializable {
         animalsView.put(animal, image);
         gameBoard.getChildren().add(image);
 
-        if (animal instanceof Wild)
+        if (animal instanceof Wild) {
             image.setOnMouseClicked(event -> {
             //TODO
             int result = game.cage((Wild) animal);
 
-//            if (result == 0) {
-//                wildCaught(animal);
-//            } else if (result == 1) {
+            if (result == 0) {
+                toWarehouse(new Product(Products.valueOf("CAUGHT_" + ((Wild) animal).getName())));
+                gameBoard.getChildren().remove(animalsView.get(animal));
+                animalsView.remove(animal);
+            }
+//            else if (result == 1) {
 //
 //            } else if (result >= 10) {
 //                increaseCage(animal, result-10);
@@ -249,9 +253,15 @@ public class GameView implements Initializable {
 //            } else if (result == 4) {
 //                setCage(animal);
 //            }
-        });
 
+            });
+        }
         return image;
+    }
+
+    public void domeDie(Domestic domestic) {
+        gameBoard.getChildren().remove(animalsView.get(domestic));
+        animalsView.remove(domestic);
     }
 
     public void freeWild(Wild wild) {
