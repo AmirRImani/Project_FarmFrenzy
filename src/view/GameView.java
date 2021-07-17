@@ -477,17 +477,23 @@ public class GameView implements Initializable {
 
     private void buildWorkshop(Workshops workshop) {
         //TODO
+        if (game.build(workshop)) {
+
+        }
     }
 
     private void upgradeWorkshop(Workshops workshop) {
         //TODO
+        if (game.upgradeWorkshop(workshop)) {
+
+        }
     }
 
     private void well() {
         //TODO
-    }
+        if (game.well()) {
 
-    public void plant(ActionEvent actionEvent) { //TODO by click on empty spaces of board
+        }
 
     }
 

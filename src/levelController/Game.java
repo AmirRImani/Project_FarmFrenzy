@@ -269,73 +269,29 @@ public class Game {
         return this.truck.unload(Products.valueOf(productName), this.warehouse);
     }
 
-    public boolean build(String workshopName) {
-//        for (Workshop workshop : workshops) {
-//            if(workshop.getName().equals(workshopName)){
-//                System.out.println("This workshop is already built");
-//                logger.setUseParentHandlers(false);
-//                logger.info("This workshop is already built");
-//                return;
-//            }
-//        }
-
-        if (workshopName.equals("INCUBATOR")) {
-            incubator = new Incubator();
-            if(coin >= incubator.getCost()) {
-                coin -= incubator.getCost();
-                //System.out.println("Built successfully");
-                logger.setUseParentHandlers(false);
-                logger.info("Built successfully");
-                return true;
-            } else{
-                //System.out.println("Not enough coin to build this workshop");
-                logger.setUseParentHandlers(false);
-                logger.info("Not enough coin to build this workshop!");
-                return false;
-            }
+    public boolean build(Workshops workshop) {
+        if(coin >= workshop.getCost()) {
+            Workshop workshop1 = new Workshop(workshop);
+            workshops.add(workshop1);
+            coin -= workshop.getCost();
+            //System.out.println("Built successfully");
+            logger.setUseParentHandlers(false);
+            logger.info("Built successfully");
+            return true;
+        } else{
+            //System.out.println("Not enough coin to build this workshop");
+            logger.setUseParentHandlers(false);
+            logger.info("Not enough coin to build this workshop!");
+            return false;
         }
-
-        for (Workshops workshop : Workshops.values()){
-            if(workshop.name().equals(workshopName)) {
-                if(coin >= workshop.getCost()) {
-                    Workshop workshop1 = new Workshop(workshop);
-                    workshops.add(workshop1);
-                    coin -= workshop.getCost();
-                    //System.out.println("Built successfully");
-                    logger.setUseParentHandlers(false);
-                    logger.info("Built successfully");
-                    return true;
-                } else{
-                    //System.out.println("Not enough coin to build this workshop");
-                    logger.setUseParentHandlers(false);
-                    logger.info("Not enough coin to build this workshop!");
-                    return false;
-                }
-            }
-        }
-//        System.out.println("Workshop is incorrect");
-//        logger.setUseParentHandlers(false);
-//        logger.info("Workshop is incorrect");
-        return false;
     }
 
-    public boolean upgradeWorkshop(String workshopName) {
-        if (workshopName.equals("INCUBATOR")) {
-            if (coin >= incubator.getCostToUpgrade() /* && !workshop.maxLevel() */) { //TODO when workshop is maxLevel
-                incubator.increaseLevel();                                                 //TODO button should be disabled
-                coin -= incubator.getCostToUpgrade();
-                //System.out.println("Upgraded successfully");
-                logger.setUseParentHandlers(false);
-                logger.info("Upgraded successfully");
-                return true;
-            }
-        }
-
-        for (Workshop workshop : workshops) {
-            if (workshop.getName().equals(workshopName)) {
-                if (coin >= workshop.getCostToUpgrade() /* && !workshop.maxLevel() */) { //TODO when workshop is maxLevel
-                    workshop.increaseLevel();                                                 //TODO button should be disabled
-                    coin -= workshop.getCostToUpgrade();
+    public boolean upgradeWorkshop(Workshops workshop) {
+        for (Workshop workshop1 : workshops) {
+            if (workshop1.getName().equals(workshop.name())) {
+                if (coin >= workshop1.getCostToUpgrade() /* && !workshop1.maxLevel() */) { //TODO when workshop1 is maxLevel
+                    workshop1.increaseLevel();                                                 //TODO button should be disabled
+                    coin -= workshop1.getCostToUpgrade();
                     //System.out.println("Upgraded successfully");
                     logger.setUseParentHandlers(false);
                     logger.info("Upgraded successfully");
@@ -344,17 +300,6 @@ public class Game {
             }
         }
         return false;
-//        for (Workshops workshop1 : Workshops.values()) {
-//            if (workshop1.name().equals(workshopName)) {
-//                System.out.println("There isn't " + workshopName + " to upgrade");
-//                logger.setUseParentHandlers(false);
-//                logger.info("There isn't " + workshopName + " to upgrade");
-//                return;
-//            }
-//        }
-//        System.out.println("Workshop is incorrect");
-//        logger.setUseParentHandlers(false);
-//        logger.info("Workshop is incorrect");
     }
 
     public boolean well() {
