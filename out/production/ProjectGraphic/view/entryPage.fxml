@@ -5,27 +5,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="595.0" prefWidth="800.0" styleClass="bodybg" stylesheets="@styles/backgrounds/backgroundFirstPage.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Entry">
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" styleClass="bodybg" stylesheets="@styles/backgrounds/backgroundFirstPage.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Entry">
    <children>
-      <Button fx:id="btnExit" layoutX="14.0" layoutY="490.0" mnemonicParsing="false" onAction="#exit" opacity="0.65" prefHeight="90.0" prefWidth="120.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Exit" textFill="WHITE">
+      <Button fx:id="btnExit" layoutX="15.0" layoutY="645.0" mnemonicParsing="false" onAction="#exit" opacity="0.65" prefHeight="90.0" prefWidth="120.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Exit" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Button fx:id="btnLogin" layoutX="665.0" layoutY="217.0" mnemonicParsing="false" onAction="#login" opacity="0.65" prefHeight="90.0" prefWidth="120.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Login" textFill="WHITE">
+      <Button fx:id="btnLogin" layoutX="866.0" layoutY="181.0" mnemonicParsing="false" onAction="#login" opacity="0.65" prefHeight="90.0" prefWidth="120.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Login" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Button fx:id="btnForget" layoutX="232.0" layoutY="399.0" mnemonicParsing="false" onAction="#forget" opacity="0.65" prefHeight="90.0" prefWidth="120.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Forget Password" textFill="WHITE">
+      <Button fx:id="btnForget" layoutX="318.0" layoutY="486.0" mnemonicParsing="false" onAction="#forget" opacity="0.65" prefHeight="90.0" prefWidth="120.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Forget Password" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Button fx:id="btnSignup" layoutX="460.0" layoutY="308.0" mnemonicParsing="false" onAction="#signup" opacity="0.65" prefHeight="90.0" prefWidth="120.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Signup" textFill="WHITE">
+      <Button fx:id="btnSignup" layoutX="588.0" layoutY="330.0" mnemonicParsing="false" onAction="#signup" opacity="0.65" prefHeight="90.0" prefWidth="120.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Signup" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Label alignment="CENTER" layoutX="176.0" prefHeight="56.0" prefWidth="448.0" text="SHARIF FARM" textFill="RED">
+      <Label alignment="CENTER" layoutX="212.0" layoutY="31.0" prefHeight="149.0" prefWidth="574.0" text="SHARIF FARM" textFill="RED">
          <font>
-            <Font name="Verdana Bold" size="48.0" />
+            <Font name="Verdana Bold" size="72.0" />
          </font>
       </Label>
    </children>

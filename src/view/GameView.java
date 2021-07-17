@@ -230,8 +230,9 @@ public class GameView implements Initializable {
     public void setInitial(Level level, User user) {
         game = new Game(level, user);
         workshops = game.getWorkshops();
-        workshopInitialize();
         productsView = getProductsView();
+        workshopInitialize();
+        warehouseInitialize();
         getAnimalsView();
         cages = new HashMap<>(); //TODO
         initialGrass();
@@ -240,8 +241,9 @@ public class GameView implements Initializable {
     public void setInitial(Game game) {
         this.game = game;
         workshops = game.getWorkshops();
-        workshopInitialize();
         productsView = getProductsView();
+        workshopInitialize();
+        warehouseInitialize();
         getAnimalsView();
         cages = new HashMap<>(); //TODO
         initialGrass();
@@ -260,6 +262,12 @@ public class GameView implements Initializable {
         animalsView = new HashMap<>();
         for (Animal animal : animals)
             addAnimal(animal);
+    }
+
+    private void warehouseInitialize() {
+        for (Product product : game.getWarehouseProducts()) {
+            toWarehouse(product);
+        }
     }
 
 
@@ -309,8 +317,10 @@ public class GameView implements Initializable {
         else
             warehouse5.getChildren().add(image);
 
-        gameBoard.getChildren().remove(productsView.get(product));
-        productsView.remove(product);
+        if (productsView.containsKey(product)) {
+            gameBoard.getChildren().remove(productsView.get(product));
+            productsView.remove(product);
+        }
     }
 
 

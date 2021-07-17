@@ -5,18 +5,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="main-anchorPane" stylesheets="@styles/backgrounds/backgroundPause.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Pause">
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" styleClass="main-anchorPane" stylesheets="@styles/backgrounds/backgroundPause.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Pause">
    <children>
-      <AnchorPane layoutX="150.0" layoutY="75.0" prefHeight="450.0" prefWidth="500.0" styleClass="pause-anchorPane">
+      <AnchorPane layoutX="187.0" layoutY="94.0" prefHeight="562.0" prefWidth="625.0" styleClass="pause-anchorPane">
          <children>
-            <VBox alignment="TOP_CENTER" layoutX="50.0" layoutY="25.0" prefHeight="400.0" prefWidth="400.0" spacing="25.0">
+            <VBox alignment="TOP_CENTER" layoutX="63.0" layoutY="41.0" prefHeight="500.0" prefWidth="500.0" spacing="25.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#resume" prefHeight="50.0" prefWidth="250.0" styleClass="continue-button" textFill="WHITE" />
-                  <Button mnemonicParsing="false" onAction="#restart" prefHeight="50.0" prefWidth="250.0" styleClass="restart-button" />
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" styleClass="option-button" />
-                  <Button mnemonicParsing="false" onAction="#back" prefHeight="50.0" prefWidth="250.0" styleClass="levels-button" />
-                  <Button mnemonicParsing="false" onAction="#toFirstPage" prefHeight="50.0" prefWidth="250.0" styleClass="mainMenu-button" />
-                  <Button mnemonicParsing="false" onAction="#exit" prefHeight="50.0" prefWidth="250.0" styleClass="exit-button" />
+                  <Button mnemonicParsing="false" onAction="#resume" prefHeight="62.0" prefWidth="312.0" styleClass="continue-button" textFill="WHITE" />
+                  <Button mnemonicParsing="false" onAction="#restart" prefHeight="62.0" prefWidth="312.0" styleClass="restart-button" />
+                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="312.0" styleClass="option-button" />
+                  <Button mnemonicParsing="false" onAction="#back" prefHeight="62.0" prefWidth="312.0" styleClass="levels-button" />
+                  <Button mnemonicParsing="false" onAction="#toFirstPage" prefHeight="62.0" prefWidth="312.0" styleClass="mainMenu-button" />
+                  <Button mnemonicParsing="false" onAction="#exit" prefHeight="62.0" prefWidth="312.0" styleClass="exit-button" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

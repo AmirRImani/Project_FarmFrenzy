@@ -16,6 +16,8 @@ public class Warehouse {
 
     public int getSpace() { return remainedSpace; }
 
+    public HashMap<Products, Integer> getAmountOfProduct() { return amountOfProduct; }
+
     public boolean addProduct(Products product, int amount) {
         int space = product.getSpace();
         if(remainedSpace >= space){

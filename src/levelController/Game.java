@@ -738,6 +738,17 @@ public class Game {
                 System.err.println("Not any grass on board");
         }
     }
+
+    public HashSet<Product> getWarehouseProducts() {
+        HashSet<Product> products = new HashSet<>();
+        HashMap<Products, Integer> productsHashMap = new HashMap<>(warehouse.getAmountOfProduct());
+        for (Products products1 : productsHashMap.keySet()) {
+            for (int i = 0; i < productsHashMap.get(products1); i++) {
+                products.add(new Product(products1));
+            }
+        }
+        return products;
+    }
 }
 
 
