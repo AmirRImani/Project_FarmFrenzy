@@ -1,5 +1,7 @@
 package levelController;
 
+import animals.Animal;
+import animals.Directions;
 import animals.domestics.Domestic;
 import animals.domestics.Domestics;
 import animals.helpers.Cat;
@@ -51,6 +53,15 @@ public class Game {
 
     public int getAward() { return award; }
 
+    public HashSet<Product> getProducts() { return productsOnGround; }
+
+    public HashSet<Animal> getAnimals() {
+        HashSet<Animal> animals = new HashSet<>(domestics);
+        animals.addAll(helpers);
+        animals.addAll(wilds);
+        return animals;
+    }
+
     public Game(Level level, User user) {
         this.user = user;
         this.level = level;
@@ -72,35 +83,37 @@ public class Game {
         this.helpers = new HashSet<>();
     }
 
-    public boolean buyDome(Domestics domestic) {
+    public Domestic buyDome(Domestics domestic) {
         if(this.coin >= domestic.getValue()) {
-            domestics.add(new Domestic(domestic));
+            Domestic domestic1 = new Domestic(domestic);
+            domestics.add(domestic1);
             //System.out.println("Buying has been done");
             logger.setUseParentHandlers(false);
             logger.fine("Buying has been done!");
             this.coin -= domestic.getValue();
-            return true;
+            return domestic1;
         } else
             //System.out.println("Not enough coin to buy");
             logger.setUseParentHandlers(false);
             logger.info("Not enough coin to buy!");
-            return false;
+            return null;
     }
 
-    public boolean buyHelper(Helpers helper) {
+    public Helper buyHelper(Helpers helper) {
         if(this.coin >= helper.getValue()) {
-            helpers.add(new Helper(helper));
+            Helper helper1 = new Helper(helper);
+            helpers.add(helper1);
             //System.out.println("Buying has been done");
             logger.setUseParentHandlers(false);
             logger.info("Buying has been done! ");
 
             this.coin -= helper.getValue();
-            return true;
+            return helper1;
         } else
             //System.out.println("Not enough coin to buy");
             logger.setUseParentHandlers(false);
             logger.info("Not enough coin to buy! ");
-            return false;
+            return null;
     }
 
 
@@ -204,68 +217,51 @@ public class Game {
     }
 
     //TODO another function for cage
-//    public void cage(int x, int y) {
-//        boolean found = false;
-//        HashSet<Wild> wildHashSet = new HashSet<>(wilds);
-//        if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
-//            System.out.println("Coordinate is not on game board");
-//            logger.setUseParentHandlers(false);
-//            logger.info("Coordinate is not on game board!");
-//            return;
-//        }
-//        for (Wild wild : wildHashSet) {
-//            if(wild.getX() == x && wild.getY() == y){
-//                found = true;
-//
-//
-//                if(wild.isInCage()){
-//                    for (Cage cage : cages) {
-//                        if(cage.getX() == x && cage.getY() == y) {
-//                            if(wild.isPrisoned()){
-//                                if(warehouse.addProduct(Products.valueOf("CAUGHT_" + wild.getName()), 1)) {
-//                                wilds.remove(wild);
-//                                cages.remove(cage);
-//                                System.out.println("Wild " + wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
-//                                logger.setUseParentHandlers(false);
-//                                logger.fine("Wild " + wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
-//                            } else
-//                                System.out.println("Not enough space in warehouse");
-//                            return;
-//                        }
-//                            System.out.println(cage.isPrisoned());
-//                            System.out.println(wild.isPrisoned());
-//                            if(cage.increaseTap()) {
-//                                wild.increaseTap();
-//                                System.out.println("Cage on [ " + cage.getX() + " " + cage.getY() + " ] resistance increased");
-//                                logger.setUseParentHandlers(false);
-//                                logger.fine("Cage on [ " + cage.getX() + " " + cage.getY() + " ] resistance increased");
-//                            } else {
-//                                System.out.println("Cage can't be used. You used it on this cage in this step");
-//                                logger.setUseParentHandlers(false);
-//                                logger.info("Cage can't be used. You used it on this cage in this step");
-//                            }
-//                            //TODO sout needed in method
-//                            return;
-//                        }
-//                    }
-//                } else{
-//                    Cage newCage = new Cage(wild);
-//                    wild.setCage(true);
-//                    cages.add(newCage);
-//                    wild.increaseTap();
-//                    System.out.println("New cage on " + wild.getX() + ", " + wild.getY());
-//                    logger.setUseParentHandlers(false);
-//                    logger.fine("New cage on " + wild.getX() + ", " + wild.getY());
-//                    return;
-//                }
-//            }
-//        }
-//        if(!found) {
-//            System.out.println("There isn't any wild animal in this coordinate");
-//            logger.setUseParentHandlers(false);
-//            logger.info("There isn't any wild animal in this coordinate");
-//        }
-//    }
+    public int cage(Wild wild) {
+        if(wild.isInCage()){
+            for (Cage cage : cages) {
+                if(cage.getX() == wild.getX() && cage.getY() == wild.getY()) {
+                    if(wild.isPrisoned()){
+                        if(warehouse.addProduct(Products.valueOf("CAUGHT_" + wild.getName()), 1)) {
+                            wilds.remove(wild);
+                            cages.remove(cage);
+                            //System.out.println("Wild " + wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
+                            logger.setUseParentHandlers(false);
+                            logger.fine("Wild " + wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
+                            return 0;
+                        } else {
+                            System.out.println("Not enough space in warehouse");
+                            return 1;
+                        }
+                    }
+
+                    if(cage.increaseTap()) {
+                        wild.increaseTap();
+                        //System.out.println("Cage on [ " + cage.getX() + " " + cage.getY() + " ] resistance increased");
+                        logger.setUseParentHandlers(false);
+                        logger.fine("Cage on [ " + cage.getX() + " " + cage.getY() + " ] resistance increased");
+                        return 10 + cage.getCageLevel();
+                    } else {
+                        //System.out.println("Cage can't be used. You used it on this cage in this step");
+                        logger.setUseParentHandlers(false);
+                        logger.info("Cage can't be used. You used it on this cage in this step");
+                        return 3;
+                    }
+                }
+            }
+
+        } else{
+            Cage newCage = new Cage(wild);
+            wild.setCage(true);
+            cages.add(newCage);
+            wild.increaseTap();
+            //System.out.println("New cage on " + wild.getX() + ", " + wild.getY());
+            logger.setUseParentHandlers(false);
+            logger.fine("New cage on " + wild.getX() + ", " + wild.getY());
+            return 4;
+        }
+        return 5;
+    }
 
     public boolean turn(int turnNumber, GameView gameView) {
         boolean exit;
@@ -427,19 +423,17 @@ public class Game {
         }
     }
 
-    public boolean domesticProducts(GameView gameView) {
+    public void domesticProducts(GameView gameView) {
         for (Domestic domestic : domestics) {
             if(domestic.isProduced()) {
                 Product product = new Product(domestic.getProduct(),domestic.getX(),domestic.getY());
                 productsOnGround.add(product);
                 gameView.addProduct(product);
-                return true;
             }
         }
-        return false;
     }
 
-    public boolean feedAnimals() {
+    public void feedAnimals() {
         for (Domestic domestic : domestics) {
             if(domestic.needToEat())
                 onGrass(domestic);//TODO
@@ -452,10 +446,8 @@ public class Game {
             if(dome != null) {
                 dome.eat();
                 grasses.remove(grass);
-                return true;
             }
         }
-        return false;
     }
 
     private boolean onGrass(Domestic domestic) {
@@ -468,38 +460,40 @@ public class Game {
         return false;
     }
 
-    public boolean appearWilds() {
+    public void appearWilds(GameView gameView) {
         for (Wilds wild : Wilds.values()) {
             if(wildsAppearance.containsKey(wild)) {
-                if (timeWild(wild, wildsAppearance.get(wild)))//TODO
-                    return true;
+                Wild wild1 = timeWild(wild, wildsAppearance.get(wild));
+                if (wild1 != null)
+                    gameView.addAnimal(wild1);
             }
         }
-        return false;
     }
 
-    private boolean timeWild(Wilds wild, int[] ints) {
+    private Wild timeWild(Wilds wild, int[] ints) {
         for (int i = 0; i < ints.length; i++) {
             if(ints[i] == TimeProcessor.getInstance().currentStep) {
-                wilds.add(new Wild(wild));
-                return true;
+                Wild wild1 = new Wild(wild);
+                wilds.add(wild1);
+                return wild1;
             }
         }
-        return false;
+        return null;
     }
 
-    public boolean disappearProducts() {
+    public boolean disappearProducts(GameView gameView) {
         HashSet<Product> products = new HashSet<>(productsOnGround);
         for (Product product : products) {
             if(product.spoil()) {
                 productsOnGround.remove(product);
+                gameView.disappearProduct(product);
                 return true;
             }
         }
         return true;
     }
 
-    public boolean freeWilds() {
+    public void freeWilds(GameView gameView) {
         HashSet<Cage> cageHashSet = new HashSet<>(cages);
         for (Cage cage : cageHashSet) {
             if(cage.isPrisoned()) {
@@ -507,23 +501,24 @@ public class Game {
                     cages.remove(cage);
                     wilds.remove(cage.getWild());
                     cage.getWild().free();
+                    gameView.freeWild(cage.getWild());
                     //System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " + "Wild on " + cage.getX() + "," + cage.getY() + " was freed");
                     logger.setUseParentHandlers(false);
                     logger.info("Wild on " + cage.getX() + "," + cage.getY() + " was freed");
-                    return true;
                 }
             }
         }
-        return false;
     }
 
-    public void decreaseCageResist() { //TODO
+    public void decreaseCageResist(GameView gameView) { //TODO
         HashSet<Cage> cageHashSet = new HashSet<>(cages);
         for (Cage cage : cageHashSet) {
             cage.getWild().decreaseTap();
+            gameView.decreaseCageResist(cage.getWild());
             if(cage.decreaseTap()) {
                 cages.remove(cage);
                 cage.getWild().free();
+                gameView.freeWild(cage.getWild());
             }
         }
     }
@@ -605,7 +600,7 @@ public class Game {
         return false;
     }
 
-    public void walk() {
+    public void walk(GameView gameView) {
         for (Domestic domestic : domestics){
             if(domestic.isHungry())
                 domestic.hungryWalk(grasses);

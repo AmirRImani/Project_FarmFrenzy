@@ -20,6 +20,8 @@ public class Cage {
 
     public boolean isPrisoned() { return prisoned; }
 
+    public int getCageLevel() { return numberOfTap; }
+
     public Cage(Wild wild) {
         this.wild = wild;
         this.prisoned = false;

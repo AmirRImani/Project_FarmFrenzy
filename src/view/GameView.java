@@ -1,9 +1,12 @@
 package view;
 
+import animals.Animal;
+import animals.Directions;
+import animals.domestics.Domestic;
 import animals.domestics.Domestics;
+import animals.helpers.Helper;
 import animals.helpers.Helpers;
 import animals.wilds.Wild;
-import animals.wilds.Wilds;
 import entry.User;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -22,10 +25,12 @@ import javafx.util.Duration;
 import levelController.Game;
 import levels.Level;
 import products.Product;
-import products.Products;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class GameView implements Initializable {
@@ -33,6 +38,9 @@ public class GameView implements Initializable {
     private Scene scene;
     private Parent root;
     private Game game;
+    private HashMap<Animal, ImageView> animalsView;
+    private HashMap<Product, ImageView> productsView;
+    private HashMap<Wild, ImageView> cages;
 
     @FXML
     AnchorPane gameBoard;
@@ -67,13 +75,36 @@ public class GameView implements Initializable {
 
     public void setInitial(Level level, User user) {
         game = new Game(level, user);
+        productsView = getProductsView();
+        animalsView = getAnimalsView();
+        cages = new HashMap<>(); //TODO
     }
 
     public void setInitial(Game game) {
         this.game = game;
+        productsView = getProductsView();
+        animalsView = getAnimalsView();
+        cages = new HashMap<>(); //TODO
     }
 
-    public void addProduct(Product product) {
+    private HashMap<Product, ImageView> getProductsView() {
+        HashSet<Product> products = game.getProducts();
+        HashMap<Product, ImageView> productImageView = new HashMap<>();
+        for (Product product : products)
+            productImageView.put(product, addProduct(product));
+        return productImageView;
+    }
+
+    private HashMap<Animal, ImageView> getAnimalsView() {
+        HashSet<Animal> animals = game.getAnimals();
+        HashMap<Animal, ImageView> animalImageView = new HashMap<>();
+        for (Animal animal : animals)
+            addAnimal(animal);
+        return animalImageView;
+    }
+
+
+    public ImageView addProduct(Product product) {
         ImageView image = new ImageView("/images/products/" + product.getNameOfProduct() + ".png");
         image.setLayoutX(40 + (product.getX()-1) * 80);
         image.setLayoutY(27.5 + (product.getY()-1) * 55);
@@ -82,7 +113,7 @@ public class GameView implements Initializable {
 
         gameBoard.getChildren().add(image);
 
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(2), image);
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), image);
         transition.setToX(400);
         transition.setToY(450);
         transition.setCycleCount(1);
@@ -92,8 +123,16 @@ public class GameView implements Initializable {
                 transition.play();
                 toWarehouse(product);
                 gameBoard.getChildren().remove(image);
+                productsView.remove(product);
             }
         });
+
+        return image;
+    }
+
+    public void disappearProduct(Product product) {
+        gameBoard.getChildren().remove(productsView.get(product));
+        productsView.remove(product);
     }
 
     private void toWarehouse(Product product) {
@@ -114,16 +153,42 @@ public class GameView implements Initializable {
     }
 
     public void addHen(ActionEvent actionEvent) {
-        if (game.buyDome(Domestics.HEN)) {
+        Domestic domestic = game.buyDome(Domestics.HEN);
+        if (domestic != null) {
             //TODO graphical
-            showAnimal("Hen");
+            addAnimal(domestic);
         }
     }
 
     public void addTurkey(ActionEvent actionEvent) {
-        if (game.buyDome(Domestics.TURKEY)) {
+        Domestic domestic = game.buyDome(Domestics.TURKEY);
+        if (domestic != null) {
             //TODO graphical
-            showAnimal("Turkey");
+            addAnimal(domestic);
+        }
+    }
+
+    public void addBuffalo(ActionEvent actionEvent) {
+        Domestic domestic = game.buyDome(Domestics.BUFFALO);
+        if (domestic != null) {
+            //TODO graphical
+            addAnimal(domestic);
+        }
+    }
+
+    public void addDog(ActionEvent actionEvent) {
+        Helper helper = game.buyHelper(Helpers.DOG);
+        if (helper != null) {
+            //TODO graphical
+            addAnimal(helper);
+        }
+    }
+
+    public void addCat(ActionEvent actionEvent) {
+        Helper helper = game.buyHelper(Helpers.CAT);
+        if (helper != null) {
+            //TODO graphical
+            addAnimal(helper);
         }
     }
 
@@ -151,29 +216,58 @@ public class GameView implements Initializable {
         //TODO
     }
 
-    public void addBuffalo(ActionEvent actionEvent) {
-        if (game.buyDome(Domestics.BUFFALO)) {
-            //TODO graphical
-            showAnimal("Buffalo");
-        }
+    public ImageView addAnimal(Animal animal) {
+        String name = new String();
+        if (animal instanceof Domestic)
+            name = ((Domestic) animal).getName();
+        else if (animal instanceof Helper)
+            name = ((Helper) animal).getName();
+        else if (animal instanceof Wild)
+            name = ((Wild) animal).getName();
+        ImageView image = new ImageView(new Image("/images/animals/" + name + ".png"));//TODO
+        image.setLayoutX(40 + (animal.getX()-1) * 80);
+        image.setLayoutY(27.5 + (animal.getY()-1) * 55);
+        image.setFitWidth(60);
+        image.setFitHeight(60);
+
+        animalsView.put(animal, image);
+        gameBoard.getChildren().add(image);
+
+        if (animal instanceof Wild)
+            image.setOnMouseClicked(event -> {
+            //TODO
+            int result = game.cage((Wild) animal);
+
+//            if (result == 0) {
+//                wildCaught(animal);
+//            } else if (result == 1) {
+//
+//            } else if (result >= 10) {
+//                increaseCage(animal, result-10);
+//            } else if (result == 3) {
+//
+//            } else if (result == 4) {
+//                setCage(animal);
+//            }
+        });
+
+        return image;
     }
 
-    public void addDog(ActionEvent actionEvent) {
-        if (game.buyHelper(Helpers.DOG)) {
-            //TODO graphical
-            showAnimal("Dog");
-        }
+    public void freeWild(Wild wild) {
+        ImageView image = animalsView.get(wild);
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), image);
+        transition.setToX(805);
+        transition.setCycleCount(1);
+
+        transition.play();
+
+        gameBoard.getChildren().remove(image);
+        animalsView.remove(wild);
     }
 
-    public void addCat(ActionEvent actionEvent) {
-        if (game.buyHelper(Helpers.CAT)) {
-            //TODO graphical
-            showAnimal("Cat");
-        }
-    }
-
-    private void showAnimal(String animal) {
-        ImageView imageView = new ImageView(new Image("/images/animals/" + animal /*...*/  ));//TODO
+    public void decreaseCageResist(Wild wild) {
+        //TODO
     }
 
 //    private void addWild(String wildName) {
@@ -189,9 +283,15 @@ public class GameView implements Initializable {
     public void turn(ActionEvent actionEvent) {
         //TODO
         game.turn(1, this);
-        //show();
+        updateBoard();
     }
 
+    private void updateBoard() {
+        for (Animal animal : animalsView.keySet()) {
+            animalsView.get(animal).setLayoutX(40 + (animal.getX()-1) * 80);
+            animalsView.get(animal).setLayoutY(27.5 + (animal.getY()-1) * 55);
+        }
+    }
 
 
     public void plant(ActionEvent actionEvent) { //TODO by click on empty spaces of board
@@ -211,4 +311,17 @@ public class GameView implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+//    public void walk(Animal animal, Directions direction) {
+//        if (direction != null) {
+//            if (direction == Directions.RIGHT)
+//                animalsView.get(animal).setX(80);
+//            else if (direction == Directions.LEFT)
+//                animalsView.get(animal).setX(-80);
+//            else if (direction == Directions.DOWN)
+//                animalsView.get(animal).setY(55);
+//            else if (direction == Directions.UP)
+//                animalsView.get(animal).setY(-55);
+//        }
+//    }
 }
