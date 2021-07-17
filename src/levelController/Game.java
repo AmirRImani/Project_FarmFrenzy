@@ -52,6 +52,8 @@ public class Game {
 
     public int getAward() { return award; }
 
+    public HashSet<Workshop> getWorkshops() { return workshops; }
+
     public HashSet<Product> getProducts() { return productsOnGround; }
 
     public HashSet<Grass> getGrasses() { return grasses; }
@@ -198,31 +200,10 @@ public class Game {
     }
 
     //TODO maybe this function should be written again
-    public boolean work(String nameOfWorkshop) { //TODO initial variables should be changed
-        if (nameOfWorkshop.equals("INCUBATOR")) {
-            if(incubator.work(warehouse)) {
-                //System.out.println("Workshop " + workshop.getName() + " started to produce");
-                logger.setUseParentHandlers(false);
-                logger.fine("Incubator started to produce");
-                return true;
-            }
-        }
-        for (Workshop workshop : workshops) {
-            if(workshop.getName().equals(nameOfWorkshop)){
-                if(workshop.work(warehouse)) {
-                    //System.out.println("Workshop " + workshop.getName() + " started to produce");
+    public void work(Workshop workshop) { //TODO initial variables should be changed
+        workshop.work(warehouse);
                     logger.setUseParentHandlers(false);
                     logger.fine("Workshop " + workshop.getName() + " started to produce");
-                    return true;
-                } else {
-                    //TODO
-                }
-            }
-        }
-        //System.out.println("Workshop is incorrect");
-        logger.setUseParentHandlers(false);
-        logger.info("Workshop is incorrect!");
-        return false;
     }
 
     //TODO another function for cage
@@ -415,6 +396,7 @@ public class Game {
                     for (int i = 0; i < workshop.getAmountPro(); i++) {
                         Product product = new Product(workshop.getProducedProduct());
                         productsOnGround.add(product);
+                        gameView.workshopProduct(workshop, product);
                         gameView.addProduct(product);
                     }
                 }

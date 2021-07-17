@@ -2,17 +2,18 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="bodybg" stylesheets="@styles/backgrounds/backgroundGame.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GameView">
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" styleClass="bodybg" stylesheets="@styles/backgrounds/backgroundGame.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GameView">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="800.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true" styleClass="first-imageView" />
-      <Button layoutX="14.0" layoutY="547.0" mnemonicParsing="false" onAction="#pause" prefHeight="38.0" prefWidth="40.0" styleClass="menu-button" />
-      <HBox layoutX="422.0" prefHeight="80.0" prefWidth="363.0" spacing="10.0">
+      <ImageView fitHeight="130.0" fitWidth="1000.0" layoutY="665.0" pickOnBounds="true" preserveRatio="true" styleClass="first-imageView" />
+      <Button layoutX="29.0" layoutY="737.0" mnemonicParsing="false" onAction="#pause" prefHeight="40.0" prefWidth="42.0" styleClass="menu-button" />
+      <HBox layoutX="573.0" layoutY="20.0" prefHeight="100.0" prefWidth="400.0" spacing="10.0">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
@@ -24,17 +25,35 @@
             <ImageView fx:id="imgCat" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="cat-imageView" />
          </children>
       </HBox>
-      <AnchorPane fx:id="gameBoard" layoutX="168.0" layoutY="135.0" prefHeight="330.0" prefWidth="480.0" />
-      <ImageView fx:id="imgTurn" fitHeight="30.0" fitWidth="80.0" layoutX="708.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true" styleClass="turn-imageView" />
-      <ImageView fitHeight="139.0" fitWidth="244.0" layoutX="312.0" layoutY="456.0" pickOnBounds="true" preserveRatio="true">
+      <AnchorPane fx:id="gameBoard" layoutX="200.0" layoutY="180.0" prefHeight="440.0" prefWidth="600.0" />
+      <ImageView fx:id="imgTurn" fitHeight="50.0" fitWidth="150.0" layoutX="632.0" layoutY="726.0" pickOnBounds="true" preserveRatio="true" styleClass="turn-imageView" />
+      <ImageView fitHeight="170.0" fitWidth="235.0" layoutX="397.0" layoutY="635.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/objects/Warehouse.png" />
          </image>
       </ImageView>
-      <VBox fx:id="warehouse1" alignment="BOTTOM_LEFT" layoutX="364.0" layoutY="500.0" prefHeight="72.0" prefWidth="24.0" />
-      <VBox fx:id="warehouse2" alignment="BOTTOM_LEFT" layoutX="388.0" layoutY="500.0" prefHeight="72.0" prefWidth="24.0" />
-      <VBox fx:id="warehouse3" alignment="BOTTOM_LEFT" layoutX="408.0" layoutY="500.0" prefHeight="72.0" prefWidth="24.0" />
-      <VBox fx:id="warehouse4" alignment="BOTTOM_LEFT" layoutX="431.0" layoutY="500.0" prefHeight="72.0" prefWidth="24.0" />
-      <VBox fx:id="warehouse5" alignment="BOTTOM_LEFT" layoutX="455.0" layoutY="500.0" prefHeight="72.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse1" alignment="BOTTOM_LEFT" layoutX="458.0" layoutY="685.0" prefHeight="72.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse2" alignment="BOTTOM_LEFT" layoutX="482.0" layoutY="685.0" prefHeight="72.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse3" alignment="BOTTOM_LEFT" layoutX="502.0" layoutY="685.0" prefHeight="72.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse4" alignment="BOTTOM_LEFT" layoutX="525.0" layoutY="685.0" prefHeight="72.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse5" alignment="BOTTOM_LEFT" layoutX="549.0" layoutY="685.0" prefHeight="72.0" prefWidth="24.0" />
+      <ImageView fx:id="milkPacking" fitHeight="140.0" fitWidth="180.0" layoutX="810.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="iceCream" fitHeight="140.0" fitWidth="180.0" layoutX="810.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="sewing" fitHeight="140.0" fitWidth="180.0" layoutX="809.0" layoutY="546.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mill" fitHeight="140.0" fitWidth="180.0" layoutX="9.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="bakery" fitHeight="140.0" fitWidth="180.0" layoutX="9.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="weaving" fitHeight="140.0" fitWidth="180.0" layoutX="9.0" layoutY="547.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="buyBakery" layoutX="39.0" layoutY="326.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" />
+      <Button fx:id="buyMill" layoutX="39.0" layoutY="131.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" />
+      <Button fx:id="buyWeaving" layoutX="39.0" layoutY="516.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" />
+      <Button fx:id="buyMilkPacking" layoutX="840.0" layoutY="129.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" />
+      <Button fx:id="buyIceCream" layoutX="840.0" layoutY="318.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" />
+      <Button fx:id="buySewing" layoutX="839.0" layoutY="516.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" />
+      <ProgressBar fx:id="progressMill" layoutY="297.0" opacity="0.5" prefHeight="18.0" prefWidth="198.0" progress="0.0" />
+      <ProgressBar fx:id="progressBakery" layoutY="492.0" opacity="0.5" prefHeight="18.0" prefWidth="198.0" progress="0.0" />
+      <ProgressBar fx:id="progressWeaving" layoutY="687.0" opacity="0.5" prefHeight="18.0" prefWidth="198.0" progress="0.0" />
+      <ProgressBar fx:id="progressMilkPacking" layoutX="800.0" layoutY="295.0" opacity="0.5" prefHeight="18.0" prefWidth="198.0" progress="0.0" />
+      <ProgressBar fx:id="progressIceCream" layoutX="800.0" layoutY="490.0" opacity="0.5" prefHeight="18.0" prefWidth="198.0" progress="0.0" />
+      <ProgressBar fx:id="progressSewing" layoutX="800.0" layoutY="682.0" opacity="0.5" prefHeight="18.0" prefWidth="198.0" progress="0.0" />
    </children>
 </AnchorPane>

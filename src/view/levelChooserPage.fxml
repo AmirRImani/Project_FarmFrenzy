@@ -4,14 +4,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorpane" prefHeight="600.0" prefWidth="800.0" styleClass="bodybg" stylesheets="@styles/backgrounds/backgroundLevelChooser.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LevelChooser">
+<AnchorPane fx:id="anchorpane" prefHeight="750.0" prefWidth="1000.0" styleClass="bodybg" stylesheets="@styles/backgrounds/backgroundLevelChooser.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LevelChooser">
    <children>
-      <Button alignment="CENTER" layoutX="136.0" layoutY="499.0" mnemonicParsing="false" onAction="#exit" opacity="0.8" prefHeight="60.0" prefWidth="150.0" stylesheets="@styles/buttonStyles/buttonPressedRed.css" text="Exit" textFill="BLUE">
+      <Button alignment="CENTER" layoutX="61.0" layoutY="609.0" mnemonicParsing="false" onAction="#exit" opacity="0.8" prefHeight="75.0" prefWidth="190.0" stylesheets="@styles/buttonStyles/buttonPressedRed.css" text="Exit" textFill="BLUE">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" layoutX="552.0" layoutY="499.0" mnemonicParsing="false" onAction="#back" opacity="0.8" prefHeight="60.0" prefWidth="150.0" stylesheets="@styles/buttonStyles/buttonPressedYellow.css" text="Logout" textFill="RED">
+      <Button alignment="CENTER" layoutX="747.0" layoutY="609.0" mnemonicParsing="false" onAction="#back" opacity="0.8" prefHeight="75.0" prefWidth="190.0" stylesheets="@styles/buttonStyles/buttonPressedYellow.css" text="Logout" textFill="RED">
          <font>
             <Font size="24.0" />
          </font>

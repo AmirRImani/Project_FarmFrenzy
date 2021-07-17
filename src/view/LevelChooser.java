@@ -55,8 +55,8 @@ public class LevelChooser implements Initializable {
                 buttons[i].getStylesheets().add("/view/styles/buttonStyles/levelButtons/levelButtonLocked" + (i+1) + ".css");
             buttons[i].setPrefWidth(40);
             buttons[i].setPrefHeight(40);
-            buttons[i].setLayoutX(50 + 100 * i);
-            buttons[i].setLayoutY(430 - 30 * i);
+            buttons[i].setLayoutX(65 + 100 * i);
+            buttons[i].setLayoutY(535 - 30 * i);
 
             anchorpane.getChildren().add(buttons[i]);
         }

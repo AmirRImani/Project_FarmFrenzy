@@ -16,6 +16,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -28,6 +30,8 @@ import levelController.objects.Grass;
 import levels.Level;
 import products.Product;
 import products.Products;
+import workshops.Workshop;
+import workshops.Workshops;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,13 +43,14 @@ public class GameView implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private final int WIDTH = 480;
-    private final int HEIGHT = 330;
+    private final int WIDTH = 600;
+    private final int HEIGHT = 440;
     private Game game;
     private HashMap<Animal, ImageView> animalsView;
     private HashMap<Product, ImageView> productsView;
     private HashMap<Wild, ImageView> cages;
     private HashMap<Grass, ImageView> grassViews;
+    private HashSet<Workshop> workshops;
 
     @FXML
     AnchorPane gameBoard;
@@ -55,6 +60,15 @@ public class GameView implements Initializable {
 
     @FXML
     ImageView imgHen, imgTurkey, imgBuffalo, imgDog, imgCat, imgTurn;
+
+    @FXML
+    ImageView mill, bakery, weaving, milkPacking, iceCream, sewing;
+
+    @FXML
+    Button buyMill, buyBakery, buyWeaving, buyMilkPacking, buyIceCream, buySewing;
+
+    @FXML
+    ProgressBar progressMill, progressBakery, progressWeaving, progressMilkPacking, progressIceCream, progressSewing;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,8 +96,141 @@ public class GameView implements Initializable {
         });
     }
 
+    private void workshopInitialize() {
+        boolean[] found = new boolean[6];
+        for (int i = 0; i < 6; i++) {
+            found[i] = false;
+        }
+        for (Workshop workshop : workshops) {
+            if (workshop.getName().equals(Workshops.MILL.name())) {
+                found[0] = true;
+                if (workshop.maxLevel())
+                    buyMill.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                else {
+                    buyMill.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+                    buyMill.setOnAction(event -> {
+                        upgradeWorkshop(Workshops.MILL);
+                    });
+                } mill.setImage(new Image("/images/workshops/MILL.png"));
+                mill.setOnMouseClicked(event -> {
+                    game.work(workshop);
+                });
+            } else if (workshop.getName().equals(Workshops.BAKERY.name())) {
+                found[1] = true;
+                if (workshop.maxLevel())
+                    buyBakery.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                else {
+                    buyBakery.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+                    buyMill.setOnAction(event -> {
+                        upgradeWorkshop(Workshops.BAKERY);
+                    });
+                } bakery.setImage(new Image("/images/workshops/BAKERY.png"));
+                bakery.setOnMouseClicked(event -> {
+                    game.work(workshop);
+                });
+            } else if (workshop.getName().equals(Workshops.WEAVING.name())) {
+                found[2] = true;
+                if (workshop.maxLevel())
+                    buyWeaving.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                else {
+                    buyWeaving.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+                    buyMill.setOnAction(event -> {
+                        upgradeWorkshop(Workshops.WEAVING);
+                    });
+                } weaving.setImage(new Image("/images/workshops/WEAVING.png"));
+                weaving.setOnMouseClicked(event -> {
+                    game.work(workshop);
+                });
+            } else if (workshop.getName().equals(Workshops.MILK_PACKING.name())) {
+                found[3] = true;
+                if (workshop.maxLevel())
+                    buyMilkPacking.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                else {
+                    buyMilkPacking.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+                    buyMill.setOnAction(event -> {
+                        upgradeWorkshop(Workshops.MILK_PACKING);
+                    });
+                } milkPacking.setImage(new Image("/images/workshops/MILK_PACKING.png"));
+                milkPacking.setOnMouseClicked(event -> {
+                    game.work(workshop);
+                });
+            } else if (workshop.getName().equals(Workshops.ICE_CREAM_SHOP.name())) {
+                found[4] = true;
+                if (workshop.maxLevel())
+                    buyIceCream.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                else {
+                    buyIceCream.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+                    buyMill.setOnAction(event -> {
+                        upgradeWorkshop(Workshops.ICE_CREAM_SHOP);
+                    });
+                } iceCream.setImage(new Image("/images/workshops/ICE_CREAM_SHOP.png"));
+                iceCream.setOnMouseClicked(event -> {
+                    game.work(workshop);
+                });
+            } else if (workshop.getName().equals(Workshops.SEWING.name())) {
+                found[5] = true;
+                if (workshop.maxLevel())
+                    buySewing.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                else {
+                    buySewing.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+                    buyMill.setOnAction(event -> {
+                        upgradeWorkshop(Workshops.SEWING);
+                    });
+                } sewing.setImage(new Image("/images/workshops/SEWING.png"));
+                sewing.setOnMouseClicked(event -> {
+                    game.work(workshop);
+                });
+            }
+        }
+
+        if (!found[0]) {
+            buyMill.getStylesheets().add("/view/styles/buttonStyles/buyButton.css");
+            buyMill.setOnAction(event -> {
+                buildWorkshop(Workshops.MILL);
+            });
+            mill.setImage(new Image("/images/workshops/MILLoff.png"));
+        }
+        if (!found[1]) {
+            buyBakery.getStylesheets().add("/view/styles/buttonStyles/buyButton.css");
+            buyBakery.setOnAction(event -> {
+                buildWorkshop(Workshops.BAKERY);
+            });
+            bakery.setImage(new Image("/images/workshops/BAKERYoff.png"));
+        }
+        if (!found[2]) {
+            buyWeaving.getStylesheets().add("/view/styles/buttonStyles/buyButton.css");
+            buyWeaving.setOnAction(event -> {
+                buildWorkshop(Workshops.WEAVING);
+            });
+            weaving.setImage(new Image("/images/workshops/WEAVINGoff.png"));
+        }
+        if (!found[3]) {
+            buyMilkPacking.getStylesheets().add("/view/styles/buttonStyles/buyButton.css");
+            buyMilkPacking.setOnAction(event -> {
+                buildWorkshop(Workshops.MILK_PACKING);
+            });
+            milkPacking.setImage(new Image("/images/workshops/MILK_PACKINGoff.png"));
+        }
+        if (!found[4]) {
+            buyIceCream.getStylesheets().add("/view/styles/buttonStyles/buyButton.css");
+            buyIceCream.setOnAction(event -> {
+                buildWorkshop(Workshops.ICE_CREAM_SHOP);
+            });
+            iceCream.setImage(new Image("/images/workshops/ICE_CREAM_SHOPoff.png"));
+        }
+        if (!found[5]) {
+            buySewing.getStylesheets().add("/view/styles/buttonStyles/buyButton.css");
+            buySewing.setOnAction(event -> {
+                buildWorkshop(Workshops.SEWING);
+            });
+            sewing.setImage(new Image("/images/workshops/SEWINGoff.png"));
+        }
+    }
+
     public void setInitial(Level level, User user) {
         game = new Game(level, user);
+        workshops = game.getWorkshops();
+        workshopInitialize();
         productsView = getProductsView();
         getAnimalsView();
         cages = new HashMap<>(); //TODO
@@ -92,6 +239,8 @@ public class GameView implements Initializable {
 
     public void setInitial(Game game) {
         this.game = game;
+        workshops = game.getWorkshops();
+        workshopInitialize();
         productsView = getProductsView();
         getAnimalsView();
         cages = new HashMap<>(); //TODO
@@ -316,11 +465,11 @@ public class GameView implements Initializable {
         //TODO
     }
 
-    private void buildWorkshop() {
+    private void buildWorkshop(Workshops workshop) {
         //TODO
     }
 
-    private void upgradeWorkshop() {
+    private void upgradeWorkshop(Workshops workshop) {
         //TODO
     }
 
@@ -337,6 +486,25 @@ public class GameView implements Initializable {
         //TODO
         game.turn(1, this);
         updateBoard();
+        for (Workshop workshop : workshops) {
+            progressWorkshop(workshop);
+        }
+
+    }
+
+    private void progressWorkshop(Workshop workshop) {
+        if (workshop.getName().equals(Workshops.MILL.name()) && workshop.isBusy())
+            progressMill.setProgress(workshop.progress());
+        else if (workshop.getName().equals(Workshops.BAKERY.name()) && workshop.isBusy())
+            progressBakery.setProgress(workshop.progress());
+        else if (workshop.getName().equals(Workshops.WEAVING.name()) && workshop.isBusy())
+            progressWeaving.setProgress(workshop.progress());
+        else if (workshop.getName().equals(Workshops.MILK_PACKING.name()) && workshop.isBusy())
+            progressMilkPacking.setProgress(workshop.progress());
+        else if (workshop.getName().equals(Workshops.ICE_CREAM_SHOP.name()) && workshop.isBusy())
+            progressIceCream.setProgress(workshop.progress());
+        else if (workshop.getName().equals(Workshops.SEWING.name()) && workshop.isBusy())
+                progressSewing.setProgress(workshop.progress());
     }
 
     private void updateBoard() {
@@ -397,6 +565,22 @@ public class GameView implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void workshopProduct(Workshop workshop, Product product) {
+        addProduct(product);
+        if (workshop.getName().equals(Workshops.MILL.name()) && workshop.isBusy())
+            progressMill.setProgress(0);
+        else if (workshop.getName().equals(Workshops.BAKERY.name()) && workshop.isBusy())
+            progressBakery.setProgress(0);
+        else if (workshop.getName().equals(Workshops.WEAVING.name()) && workshop.isBusy())
+            progressWeaving.setProgress(0);
+        else if (workshop.getName().equals(Workshops.MILK_PACKING.name()) && workshop.isBusy())
+            progressMilkPacking.setProgress(0);
+        else if (workshop.getName().equals(Workshops.ICE_CREAM_SHOP.name()) && workshop.isBusy())
+            progressIceCream.setProgress(0);
+        else if (workshop.getName().equals(Workshops.SEWING.name()) && workshop.isBusy())
+            progressSewing.setProgress(0);
     }
 
 
