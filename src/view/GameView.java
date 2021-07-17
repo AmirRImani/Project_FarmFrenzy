@@ -267,6 +267,38 @@ public class GameView implements Initializable {
         animalsView.remove(wild);
     }
 
+    public void dogAttack(Dog dog, Wild wild) {
+        ImageView image1 = animalsView.get(dog);
+        ImageView image2 = animalsView.get(wild);
+        TranslateTransition transition1 = new TranslateTransition(Duration.seconds(0.5), image1);
+        transition1.setToX(805);
+        transition1.setCycleCount(1);
+
+        TranslateTransition transition2 = new TranslateTransition(Duration.seconds(0.5), image2);
+        transition2.setToX(805);
+        transition2.setCycleCount(1);
+
+        transition1.play();
+        transition2.play();
+
+        gameBoard.getChildren().remove(image1);
+        gameBoard.getChildren().remove(image2);
+        animalsView.remove(dog);
+        animalsView.remove(wild);
+    }
+
+    public void wildAttack(Animal animal) {
+        ImageView image1 = animalsView.get(animal);
+        TranslateTransition transition1 = new TranslateTransition(Duration.seconds(0.5), image1);
+        transition1.setToX(805);
+        transition1.setCycleCount(1);
+
+        transition1.play();
+
+        gameBoard.getChildren().remove(image1);
+        animalsView.remove(animal);
+    }
+
     public void decreaseCageResist(Wild wild) {
         //TODO
     }
@@ -367,25 +399,6 @@ public class GameView implements Initializable {
         stage.show();
     }
 
-    public void dogAttack(Dog dog, Wild wild) {
-        ImageView image1 = animalsView.get(dog);
-        ImageView image2 = animalsView.get(wild);
-        TranslateTransition transition1 = new TranslateTransition(Duration.seconds(0.5), image1);
-        transition1.setToX(805);
-        transition1.setCycleCount(1);
-
-        TranslateTransition transition2 = new TranslateTransition(Duration.seconds(0.5), image2);
-        transition2.setToX(805);
-        transition2.setCycleCount(1);
-
-        transition1.play();
-        transition2.play();
-
-        gameBoard.getChildren().remove(image1);
-        gameBoard.getChildren().remove(image2);
-        animalsView.remove(dog);
-        animalsView.remove(wild);
-    }
 
 //    public void walk(Animal animal, Directions direction) {
 //        if (direction != null) {

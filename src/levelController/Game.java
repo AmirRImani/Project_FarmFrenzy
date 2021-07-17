@@ -585,27 +585,44 @@ public class Game {
         return null;
     }
 
-    public boolean wildAttack() {
+    public void wildAttack(GameView gameView) {
         for (Wild wild : wilds) {
-            if(!wild.isInCage())
-                if (onDome(wild.getX(), wild.getY()))//TODO
-                    return true;
+            if(!wild.isInCage()) {
+                Animal animal = onDome(wild.getX(), wild.getY());
+                if (animal != null)
+                    gameView.wildAttack(animal);
+            }
         }
-        return false;
     }
 
-    private boolean onDome(int x, int y) {
+    private Animal onDome(int x, int y) {
         HashSet<Domestic> domesticHashSet = new HashSet<>(domestics);
+        HashSet<Cat> cats = new HashSet<>();
+        for (Helper helper : helpers) {
+            if (helper instanceof Cat)
+                cats.add((Cat) helper);
+        }
+
+
         for (Domestic domestic : domesticHashSet) {
             if(domestic.getX() == x && domestic.getY() == y){
                 //System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " +"Wild on " + x + "," + y + " attacked a domestic");
                 logger.setUseParentHandlers(false);
                 logger.info("Wild on " + x + "," + y + " attacked a domestic");
                 domestics.remove(domestic);
-                return true;
+                return domestic;
             }
         }
-        return false;
+        for (Cat cat : cats) {
+            if(cat.getX() == x && cat.getY() == y){
+                //System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " +"Wild on " + x + "," + y + " attacked a domestic");
+                logger.setUseParentHandlers(false);
+                logger.info("Wild on " + x + "," + y + " attacked a domestic");
+                helpers.remove(cat);
+                return cat;
+            }
+        }
+        return null;
     }
 
     public void walk(GameView gameView) {
