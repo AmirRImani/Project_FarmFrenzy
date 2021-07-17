@@ -32,7 +32,7 @@ public class TimeProcessor {
         game.walk(gameView);
         game.workshopProducts(gameView);
         game.domesticProducts(gameView);
-        game.feedAnimals();
+        game.feedAnimals(gameView);
         game.domeHealth();
         game.domeDie(gameView);
         game.appearWilds(gameView);
@@ -40,7 +40,7 @@ public class TimeProcessor {
         game.freeWilds(gameView);
         game.decreaseCageResist(gameView);
 //        game.dogAttack(gameView);
-//        game.catCatches(gameView);
+        game.catCatches(gameView);
 //        game.wildAttack(gameView);
         game.transportCompleted();
         game.grassAlarm(last);

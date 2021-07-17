@@ -84,7 +84,7 @@ public class Domestic extends Animal {
     }
 
     private Grass nearGrass(HashSet<Grass> grasses) {
-        double min = 100;
+        double min = 10000;
         double distance;
         Grass nearGrass = null;
         if(grasses.isEmpty())

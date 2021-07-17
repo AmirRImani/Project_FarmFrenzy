@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import levelController.Game;
+import levelController.objects.Board;
 import levelController.objects.Grass;
 import levels.Level;
 import products.Product;
@@ -38,11 +39,13 @@ public class GameView implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private final int WIDTH = 480;
+    private final int HEIGHT = 330;
     private Game game;
     private HashMap<Animal, ImageView> animalsView;
     private HashMap<Product, ImageView> productsView;
     private HashMap<Wild, ImageView> cages;
-    private HashSet<Grass> grassViews;
+    private HashMap<Grass, ImageView> grassViews;
 
     @FXML
     AnchorPane gameBoard;
@@ -82,7 +85,7 @@ public class GameView implements Initializable {
     public void setInitial(Level level, User user) {
         game = new Game(level, user);
         productsView = getProductsView();
-        animalsView = getAnimalsView();
+        getAnimalsView();
         cages = new HashMap<>(); //TODO
         initialGrass();
     }
@@ -90,7 +93,7 @@ public class GameView implements Initializable {
     public void setInitial(Game game) {
         this.game = game;
         productsView = getProductsView();
-        animalsView = getAnimalsView();
+        getAnimalsView();
         cages = new HashMap<>(); //TODO
         initialGrass();
     }
@@ -103,19 +106,18 @@ public class GameView implements Initializable {
         return productImageView;
     }
 
-    private HashMap<Animal, ImageView> getAnimalsView() {
+    private void getAnimalsView() {
         HashSet<Animal> animals = game.getAnimals();
-        HashMap<Animal, ImageView> animalImageView = new HashMap<>();
+        animalsView = new HashMap<>();
         for (Animal animal : animals)
             addAnimal(animal);
-        return animalImageView;
     }
 
 
     public ImageView addProduct(Product product) {
         ImageView image = new ImageView("/images/products/" + product.getNameOfProduct() + ".png");
-        image.setLayoutX(40 + (product.getX()-1) * 80);
-        image.setLayoutY(27.5 + (product.getY()-1) * 55);
+        image.setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (product.getX() - 1) * WIDTH/Board.COLUMN.getLength());
+        image.setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (product.getY() - 1) * HEIGHT/Board.ROW.getLength());
         image.setFitWidth(40);
         image.setFitHeight(40);
 
@@ -131,8 +133,6 @@ public class GameView implements Initializable {
             if (game.pickup(product)) {
                 transition.play();
                 toWarehouse(product);
-                gameBoard.getChildren().remove(image);
-                productsView.remove(product);
             }
         });
 
@@ -144,7 +144,7 @@ public class GameView implements Initializable {
         productsView.remove(product);
     }
 
-    private void toWarehouse(Product product) {
+    public void toWarehouse(Product product) {
         ImageView image = new ImageView("/images/warehouseItems/" + product.getNameOfProduct() + ".png");
         image.setFitWidth(24);
         image.setFitHeight(24);
@@ -159,6 +159,9 @@ public class GameView implements Initializable {
             warehouse4.getChildren().add(image);
         else
             warehouse5.getChildren().add(image);
+
+        gameBoard.getChildren().remove(productsView.get(product));
+        productsView.remove(product);
     }
 
 
@@ -211,8 +214,11 @@ public class GameView implements Initializable {
         else if (animal instanceof Wild)
             name = ((Wild) animal).getName();
         ImageView image = new ImageView(new Image("/images/animals/" + name + ".png"));//TODO
-        image.setLayoutX(40 + (animal.getX()-1) * 80);
-        image.setLayoutY(27.5 + (animal.getY()-1) * 55);
+        System.out.println(animal.getX() + " " + animal.getY());
+        System.out.print(WIDTH/(2 * Board.COLUMN.getLength()) + (animal.getX() - 1) * WIDTH/Board.COLUMN.getLength() + " ");
+        System.out.println(HEIGHT/(2 * Board.ROW.getLength()) + (animal.getY() - 1) * HEIGHT/Board.ROW.getLength());
+        image.setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (animal.getX() - 1) * WIDTH/Board.COLUMN.getLength());
+        image.setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (animal.getY() - 1) * HEIGHT/Board.ROW.getLength());
         image.setFitWidth(60);
         image.setFitHeight(60);
 
@@ -303,40 +309,47 @@ public class GameView implements Initializable {
 
     private void updateBoard() {
         for (Animal animal : animalsView.keySet()) {
-            animalsView.get(animal).setLayoutX(40 + (animal.getX()-1) * 80);
-            animalsView.get(animal).setLayoutY(27.5 + (animal.getY()-1) * 55);
+            animalsView.get(animal).setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (animal.getX() - 1) * WIDTH/Board.COLUMN.getLength());
+            animalsView.get(animal).setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (animal.getY() - 1) * HEIGHT/Board.ROW.getLength());
         }
     }
 
     private void initialGrass() {
-        grassViews = game.getGrasses();
-        for (Grass grass : grassViews) {
+        grassViews = new HashMap<>();
+        HashSet<Grass> grasses = game.getGrasses();
+        for (Grass grass : grasses) {
             ImageView image = new ImageView(new Image("/images/objects/SINGLE_GRASS.png"));//TODO
-            image.setLayoutX(40 + (grass.getColumn()-1) * 80);
-            image.setLayoutY(27.5 + (grass.getRow()-1) * 55);
-            image.setFitWidth(40);
-            image.setFitHeight(40);
+            image.setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (grass.getColumn() - 1) * WIDTH/Board.COLUMN.getLength());
+            image.setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (grass.getRow() - 1) * HEIGHT/Board.ROW.getLength());
+            image.setFitWidth(80);
+            image.setFitHeight(80);
 
+            grassViews.put(grass, image);
             gameBoard.getChildren().add(0,image);
         }
     }
 
     private void addGrass(double X, double Y) {
-        int x = Math.toIntExact(Math.round((X-40)/80.0 + 1));
-        int y = Math.toIntExact(Math.round((Y-27.5)/55.0 + 1));
+        int x = Math.toIntExact(Math.round((X + WIDTH/(2 * Board.COLUMN.getLength()))/(WIDTH/Board.COLUMN.getLength()) + 1));
+        int y = Math.toIntExact(Math.round((Y + HEIGHT/(2 * Board.ROW.getLength()))/(HEIGHT/Board.ROW.getLength()) + 1));
         System.out.println(x + " " + y);
         Grass grass = game.plant(x,y);
 
         if (grass != null) {
             ImageView image = new ImageView(new Image("/images/objects/SINGLE_GRASS.png"));//TODO
-            image.setLayoutX(40 + (x - 1) * 80);
-            image.setLayoutY(27.5 + (y - 1) * 55);
+            image.setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (grass.getColumn() - 1) * WIDTH/Board.COLUMN.getLength());
+            image.setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (grass.getRow() - 1) * HEIGHT/Board.ROW.getLength());
             image.setFitWidth(80);
             image.setFitHeight(80);
 
-            grassViews.add(grass);
+            grassViews.put(grass, image);
             gameBoard.getChildren().add(0, image);
         }
+    }
+
+    public void feedAnimal(Grass grass) {
+        gameBoard.getChildren().remove(grassViews.get(grass));
+        grassViews.remove(grass);
     }
 
 

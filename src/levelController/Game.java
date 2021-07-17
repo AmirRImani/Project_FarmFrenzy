@@ -103,14 +103,21 @@ public class Game {
 
     public Helper buyHelper(Helpers helper) {
         if(this.coin >= helper.getValue()) {
-            Helper helper1 = new Helper(helper);
-            helpers.add(helper1);
             //System.out.println("Buying has been done");
             logger.setUseParentHandlers(false);
             logger.info("Buying has been done! ");
 
             this.coin -= helper.getValue();
-            return helper1;
+
+            if (helper == Helpers.CAT) {
+                Cat cat = new Cat();
+                helpers.add(cat);
+                return cat;
+            } else if (helper == Helpers.DOG){
+                Dog dog = new Dog();
+                helpers.add(dog);
+                return dog;
+            }
         } else
             //System.out.println("Not enough coin to buy");
             logger.setUseParentHandlers(false);
@@ -436,7 +443,7 @@ public class Game {
         }
     }
 
-    public void feedAnimals() {
+    public void feedAnimals(GameView gameView) {
         for (Domestic domestic : domestics) {
             if(domestic.needToEat())
                 onGrass(domestic);//TODO
@@ -449,6 +456,7 @@ public class Game {
             if(dome != null) {
                 dome.eat();
                 grasses.remove(grass);
+                gameView.feedAnimal(grass);
             }
         }
     }
@@ -553,17 +561,17 @@ public class Game {
         return false;
     }
 
-    public boolean catCatches() {
+    public void catCatches(GameView gameView) {
         for (Helper helper : helpers) {
             if(helper instanceof Cat){
-                if (onProduct(helper.getX(), helper.getY()))//TODO
-                    return true;
+                Product product = onProduct(helper.getX(), helper.getY());
+                if (product != null)
+                    gameView.toWarehouse(product);
             }
         }
-        return false;
     }
 
-    private boolean onProduct(int x, int y) {
+    private Product onProduct(int x, int y) {
         HashSet<Product> products = new HashSet<>(productsOnGround);
         for (Product product : products) {
             if(product.getX() == x && product.getY() == y){
@@ -572,10 +580,10 @@ public class Game {
                 logger.info("Product on " + x + "," + y + " moved to warehouse by cat");
                 productsOnGround.remove(product);
                 warehouse.addProduct(Products.valueOf(product.getNameOfProduct()),1);//TODO
-                return true;
+                return product;
             }
         }
-        return false;
+        return null;
     }
 
     public boolean wildAttack() {

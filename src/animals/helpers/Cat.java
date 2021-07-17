@@ -20,7 +20,7 @@ public class Cat extends Helper {
     }
 
     private Product nearProduct(HashSet<Product> products) {
-        double min = 100;
+        double min = 10000;
         double distance;
         Product nearProduct = null;
         if(products.isEmpty())

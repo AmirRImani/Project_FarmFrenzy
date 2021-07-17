@@ -1,8 +1,8 @@
 package levelController.objects;
 
 public enum Board {
-    ROW(6),
-    COLUMN(6);
+    ROW(10),
+    COLUMN(10);
 
     private int length;
 
