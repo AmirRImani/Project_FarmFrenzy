@@ -39,7 +39,7 @@ public class TimeProcessor {
         game.disappearProducts(gameView);
         game.freeWilds(gameView);
         game.decreaseCageResist(gameView);
-//        game.dogAttack(gameView);
+        game.dogAttack(gameView);
         game.catCatches(gameView);
 //        game.wildAttack(gameView);
         game.transportCompleted();

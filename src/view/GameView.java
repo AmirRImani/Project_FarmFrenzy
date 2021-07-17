@@ -3,6 +3,7 @@ package view;
 import animals.Animal;
 import animals.domestics.Domestic;
 import animals.domestics.Domestics;
+import animals.helpers.Dog;
 import animals.helpers.Helper;
 import animals.helpers.Helpers;
 import animals.wilds.Wild;
@@ -30,7 +31,6 @@ import products.Products;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -365,6 +365,26 @@ public class GameView implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void dogAttack(Dog dog, Wild wild) {
+        ImageView image1 = animalsView.get(dog);
+        ImageView image2 = animalsView.get(wild);
+        TranslateTransition transition1 = new TranslateTransition(Duration.seconds(0.5), image1);
+        transition1.setToX(805);
+        transition1.setCycleCount(1);
+
+        TranslateTransition transition2 = new TranslateTransition(Duration.seconds(0.5), image2);
+        transition2.setToX(805);
+        transition2.setCycleCount(1);
+
+        transition1.play();
+        transition2.play();
+
+        gameBoard.getChildren().remove(image1);
+        gameBoard.getChildren().remove(image2);
+        animalsView.remove(dog);
+        animalsView.remove(wild);
     }
 
 //    public void walk(Animal animal, Directions direction) {

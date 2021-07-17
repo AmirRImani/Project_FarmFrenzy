@@ -1,7 +1,6 @@
 package levelController;
 
 import animals.Animal;
-import animals.Directions;
 import animals.domestics.Domestic;
 import animals.domestics.Domestics;
 import animals.helpers.Cat;
@@ -533,32 +532,32 @@ public class Game {
     }
 
 
-    public boolean dogAttack() {
+    public void dogAttack(GameView gameView) {
         HashSet<Helper> helperHashSet = new HashSet<>(helpers);
         for (Helper helper : helperHashSet) {
             if(helper instanceof Dog){
-                if (onWild(helper)) //TODO
-                    return true;
+                Wild wild = onWild((Dog)helper);
+                if (wild != null)
+                    gameView.dogAttack((Dog) helper, wild);
             }
         }
-        return false;
     }
 
-    private boolean onWild(Helper helper) {
+    private Wild onWild(Dog dog) {
         HashSet<Wild> wildHashSet = new HashSet<>(wilds);
         for (Wild wild : wildHashSet) {
             if(!wild.isInCage()){
-                if(wild.getX() == helper.getX() && wild.getY() == helper.getY()){
+                if(wild.getX() == dog.getX() && wild.getY() == dog.getY()){
                     //System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " +"Dog on " + helper.getX() + "," + helper.getY() + " attacked a wild");
                     logger.setUseParentHandlers(false);
-                    logger.info("Dog on " + helper.getX() + "," + helper.getY() + " attacked a wild");
+                    logger.info("Dog on " + dog.getX() + "," + dog.getY() + " attacked a wild");
                     wilds.remove(wild);
-                    helpers.remove(helper);
-                    return true;
+                    helpers.remove(dog);
+                    return wild;
                 }
             }
         }
-        return false;
+        return null;
     }
 
     public void catCatches(GameView gameView) {
