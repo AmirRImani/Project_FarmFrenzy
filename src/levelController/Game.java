@@ -55,6 +55,8 @@ public class Game {
 
     public HashSet<Product> getProducts() { return productsOnGround; }
 
+    public HashSet<Grass> getGrasses() { return grasses; }
+
     public HashSet<Animal> getAnimals() {
         HashSet<Animal> animals = new HashSet<>(domestics);
         animals.addAll(helpers);
@@ -167,7 +169,7 @@ public class Game {
         }
     }
 
-    public boolean plant(int x, int y) { //TODO initial variables should be changed
+    public Grass plant(int x, int y) { //TODO initial variables should be changed
 //        if(x<1 || x>Board.COLUMN.getLength() || y<1 || y>Board.ROW.getLength()) {
 //            System.out.println("Coordinate is not on game board");
 //            logger.setUseParentHandlers(false);
@@ -176,16 +178,17 @@ public class Game {
 //            return;
 //        }
         if(this.well.putGrass()) {
-            grasses.add(new Grass(x, y));
+            Grass grass = new Grass(x, y);
+            grasses.add(grass);
             //System.out.println("Grass planted");
             logger.setUseParentHandlers(false);
             logger.info("Grass planted");
-            return true;
+            return grass;
         } else
            // System.out.println("Water needed");
             logger.setUseParentHandlers(false);
             logger.info("Water needed");
-            return false;
+            return null;
     }
 
     //TODO maybe this function should be written again
@@ -481,16 +484,14 @@ public class Game {
         return null;
     }
 
-    public boolean disappearProducts(GameView gameView) {
+    public void disappearProducts(GameView gameView) {
         HashSet<Product> products = new HashSet<>(productsOnGround);
         for (Product product : products) {
             if(product.spoil()) {
                 productsOnGround.remove(product);
                 gameView.disappearProduct(product);
-                return true;
             }
         }
-        return true;
     }
 
     public void freeWilds(GameView gameView) {

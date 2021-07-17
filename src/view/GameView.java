@@ -1,7 +1,6 @@
 package view;
 
 import animals.Animal;
-import animals.Directions;
 import animals.domestics.Domestic;
 import animals.domestics.Domestics;
 import animals.helpers.Helper;
@@ -23,13 +22,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import levelController.Game;
+import levelController.objects.Grass;
 import levels.Level;
 import products.Product;
 import products.Products;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -42,6 +42,7 @@ public class GameView implements Initializable {
     private HashMap<Animal, ImageView> animalsView;
     private HashMap<Product, ImageView> productsView;
     private HashMap<Wild, ImageView> cages;
+    private HashSet<Grass> grassViews;
 
     @FXML
     AnchorPane gameBoard;
@@ -54,6 +55,10 @@ public class GameView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        gameBoard.setOnMouseClicked(event -> {
+            addGrass(event.getX(), event.getY());
+        });
+
         imgHen.setOnMouseClicked(event -> {
             addHen(new ActionEvent());
         });
@@ -79,6 +84,7 @@ public class GameView implements Initializable {
         productsView = getProductsView();
         animalsView = getAnimalsView();
         cages = new HashMap<>(); //TODO
+        initialGrass();
     }
 
     public void setInitial(Game game) {
@@ -86,6 +92,7 @@ public class GameView implements Initializable {
         productsView = getProductsView();
         animalsView = getAnimalsView();
         cages = new HashMap<>(); //TODO
+        initialGrass();
     }
 
     private HashMap<Product, ImageView> getProductsView() {
@@ -112,6 +119,7 @@ public class GameView implements Initializable {
         image.setFitWidth(40);
         image.setFitHeight(40);
 
+        productsView.put(product, image);
         gameBoard.getChildren().add(image);
 
         TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), image);
@@ -153,6 +161,7 @@ public class GameView implements Initializable {
             warehouse5.getChildren().add(image);
     }
 
+
     public void addHen(ActionEvent actionEvent) {
         Domestic domestic = game.buyDome(Domestics.HEN);
         if (domestic != null) {
@@ -191,30 +200,6 @@ public class GameView implements Initializable {
             //TODO graphical
             addAnimal(helper);
         }
-    }
-
-    private void truckLoad() {
-        //TODO
-    }
-
-    private void truckUnLoad() {
-        //TODO
-    }
-
-    private void truckGo() {
-        //TODO
-    }
-
-    private void buildWorkshop() {
-        //TODO
-    }
-
-    private void upgradeWorkshop() {
-        //TODO
-    }
-
-    private void well() {
-        //TODO
     }
 
     public ImageView addAnimal(Animal animal) {
@@ -280,15 +265,35 @@ public class GameView implements Initializable {
         //TODO
     }
 
-//    private void addWild(String wildName) {
-//        //TODO set on action about cage
-//        Wild wild = game.addWild(Wilds.valueOf(wildName.toUpperCase()));
-//        ImageView imageView = new ImageView(new Image("/images/animals/" + wildName /*...*/  ));
-//        imageView.setOnMouseClicked(event -> {
-//            //TODO
-//            game.cage(wild);
-//        });
-//    }
+
+    private void truckLoad() {
+        //TODO
+    }
+
+    private void truckUnLoad() {
+        //TODO
+    }
+
+    private void truckGo() {
+        //TODO
+    }
+
+    private void buildWorkshop() {
+        //TODO
+    }
+
+    private void upgradeWorkshop() {
+        //TODO
+    }
+
+    private void well() {
+        //TODO
+    }
+
+    public void plant(ActionEvent actionEvent) { //TODO by click on empty spaces of board
+
+    }
+
 
     public void turn(ActionEvent actionEvent) {
         //TODO
@@ -303,10 +308,37 @@ public class GameView implements Initializable {
         }
     }
 
+    private void initialGrass() {
+        grassViews = game.getGrasses();
+        for (Grass grass : grassViews) {
+            ImageView image = new ImageView(new Image("/images/objects/SINGLE_GRASS.png"));//TODO
+            image.setLayoutX(40 + (grass.getColumn()-1) * 80);
+            image.setLayoutY(27.5 + (grass.getRow()-1) * 55);
+            image.setFitWidth(40);
+            image.setFitHeight(40);
 
-    public void plant(ActionEvent actionEvent) { //TODO by click on empty spaces of board
-
+            gameBoard.getChildren().add(0,image);
+        }
     }
+
+    private void addGrass(double X, double Y) {
+        int x = Math.toIntExact(Math.round((X-40)/80.0 + 1));
+        int y = Math.toIntExact(Math.round((Y-27.5)/55.0 + 1));
+        System.out.println(x + " " + y);
+        Grass grass = game.plant(x,y);
+
+        if (grass != null) {
+            ImageView image = new ImageView(new Image("/images/objects/SINGLE_GRASS.png"));//TODO
+            image.setLayoutX(40 + (x - 1) * 80);
+            image.setLayoutY(27.5 + (y - 1) * 55);
+            image.setFitWidth(80);
+            image.setFitHeight(80);
+
+            grassViews.add(grass);
+            gameBoard.getChildren().add(0, image);
+        }
+    }
+
 
     public void pause(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -335,3 +367,15 @@ public class GameView implements Initializable {
 //        }
 //    }
 }
+
+//class GrassView {
+//    private int column;
+//    private int row;
+//    private int quantity;
+//
+//    public GrassView(int column, int row, int quantity) {
+//        this.column = column;
+//        this.row = row;
+//        this.quantity = quantity;
+//    }
+//}
