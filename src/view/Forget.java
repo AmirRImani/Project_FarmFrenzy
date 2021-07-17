@@ -23,7 +23,10 @@ public class Forget {
     Button btnReset, btnReset1;
 
     @FXML
-    TextField txtUsername, txtEmail, txtPassword;
+    TextField txtUsername, txtEmail;
+
+    @FXML
+    PasswordField txtPassword;
 
     @FXML
     Label labelForget, labelReset, labelUsername;

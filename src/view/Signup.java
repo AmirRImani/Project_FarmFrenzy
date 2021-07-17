@@ -18,19 +18,13 @@ public class Signup {
     private Parent root;
 
     @FXML
-    Button btnExit;
+    Button btnExit, btnSignup;
 
     @FXML
-    Button btnSignup;
+    TextField txtUsername, txtEmail;
 
     @FXML
-    TextField txtUsername;
-
-    @FXML
-    TextField txtPassword;
-
-    @FXML
-    TextField txtEmail;
+    PasswordField txtPassword;
 
     @FXML
     Label labelSignup;

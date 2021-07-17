@@ -18,16 +18,13 @@ public class Login {
     private Parent root;
 
     @FXML
-    Button btnExit;
-
-    @FXML
-    Button btnLogin;
+    Button btnExit, btnLogin;
 
     @FXML
     TextField txtUsername;
 
     @FXML
-    TextField txtPassword;
+    PasswordField txtPassword;
 
     @FXML
     Label labelLogin;
