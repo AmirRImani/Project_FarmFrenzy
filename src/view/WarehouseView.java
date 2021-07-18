@@ -13,11 +13,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import levelController.Game;
-import products.Product;
 import products.Products;
 
 import java.io.IOException;
@@ -36,21 +36,23 @@ public class WarehouseView implements Initializable {
     @FXML
     AnchorPane anchorPane1, anchorPane2;
 
+    @FXML
+    ImageView imgTruck;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableWarehouse = new TableView();
         tableTruck = new TableView();
 
-        TableColumn<Product, String> column1 = new TableColumn<>("Product Name");
+        TableColumn<ProductView, String> column1 = new TableColumn<>("Product Name");
         column1.setMinWidth(120);
         column1.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Product, String> column2 = new TableColumn<>("Price");
+        TableColumn<ProductView, String> column2 = new TableColumn<>("Price");
         column2.setMinWidth(120);
         column2.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-
-        TableColumn<Product, String> column3 = new TableColumn<>("Amount");
+        TableColumn<ProductView, String> column3 = new TableColumn<>("Amount");
         column3.setMinWidth(60);
         column3.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
@@ -69,7 +71,19 @@ public class WarehouseView implements Initializable {
             }
         });
 
-        tableTruck.getColumns().addAll(column1, column2, column3);
+        TableColumn<ProductView, String> column4 = new TableColumn<>("Product Name");
+        column4.setMinWidth(120);
+        column4.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<ProductView, String> column5 = new TableColumn<>("Price");
+        column5.setMinWidth(120);
+        column5.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        TableColumn<ProductView, String> column6 = new TableColumn<>("Amount");
+        column6.setMinWidth(60);
+        column6.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
+        tableTruck.getColumns().addAll(column4, column5, column6);
         tableTruck.setOpacity(0.75);
         tableTruck.setMaxHeight(600);
 
@@ -88,18 +102,19 @@ public class WarehouseView implements Initializable {
     private ObservableList<ProductView> getWarehouseProducts() {
         HashMap<Products,Integer> productsAmount = game.getWarehouseProducts(0);
         ObservableList<ProductView> productViews = FXCollections.observableArrayList();
-        for (Products product : productsAmount.keySet())
-            productViews.add(new ProductView(product, product.name(), product.getPrice(), productsAmount.get(product)));
+        for (Products product : productsAmount.keySet()) {
+            if (productsAmount.get(product) > 0)
+                productViews.add(new ProductView(product, product.name(), product.getPrice(), productsAmount.get(product)));
+        }
         return productViews;
     }
 
     private ObservableList<ProductView> getTruckProducts() {
         HashMap<Products,Integer> productsAmount = game.getTruckProducts();
         ObservableList<ProductView> productViews = FXCollections.observableArrayList();
-        for (Products product : productsAmount.keySet())
-            productViews.add(new ProductView(product, product.name(), product.getPrice(), productsAmount.get(product)));
-        for (ProductView productView : productViews) {
-            System.out.println(productView);
+        for (Products product : productsAmount.keySet()) {
+            if (productsAmount.get(product) > 0)
+                productViews.add(new ProductView(product, product.name(), product.getPrice(), productsAmount.get(product)));
         }
         return productViews;
     }
@@ -109,6 +124,8 @@ public class WarehouseView implements Initializable {
         this.game = game;
         setItems();
         //TODO
+        if (game.truckOnRoad())
+            imgTruck.setImage(new Image("/images/objects/empty2.png"));
     }
 
     private void setItems() {
@@ -117,9 +134,9 @@ public class WarehouseView implements Initializable {
         tableTruck.getItems().clear();
         tableTruck.setItems(getTruckProducts());
 
-        for (Object item : tableWarehouse.getItems()) {
-            System.out.println(item);
-        }
+//        ObservableList<ProductView> productViews = FXCollections.observableArrayList();
+//        productViews.add(new ProductView(Products.BREAD, Products.BREAD.name(), Products.BREAD.getPrice(), 5));
+//        tableWarehouse.setItems(productViews);
     }
 
 
@@ -138,7 +155,8 @@ public class WarehouseView implements Initializable {
     }
 
     public void truckLoad(ActionEvent actionEvent) {
-        if (game.truckLoad(productSelectedWarehouse)) {
+        Products product = ((ProductView) tableWarehouse.getSelectionModel().getSelectedItem()).getProduct();
+        if (game.truckLoad(product)) {
             setItems();
             for (Object item : tableWarehouse.getItems()) {
                 System.out.println(item);
@@ -150,35 +168,9 @@ public class WarehouseView implements Initializable {
         if (game.truckUnload(productSelectedTruck))
             setItems();
     }
-}
 
-class ProductView {
-    private Products product;
-    private String name;
-    private int price;
-    private int amount;
-
-    @Override
-    public String toString() {
-        return "ProductView{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                ", amount=" + amount +
-                '}';
-    }
-
-    public Products getProduct() { return product; }
-
-    public String getName() { return name; }
-
-    public int getPrice() { return price; }
-
-    public int getAmount() { return amount; }
-
-    public ProductView(Products product, String name, int price, int amount) {
-        this.product = product;
-        this.name = name;
-        this.price = price;
-        this.amount = amount;
+    public void truckGo(ActionEvent actionEvent) {
+        if (game.truckGo())
+            imgTruck.setImage(new Image("/images/objects/empty.png"));
     }
 }

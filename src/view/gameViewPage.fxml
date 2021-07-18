@@ -51,7 +51,7 @@
       <VBox fx:id="warehouse3" alignment="BOTTOM_LEFT" layoutX="486.0" layoutY="674.0" prefHeight="101.0" prefWidth="24.0" />
       <VBox fx:id="warehouse4" alignment="BOTTOM_LEFT" layoutX="509.0" layoutY="674.0" prefHeight="101.0" prefWidth="24.0" />
       <VBox fx:id="warehouse5" alignment="BOTTOM_LEFT" layoutX="533.0" layoutY="674.0" prefHeight="101.0" prefWidth="24.0" />
-      <ImageView fitHeight="108.0" fitWidth="180.0" layoutX="236.0" layoutY="656.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgTruck" fitHeight="108.0" fitWidth="180.0" layoutX="236.0" layoutY="656.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/objects/Truck.png" />
          </image>

@@ -73,6 +73,11 @@
     -fx-image: url("/images/iconsAndLabels/turnButtonPressed.png");
 }
 
+.warehouse-button {
+    -fx-background-image: url("/images/objects/Warehouse.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
 
 
 

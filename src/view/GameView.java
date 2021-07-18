@@ -59,7 +59,7 @@ public class GameView implements Initializable {
     VBox warehouse1, warehouse2, warehouse3, warehouse4, warehouse5;
 
     @FXML
-    ImageView imgHen, imgTurkey, imgBuffalo, imgDog, imgCat, imgTurn;
+    ImageView imgHen, imgTurkey, imgBuffalo, imgDog, imgCat, imgTurn, imgTruck;
 
     @FXML
     ImageView mill, bakery, weaving, milkPacking, iceCream, sewing;
@@ -73,7 +73,8 @@ public class GameView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         gameBoard.setOnMouseClicked(event -> {
-            addGrass(event.getX(), event.getY());
+            if (!onProduct(event.getX(), event.getY()))
+                addGrass(event.getX(), event.getY());
         });
 
         imgHen.setOnMouseClicked(event -> {
@@ -94,6 +95,19 @@ public class GameView implements Initializable {
         imgTurn.setOnMouseClicked(event -> {
             turn(new ActionEvent());
         });
+    }
+
+    private boolean onProduct(double X, double Y) {
+        int x = Math.toIntExact(Math.round((X + WIDTH/(2 * Board.COLUMN.getLength()))/(WIDTH/Board.COLUMN.getLength()) + 1));
+        int y = Math.toIntExact(Math.round((Y + HEIGHT/(2 * Board.ROW.getLength()))/(HEIGHT/Board.ROW.getLength()) + 1));
+        System.out.println("Grass " + x + " " + y);
+
+        for (Product product : productsView.keySet()) {
+            System.out.println("Product " +product.getX() + " " + product.getY());
+            if(product.getX() == x && product.getY() == y)
+                return true;
+        }
+        return false;
     }
 
     private void workshopInitialize() {
@@ -236,6 +250,9 @@ public class GameView implements Initializable {
         getAnimalsView();
         cages = new HashMap<>(); //TODO
         initialGrass();
+
+        if (game.truckOnRoad())
+            imgTruck.setImage(new Image("/images/objects/empty2.png"));
     }
 
     public void setInitial(Game game) {
@@ -247,6 +264,9 @@ public class GameView implements Initializable {
         getAnimalsView();
         cages = new HashMap<>(); //TODO
         initialGrass();
+
+        if (game.truckOnRoad())
+            imgTruck.setImage(new Image("/images/objects/empty2.png"));
     }
 
     private HashMap<Product, ImageView> getProductsView() {
@@ -278,8 +298,11 @@ public class GameView implements Initializable {
         image.setFitWidth(40);
         image.setFitHeight(40);
 
+        if (productsView == null)
+            productsView = new HashMap<>();
+
         productsView.put(product, image);
-        gameBoard.getChildren().add(image);
+        gameBoard.getChildren().add(0,image);
 
         TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), image);
         transition.setToX(400);
@@ -506,6 +529,8 @@ public class GameView implements Initializable {
             progressWorkshop(workshop);
         }
 
+        if (!game.truckOnRoad())
+            imgTruck.setImage(new Image("/images/objects/truck2.png"));
     }
 
     private void progressWorkshop(Workshop workshop) {

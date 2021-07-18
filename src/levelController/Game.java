@@ -702,6 +702,10 @@ public class Game {
     public HashMap<Products, Integer> getTruckProducts() {
         return new HashMap<>(truck.getAmountOfProducts());
     }
+
+    public boolean truckOnRoad() {
+        return truck.onRoad();
+    }
 }
 
 

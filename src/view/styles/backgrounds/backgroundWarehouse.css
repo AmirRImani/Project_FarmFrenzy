@@ -1,0 +1,40 @@
+.list-anchorPane {
+    -fx-background-image: url("/images/backgrounds/backgroundMenu.png");
+    -fx-background-size: 100% 100%;
+}
+
+.continue-button {
+    -fx-background-image: url("/images/iconsAndLabels/continueButton.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.continue-button:hover {
+    -fx-background-image: url("/images/iconsAndLabels/continueButtonOn.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.continue-button:pressed{
+    -fx-background-image: url("/images/iconsAndLabels/continueButtonPressed.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.truckGo-button {
+    -fx-background-image: url("/images/iconsAndLabels/truckGoButton.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.truckGo-button:hover {
+    -fx-background-image: url("/images/iconsAndLabels/truckGoButtonOn.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.truckGo-button:pressed {
+    -fx-background-image: url("/images/iconsAndLabels/truckGoButtonPressed.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
