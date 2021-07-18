@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,7 +23,9 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import levelController.Game;
@@ -32,6 +35,7 @@ import levels.Level;
 import products.Product;
 import products.Products;
 import sharedClasses.TimeProcessor;
+import tasks.Task;
 import workshops.Workshop;
 import workshops.Workshops;
 
@@ -59,6 +63,9 @@ public class GameView implements Initializable {
 
     @FXML
     VBox warehouse1, warehouse2, warehouse3, warehouse4, warehouse5;
+
+    @FXML
+    HBox taskImage, taskLabel;
 
     @FXML
     ImageView imgHen, imgTurkey, imgBuffalo, imgDog, imgCat, imgTurn, imgTruck, imgWell;
@@ -104,6 +111,34 @@ public class GameView implements Initializable {
         imgTurn.setOnMouseClicked(event -> {
             turn(new ActionEvent());
         });
+    }
+
+    private void showTasks() {
+        taskImage.getChildren().clear();
+        taskLabel.getChildren().clear();
+
+        HashSet<Task> tasks = new HashSet<>(game.getTasks());
+        for (Task task : tasks) {
+            ImageView imageView = null;
+            Label label = null;
+            if (task.getType().equals("COIN")) {
+                imageView = new ImageView(new Image("/images/taskIcons/COIN.png"));
+                label = new Label(game.getCoin() + "/" + task.getTarget());
+            } else if (task.getType().equals("CATCH")) {
+                imageView = new ImageView(new Image("/images/taskIcons/" + task.getTypeOfProduct().name() + ".png"));
+                label = new Label(game.amountProduct(task.getTypeOfProduct()) + "/" + task.getTarget());
+            }  if (task.getType().equals("DOMESTIC")) {
+                imageView = new ImageView(new Image("/images/taskIcons/" + task.getTypeOfDomestic().name() + ".png"));
+                label = new Label(game.domeAmount(task.getTypeOfDomestic()) + "/" + task.getTarget());
+            }
+            imageView.setFitWidth(40);
+            imageView.setFitHeight(30);
+            taskImage.getChildren().add(imageView);
+
+            label.setFont(Font.font("System",10));
+            label.setAlignment(Pos.CENTER_LEFT);
+            taskLabel.getChildren().add(label);
+        }
     }
 
     private boolean onProduct(double X, double Y) {
@@ -275,6 +310,14 @@ public class GameView implements Initializable {
 
         if (game.truckOnRoad())
             imgTruck.setImage(new Image("/images/objects/empty2.png"));
+
+        HashSet<Task> tasks = new HashSet<>(game.getTasks());
+        Label[] labels = new Label[tasks.size()];
+        for (int i = 0; i < tasks.size(); i++) {
+            labels[i] = new Label();
+            taskLabel.getChildren().add(labels[i]);
+        }
+        showTasks();
     }
 
     public void setInitial(Game game) {
@@ -296,6 +339,14 @@ public class GameView implements Initializable {
 
         if (game.truckOnRoad())
             imgTruck.setImage(new Image("/images/objects/empty2.png"));
+
+        HashSet<Task> tasks = new HashSet<>(game.getTasks());
+        Label[] labels = new Label[tasks.size()];
+        for (int i = 0; i < tasks.size(); i++) {
+            labels[i] = new Label();
+            taskLabel.getChildren().add(labels[i]);
+        }
+        showTasks();
     }
 
     private HashMap<Product, ImageView> getProductsView() {
@@ -373,6 +424,8 @@ public class GameView implements Initializable {
             gameBoard.getChildren().remove(productsView.get(product));
             productsView.remove(product);
         }
+
+        showTasks();
     }
 
     private void warehouseImages() {
@@ -407,6 +460,7 @@ public class GameView implements Initializable {
             //TODO graphical
             addAnimal(domestic);
             labelCoin.setText(Integer.toString(game.getCoin()));
+            showTasks();
         }
     }
 
@@ -416,6 +470,7 @@ public class GameView implements Initializable {
             //TODO graphical
             addAnimal(domestic);
             labelCoin.setText(Integer.toString(game.getCoin()));
+            showTasks();
         }
     }
 
@@ -425,6 +480,7 @@ public class GameView implements Initializable {
             //TODO graphical
             addAnimal(domestic);
             labelCoin.setText(Integer.toString(game.getCoin()));
+            showTasks();
         }
     }
 
@@ -434,6 +490,7 @@ public class GameView implements Initializable {
             //TODO graphical
             addAnimal(helper);
             labelCoin.setText(Integer.toString(game.getCoin()));
+            showTasks();
         }
     }
 
@@ -443,6 +500,7 @@ public class GameView implements Initializable {
             //TODO graphical
             addAnimal(helper);
             labelCoin.setText(Integer.toString(game.getCoin()));
+            showTasks();
         }
     }
 
@@ -494,6 +552,7 @@ public class GameView implements Initializable {
     public void domeDie(Domestic domestic) {
         gameBoard.getChildren().remove(animalsView.get(domestic));
         animalsView.remove(domestic);
+        showTasks();
     }
 
     public void freeWild(Wild wild) {
@@ -538,6 +597,8 @@ public class GameView implements Initializable {
 
         gameBoard.getChildren().remove(image1);
         animalsView.remove(animal);
+
+        showTasks();
     }
 
     public void decreaseCageResist(Wild wild) {
@@ -552,6 +613,7 @@ public class GameView implements Initializable {
             builtWorkshop(workshop, workshop1);
             labelCoin.setText(Integer.toString(game.getCoin()));
         }
+        showTasks();
     }
 
     private void builtWorkshop(Workshops workshop, Workshop workshop1) {
@@ -624,6 +686,7 @@ public class GameView implements Initializable {
             upgrade(workshop, workshop1);
             labelCoin.setText(Integer.toString(game.getCoin()));
         }
+        showTasks();
     }
 
     private void upgrade(Workshops workshop, Workshop workshop1) {

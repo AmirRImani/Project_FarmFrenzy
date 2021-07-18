@@ -60,6 +60,8 @@ public class Game {
 
     public HashSet<Grass> getGrasses() { return grasses; }
 
+    public HashSet<Task> getTasks() { return tasks; }
+
     public HashSet<Animal> getAnimals() {
         HashSet<Animal> animals = new HashSet<>(domestics);
         animals.addAll(helpers);
@@ -575,49 +577,6 @@ public class Game {
         }
     }
 
-//    public void showDetails(boolean print) {
-//        if(print) {
-//            System.out.println("TURN: " + TimeProcessor.currentStep);
-//            showGrass();
-//            for (Domestic domestic : domestics)
-//                System.out.println(domestic.getName() + " " + domestic.getHealth() + "% [" + domestic.getX() + " " + domestic.getY() + "]");
-//            for (Helper helper : helpers)
-//                System.out.println(helper.getName() + " [" + helper.getX() + " " + helper.getY() + "]");
-//            for (Wild wild : wilds)
-//                System.out.println(wild.getName() + " " + "Cage need: " + wild.getTapNeeded() + " " + " [" + wild.getX() + " " + wild.getY() + "]");
-//            for (Product product : productsOnGround)
-//                System.out.println(product.getNameOfProduct() + " [" + product.getX() + " " + product.getY() + "]");
-//            taskPrint();
-//        }
-//    }
-
-//    private void taskPrint() {
-//        for (Task task : tasks) {
-//            if (task.getType().equals("COIN"))
-//                System.out.println("COIN: " + coin + "/" + task.getTarget());
-//            else if (task.getType().equals("CATCH"))
-//                System.out.println(task.getTypeOfProduct().name() + " " + warehouse.amount(task.getTypeOfProduct()) + "/" + task.getTarget());
-//            else if (task.getType().equals("DOMESTIC"))
-//                System.out.println(task.getTypeOfDomestic().name() + " " + domeAmount(task.getTypeOfDomestic()) + "/" + task.getTarget());
-//        }
-//    }
-
-//    private void showGrass() {
-//        int[][] grass = new int[Board.ROW.getLength()][Board.COLUMN.getLength()];
-//        for (int i = 0; i < Board.ROW.getLength(); i++) {
-//            for (int j = 0; j < Board.COLUMN.getLength(); j++)
-//                grass[i][j] = 0;
-//        }
-//        for (Grass grass1 : grasses)
-//            grass[Board.ROW.getLength() - grass1.getRow()][grass1.getColumn()-1] ++;
-//        for (int i = 0; i < Board.ROW.getLength(); i++) {
-//            for (int j = 0; j < Board.COLUMN.getLength(); j++)
-//                System.out.print(grass[i][j] + "\t");
-//            System.out.println();
-//        }
-//        System.out.println();
-//    }
-
     public boolean checkWin() {
         //TODO if user did all tasks of level
         boolean win = true;
@@ -644,7 +603,7 @@ public class Game {
         return win;
     }
 
-    private int domeAmount(Domestics typeOfDomestic) {
+    public int domeAmount(Domestics typeOfDomestic) {
         String name = typeOfDomestic.name();
         int amount = 0;
         for (Domestic domestic : domestics) {
@@ -652,6 +611,10 @@ public class Game {
                 amount ++;
         }
         return amount;
+    }
+
+    public int amountProduct(Products product) {
+        return warehouse.amount(product);
     }
 
     public void domeHealth() {

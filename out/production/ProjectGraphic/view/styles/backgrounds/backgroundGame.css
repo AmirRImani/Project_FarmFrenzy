@@ -39,6 +39,30 @@
     -fx-image: url("/images/iconsAndLabels/henButtonPressed.png");
 }
 
+.turkey-imageView {
+    -fx-image: url("/images/iconsAndLabels/turkeyButton.png");
+}
+
+.turkey-imageView:hover {
+    -fx-image: url("/images/iconsAndLabels/turkeyButtonOn.png");
+}
+
+.turkey-imageView:pressed {
+    -fx-image: url("/images/iconsAndLabels/turkeyButtonPressed.png");
+}
+
+.buffalo-imageView {
+    -fx-image: url("/images/iconsAndLabels/buffaloButton.png");
+}
+
+.buffalo-imageView:hover {
+    -fx-image: url("/images/iconsAndLabels/buffaloButtonOn.png");
+}
+
+.buffalo-imageView:pressed {
+    -fx-image: url("/images/iconsAndLabels/buffaloButtonPressed.png");
+}
+
 .dog-imageView {
     -fx-image: url("/images/iconsAndLabels/dogButton.png");
 }

@@ -21,8 +21,8 @@
          </padding>
          <children>
             <ImageView fx:id="imgHen" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="hen-imageView" />
-            <ImageView fx:id="imgTurkey" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="dog-imageView" />
-            <ImageView fx:id="imgBuffalo" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="dog-imageView" />
+            <ImageView fx:id="imgTurkey" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="turkey-imageView" />
+            <ImageView fx:id="imgBuffalo" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="buffalo-imageView" />
             <ImageView fx:id="imgDog" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="dog-imageView" />
             <ImageView fx:id="imgCat" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="cat-imageView" />
          </children>
@@ -87,5 +87,7 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <HBox fx:id="taskImage" layoutX="790.0" layoutY="710.0" prefHeight="30.0" prefWidth="200.0" spacing="12.0" />
+      <HBox fx:id="taskLabel" layoutX="790.0" layoutY="745.0" prefHeight="30.0" prefWidth="200.0" spacing="12.0" />
    </children>
 </AnchorPane>
