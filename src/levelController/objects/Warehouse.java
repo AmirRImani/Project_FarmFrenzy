@@ -31,14 +31,6 @@ public class Warehouse {
         return false;
     }
 
-    public boolean enoughAmount(Products product, int amount) {
-        if(!amountOfProduct.containsKey(product))
-            return false;
-        if(amountOfProduct.get(product) >= amount)
-            return true;
-        return false;
-    }
-
 
     public boolean truckLoad(Products product, Truck truck) {
         int amount = truck.getCapacity() / product.getSpace();
@@ -53,6 +45,7 @@ public class Warehouse {
         } else {
             truck.load(product, quantity);
             amountOfProduct.replace(product, amountOfProduct.get(product) - quantity);
+            remainedSpace += quantity * product.getSpace();
             //System.out.println("Truck loaded " + quantity + " " + product.name());
             return true;
         }

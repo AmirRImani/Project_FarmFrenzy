@@ -2,12 +2,14 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="750.0" prefWidth="1000.0" styleClass="bodybg" stylesheets="@styles/backgrounds/backgroundGame.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GameView">
    <children>
@@ -26,7 +28,7 @@
          </children>
       </HBox>
       <AnchorPane fx:id="gameBoard" layoutX="200.0" layoutY="180.0" prefHeight="440.0" prefWidth="600.0" />
-      <ImageView fx:id="imgTurn" fitHeight="50.0" fitWidth="150.0" layoutX="632.0" layoutY="726.0" pickOnBounds="true" preserveRatio="true" styleClass="turn-imageView" />
+      <ImageView fx:id="imgTurn" fitHeight="50.0" fitWidth="150.0" layoutX="624.0" layoutY="725.0" pickOnBounds="true" preserveRatio="true" styleClass="turn-imageView" />
       <ImageView fx:id="milkPacking" fitHeight="140.0" fitWidth="180.0" layoutX="810.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="iceCream" fitHeight="140.0" fitWidth="180.0" layoutX="810.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="sewing" fitHeight="140.0" fitWidth="180.0" layoutX="809.0" layoutY="546.0" pickOnBounds="true" preserveRatio="true" />
@@ -62,5 +64,28 @@
          </image>
       </ImageView>
       <ProgressBar fx:id="progressWell" layoutX="365.0" layoutY="122.0" prefWidth="100.0" progress="1.0" rotate="270.0" />
+      <Label layoutX="624.0" layoutY="680.0" prefHeight="40.0" prefWidth="60.0" styleClass="coin-label" />
+      <Label layoutX="827.0" layoutY="760.0" prefHeight="30.0" prefWidth="42.0" style="-fx-background-color: transparent;" text="Turn: " />
+      <Label fx:id="labelTurn" layoutX="869.0" layoutY="766.0" prefHeight="18.0" prefWidth="42.0" style="-fx-background-color: transparent;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelCoin" alignment="CENTER" layoutX="684.0" layoutY="680.0" prefHeight="40.0" prefWidth="60.0" styleClass="coin2-label" textFill="#796538">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <ProgressBar fx:id="progressTruck" layoutX="107.0" layoutY="46.0" opacity="0.65" prefHeight="18.0" prefWidth="258.0" progress="0.0" />
+      <Label alignment="CENTER" layoutX="190.0" layoutY="20.0" prefHeight="18.0" prefWidth="92.0" style="-fx-background-color: transparent;" text="Truck">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelGoldTime" alignment="CENTER" layoutX="930.0" layoutY="766.0" prefHeight="18.0" prefWidth="42.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

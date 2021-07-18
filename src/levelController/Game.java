@@ -50,6 +50,8 @@ public class Game {
 
     public int getGoldTime() { return goldTime; }
 
+    public int getCoin() { return coin; }
+
     public int getAward() { return award; }
 
     public HashSet<Workshop> getWorkshops() { return workshops; }
@@ -289,20 +291,20 @@ public class Game {
         }
     }
 
-    public boolean upgradeWorkshop(Workshops workshop) {
+    public Workshop upgradeWorkshop(Workshops workshop) {
         for (Workshop workshop1 : workshops) {
             if (workshop1.getName().equals(workshop.name())) {
-                if (coin >= workshop1.getCostToUpgrade() /* && !workshop1.maxLevel() */) { //TODO when workshop1 is maxLevel
-                    workshop1.increaseLevel();                                                 //TODO button should be disabled
+                if (coin >= workshop1.getCostToUpgrade()) {
+                    workshop1.increaseLevel();
                     coin -= workshop1.getCostToUpgrade();
                     //System.out.println("Upgraded successfully");
                     logger.setUseParentHandlers(false);
                     logger.info("Upgraded successfully");
-                    return true;
+                    return workshop1;
                 }
             }
         }
-        return false;
+        return null;
     }
 
     public boolean well() {
@@ -345,7 +347,6 @@ public class Game {
                         Product product = new Product(workshop.getProducedProduct());
                         productsOnGround.add(product);
                         gameView.workshopProduct(workshop, product);
-                        gameView.addProduct(product);
                     }
                 }
             }
@@ -716,6 +717,10 @@ public class Game {
 
     public void wellCheck() {
         well.fullCheck();
+    }
+
+    public double truckProgress() {
+        return truck.progress();
     }
 }
 

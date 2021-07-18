@@ -13,7 +13,7 @@ public class Workshop {
     private Products neededProduct;
     private Products producedProduct;
     private int amountProduct;
-    private int startTime;//TODO start to produce
+    private int startTime;
     private int costToUpgrade;
     private boolean busy;
 
@@ -88,6 +88,9 @@ public class Workshop {
     }
 
     public double progress() {
-       return (TimeProcessor.getInstance().currentStep - startTime)/timeToProduce;
+        double current = TimeProcessor.getInstance().currentStep;
+        double start = startTime;
+        double timeNeed = timeToProduce;
+            return (current - start)/timeNeed;
     }
 }

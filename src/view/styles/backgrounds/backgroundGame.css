@@ -79,5 +79,14 @@
     -fx-background-color: transparent;
 }
 
+.coin-label {
+    -fx-background-image: url("/images/iconsAndLabels/coinLabel.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
 
-
+.coin2-label {
+    -fx-background-image: url("/images/iconsAndLabels/coin.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}

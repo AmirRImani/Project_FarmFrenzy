@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,6 +31,7 @@ import levelController.objects.Grass;
 import levels.Level;
 import products.Product;
 import products.Products;
+import sharedClasses.TimeProcessor;
 import workshops.Workshop;
 import workshops.Workshops;
 
@@ -68,7 +70,10 @@ public class GameView implements Initializable {
     Button buyMill, buyBakery, buyWeaving, buyMilkPacking, buyIceCream, buySewing;
 
     @FXML
-    ProgressBar progressMill, progressBakery, progressWeaving, progressMilkPacking, progressIceCream, progressSewing, progressWell;
+    ProgressBar progressMill, progressBakery, progressWeaving, progressMilkPacking, progressIceCream, progressSewing, progressWell, progressTruck;
+
+    @FXML
+    Label labelCoin, labelTurn, labelGoldTime;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -132,6 +137,7 @@ public class GameView implements Initializable {
                 } mill.setImage(new Image("/images/workshops/MILL.png"));
                 mill.setOnMouseClicked(event -> {
                     game.work(workshop);
+                    warehouseImages();
                 });
             } else if (workshop.getName().equals(Workshops.BAKERY.name())) {
                 found[1] = true;
@@ -145,6 +151,7 @@ public class GameView implements Initializable {
                 } bakery.setImage(new Image("/images/workshops/BAKERY.png"));
                 bakery.setOnMouseClicked(event -> {
                     game.work(workshop);
+                    warehouseImages();
                 });
             } else if (workshop.getName().equals(Workshops.WEAVING.name())) {
                 found[2] = true;
@@ -158,6 +165,7 @@ public class GameView implements Initializable {
                 } weaving.setImage(new Image("/images/workshops/WEAVING.png"));
                 weaving.setOnMouseClicked(event -> {
                     game.work(workshop);
+                    warehouseImages();
                 });
             } else if (workshop.getName().equals(Workshops.MILK_PACKING.name())) {
                 found[3] = true;
@@ -171,6 +179,7 @@ public class GameView implements Initializable {
                 } milkPacking.setImage(new Image("/images/workshops/MILK_PACKING.png"));
                 milkPacking.setOnMouseClicked(event -> {
                     game.work(workshop);
+                    warehouseImages();
                 });
             } else if (workshop.getName().equals(Workshops.ICE_CREAM_SHOP.name())) {
                 found[4] = true;
@@ -184,6 +193,7 @@ public class GameView implements Initializable {
                 } iceCream.setImage(new Image("/images/workshops/ICE_CREAM_SHOP.png"));
                 iceCream.setOnMouseClicked(event -> {
                     game.work(workshop);
+                    warehouseImages();
                 });
             } else if (workshop.getName().equals(Workshops.SEWING.name())) {
                 found[5] = true;
@@ -197,6 +207,7 @@ public class GameView implements Initializable {
                 } sewing.setImage(new Image("/images/workshops/SEWING.png"));
                 sewing.setOnMouseClicked(event -> {
                     game.work(workshop);
+                    warehouseImages();
                 });
             }
         }
@@ -256,6 +267,11 @@ public class GameView implements Initializable {
         initialGrass();
 
         progressWell.setProgress(game.wellProgress());
+        progressTruck.setProgress(game.truckProgress());
+
+        labelCoin.setText(Integer.toString(game.getCoin()));
+        labelTurn.setText(Integer.toString(TimeProcessor.currentStep));
+        labelGoldTime.setText(Integer.toString(game.getGoldTime()));
 
         if (game.truckOnRoad())
             imgTruck.setImage(new Image("/images/objects/empty2.png"));
@@ -272,6 +288,11 @@ public class GameView implements Initializable {
         initialGrass();
 
         progressWell.setProgress(game.wellProgress());
+        progressTruck.setProgress(game.truckProgress());
+
+        labelCoin.setText(Integer.toString(game.getCoin()));
+        labelTurn.setText(Integer.toString(TimeProcessor.currentStep));
+        labelGoldTime.setText(Integer.toString(game.getGoldTime()));
 
         if (game.truckOnRoad())
             imgTruck.setImage(new Image("/images/objects/empty2.png"));
@@ -310,9 +331,9 @@ public class GameView implements Initializable {
             productsView = new HashMap<>();
 
         productsView.put(product, image);
-        gameBoard.getChildren().add(0,image);
+        gameBoard.getChildren().add(image);
 
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), image);
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(1), image);
         transition.setToX(400);
         transition.setToY(450);
         transition.setCycleCount(1);
@@ -354,12 +375,38 @@ public class GameView implements Initializable {
         }
     }
 
+    private void warehouseImages() {
+        warehouse1.getChildren().clear();
+        warehouse2.getChildren().clear();
+        warehouse3.getChildren().clear();
+        warehouse4.getChildren().clear();
+        warehouse5.getChildren().clear();
+        HashSet<Product> products = game.getWarehouseProducts();
+        for (Product product : products) {
+            ImageView image = new ImageView("/images/warehouseItems/" + product.getNameOfProduct() + ".png");
+            image.setFitWidth(24);
+            image.setFitHeight(24);
+
+            if (warehouse1.getChildren().size() < 4)
+                warehouse1.getChildren().add(image);
+            else if (warehouse2.getChildren().size() < 4)
+                warehouse2.getChildren().add(image);
+            else if (warehouse3.getChildren().size() < 4)
+                warehouse3.getChildren().add(image);
+            else if (warehouse4.getChildren().size() < 4)
+                warehouse4.getChildren().add(image);
+            else
+                warehouse5.getChildren().add(image);
+        }
+    }
+
 
     public void addHen(ActionEvent actionEvent) {
         Domestic domestic = game.buyDome(Domestics.HEN);
         if (domestic != null) {
             //TODO graphical
             addAnimal(domestic);
+            labelCoin.setText(Integer.toString(game.getCoin()));
         }
     }
 
@@ -368,6 +415,7 @@ public class GameView implements Initializable {
         if (domestic != null) {
             //TODO graphical
             addAnimal(domestic);
+            labelCoin.setText(Integer.toString(game.getCoin()));
         }
     }
 
@@ -376,6 +424,7 @@ public class GameView implements Initializable {
         if (domestic != null) {
             //TODO graphical
             addAnimal(domestic);
+            labelCoin.setText(Integer.toString(game.getCoin()));
         }
     }
 
@@ -384,6 +433,7 @@ public class GameView implements Initializable {
         if (helper != null) {
             //TODO graphical
             addAnimal(helper);
+            labelCoin.setText(Integer.toString(game.getCoin()));
         }
     }
 
@@ -392,6 +442,7 @@ public class GameView implements Initializable {
         if (helper != null) {
             //TODO graphical
             addAnimal(helper);
+            labelCoin.setText(Integer.toString(game.getCoin()));
         }
     }
 
@@ -447,7 +498,7 @@ public class GameView implements Initializable {
 
     public void freeWild(Wild wild) {
         ImageView image = animalsView.get(wild);
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), image);
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(1), image);
         transition.setToX(805);
         transition.setCycleCount(1);
 
@@ -460,11 +511,11 @@ public class GameView implements Initializable {
     public void dogAttack(Dog dog, Wild wild) {
         ImageView image1 = animalsView.get(dog);
         ImageView image2 = animalsView.get(wild);
-        TranslateTransition transition1 = new TranslateTransition(Duration.seconds(0.5), image1);
+        TranslateTransition transition1 = new TranslateTransition(Duration.seconds(1), image1);
         transition1.setToX(805);
         transition1.setCycleCount(1);
 
-        TranslateTransition transition2 = new TranslateTransition(Duration.seconds(0.5), image2);
+        TranslateTransition transition2 = new TranslateTransition(Duration.seconds(1), image2);
         transition2.setToX(805);
         transition2.setCycleCount(1);
 
@@ -479,7 +530,7 @@ public class GameView implements Initializable {
 
     public void wildAttack(Animal animal) {
         ImageView image1 = animalsView.get(animal);
-        TranslateTransition transition1 = new TranslateTransition(Duration.seconds(0.5), image1);
+        TranslateTransition transition1 = new TranslateTransition(Duration.seconds(1), image1);
         transition1.setToX(805);
         transition1.setCycleCount(1);
 
@@ -499,6 +550,7 @@ public class GameView implements Initializable {
         Workshop workshop1 = game.build(workshop);
         if (workshop1 != null) {
             builtWorkshop(workshop, workshop1);
+            labelCoin.setText(Integer.toString(game.getCoin()));
         }
     }
 
@@ -506,6 +558,7 @@ public class GameView implements Initializable {
         if (workshop == Workshops.MILL) {
             mill.setOnMouseClicked(event -> {
                 game.work(workshop1);
+                warehouseImages();
             });
             buyMill.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
             buyMill.setOnAction(event -> {
@@ -515,6 +568,7 @@ public class GameView implements Initializable {
         } else if (workshop == Workshops.BAKERY) {
             bakery.setOnMouseClicked(event -> {
                 game.work(workshop1);
+                warehouseImages();
             });
             buyBakery.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
             buyBakery.setOnAction(event -> {
@@ -524,6 +578,7 @@ public class GameView implements Initializable {
         } else if (workshop == Workshops.WEAVING) {
             weaving.setOnMouseClicked(event -> {
                 game.work(workshop1);
+                warehouseImages();
             });
             buyWeaving.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
             buyWeaving.setOnAction(event -> {
@@ -533,6 +588,7 @@ public class GameView implements Initializable {
         } else if (workshop == Workshops.MILK_PACKING) {
             milkPacking.setOnMouseClicked(event -> {
                 game.work(workshop1);
+                warehouseImages();
             });
             buyMilkPacking.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
             buyMilkPacking.setOnAction(event -> {
@@ -542,6 +598,7 @@ public class GameView implements Initializable {
         } else if (workshop == Workshops.ICE_CREAM_SHOP) {
             iceCream.setOnMouseClicked(event -> {
                 game.work(workshop1);
+                warehouseImages();
             });
             buyIceCream.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
             buyIceCream.setOnAction(event -> {
@@ -551,6 +608,7 @@ public class GameView implements Initializable {
         } else if (workshop == Workshops.SEWING) {
             sewing.setOnMouseClicked(event -> {
                 game.work(workshop1);
+                warehouseImages();
             });
             buySewing.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
             buySewing.setOnAction(event -> {
@@ -561,14 +619,60 @@ public class GameView implements Initializable {
     }
 
     private void upgradeWorkshop(Workshops workshop) {
-        //TODO
-        if (game.upgradeWorkshop(workshop)) {
+        Workshop workshop1 = game.upgradeWorkshop(workshop);
+        if (workshop1 != null) {
+            upgrade(workshop, workshop1);
+            labelCoin.setText(Integer.toString(game.getCoin()));
+        }
+    }
 
+    private void upgrade(Workshops workshop, Workshop workshop1) {
+        if (workshop == Workshops.MILL) {
+            if (workshop1.maxLevel()) {
+                buyMill.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                buyMill.setOnAction(event -> {
+
+                });
+            }
+        } else if (workshop == Workshops.BAKERY) {
+            if (workshop1.maxLevel()) {
+                buyBakery.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                buyBakery.setOnAction(event -> {
+
+                });
+            }
+        } else if (workshop == Workshops.WEAVING) {
+            if (workshop1.maxLevel()) {
+                buyWeaving.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                buyWeaving.setOnAction(event -> {
+
+                });
+            }
+        } else if (workshop == Workshops.MILK_PACKING) {
+            if (workshop1.maxLevel()) {
+                buyMilkPacking.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                buyMilkPacking.setOnAction(event -> {
+
+                });
+            }
+        } else if (workshop == Workshops.ICE_CREAM_SHOP) {
+            if (workshop1.maxLevel()) {
+                buyIceCream.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                buyIceCream.setOnAction(event -> {
+
+                });
+            }
+        } else if (workshop == Workshops.SEWING) {
+            if (workshop1.maxLevel()) {
+                buySewing.getStylesheets().add("/view/styles/buttonStyles/upgradeButtonOff.css");
+                buySewing.setOnAction(event -> {
+
+                });
+            }
         }
     }
 
     private void well() {
-        //TODO
         game.well();
     }
 
@@ -581,22 +685,27 @@ public class GameView implements Initializable {
             progressWorkshop(workshop);
         }
 
+        progressTruck.setProgress(game.truckProgress());
+
+        labelCoin.setText(Integer.toString(game.getCoin()));
+        labelTurn.setText(Integer.toString(TimeProcessor.currentStep));
+
         if (!game.truckOnRoad())
             imgTruck.setImage(new Image("/images/objects/truck2.png"));
     }
 
     private void progressWorkshop(Workshop workshop) {
-        if (workshop.getName().equals(Workshops.MILL.name()) && workshop.isBusy())
+        if (workshop.getName().equals(Workshops.MILL.name()))
             progressMill.setProgress(workshop.progress());
-        else if (workshop.getName().equals(Workshops.BAKERY.name()) && workshop.isBusy())
+        else if (workshop.getName().equals(Workshops.BAKERY.name()))
             progressBakery.setProgress(workshop.progress());
-        else if (workshop.getName().equals(Workshops.WEAVING.name()) && workshop.isBusy())
+        else if (workshop.getName().equals(Workshops.WEAVING.name()))
             progressWeaving.setProgress(workshop.progress());
-        else if (workshop.getName().equals(Workshops.MILK_PACKING.name()) && workshop.isBusy())
+        else if (workshop.getName().equals(Workshops.MILK_PACKING.name()))
             progressMilkPacking.setProgress(workshop.progress());
-        else if (workshop.getName().equals(Workshops.ICE_CREAM_SHOP.name()) && workshop.isBusy())
+        else if (workshop.getName().equals(Workshops.ICE_CREAM_SHOP.name()))
             progressIceCream.setProgress(workshop.progress());
-        else if (workshop.getName().equals(Workshops.SEWING.name()) && workshop.isBusy())
+        else if (workshop.getName().equals(Workshops.SEWING.name()))
                 progressSewing.setProgress(workshop.progress());
     }
 

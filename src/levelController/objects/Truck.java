@@ -47,6 +47,7 @@ public class Truck {
                 //System.out.println("Warehouse doesn't have enough space");
                 return false;
             } else {
+                amountOfProducts.replace(product, amountOfProducts.get(product) - quantity);
                 this.remainedCapacity += quantity * product.getSpace();
                 warehouse.addProduct(product, quantity);
                 //System.out.println("Truck unloaded " + quantity + " " + product.name());
@@ -93,5 +94,12 @@ public class Truck {
         if(startToGo)
             return true;
         return false;
+    }
+
+    public double progress() {
+        double current = TimeProcessor.currentStep;
+        double start = startTime;
+        double travelTime = TIME_OF_TRAVEL;
+        return (current - start)/travelTime;
     }
 }
