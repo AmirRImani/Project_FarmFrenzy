@@ -200,10 +200,13 @@ public class Game {
     }
 
     //TODO maybe this function should be written again
-    public void work(Workshop workshop) { //TODO initial variables should be changed
-        workshop.work(warehouse);
-                    logger.setUseParentHandlers(false);
-                    logger.fine("Workshop " + workshop.getName() + " started to produce");
+    public boolean work(Workshop workshop) { //TODO initial variables should be changed
+        if (workshop.work(warehouse)) {
+            logger.setUseParentHandlers(false);
+            logger.fine("Workshop " + workshop.getName() + " started to produce");
+            return true;
+        }
+        return false;
     }
 
     //TODO another function for cage
@@ -269,7 +272,7 @@ public class Game {
         return this.truck.unload(product, this.warehouse);
     }
 
-    public boolean build(Workshops workshop) {
+    public Workshop build(Workshops workshop) {
         if(coin >= workshop.getCost()) {
             Workshop workshop1 = new Workshop(workshop);
             workshops.add(workshop1);
@@ -277,12 +280,12 @@ public class Game {
             //System.out.println("Built successfully");
             logger.setUseParentHandlers(false);
             logger.info("Built successfully");
-            return true;
+            return workshop1;
         } else{
             //System.out.println("Not enough coin to build this workshop");
             logger.setUseParentHandlers(false);
             logger.info("Not enough coin to build this workshop!");
-            return false;
+            return null;
         }
     }
 

@@ -494,22 +494,69 @@ public class GameView implements Initializable {
     }
 
 
-    private void truckLoad() {
-        //TODO
-    }
-
-    private void truckUnLoad() {
-        //TODO
-    }
-
-    private void truckGo() {
-        //TODO
-    }
-
     private void buildWorkshop(Workshops workshop) {
         //TODO
-        if (game.build(workshop)) {
+        Workshop workshop1 = game.build(workshop);
+        if (workshop1 != null) {
+            builtWorkshop(workshop, workshop1);
+        }
+    }
 
+    private void builtWorkshop(Workshops workshop, Workshop workshop1) {
+        if (workshop == Workshops.MILL) {
+            mill.setOnMouseClicked(event -> {
+                game.work(workshop1);
+            });
+            buyMill.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+            buyMill.setOnAction(event -> {
+                upgradeWorkshop(Workshops.MILL);
+            });
+            mill.setImage(new Image("/images/workshops/MILL.png"));
+        } else if (workshop == Workshops.BAKERY) {
+            bakery.setOnMouseClicked(event -> {
+                game.work(workshop1);
+            });
+            buyBakery.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+            buyBakery.setOnAction(event -> {
+                upgradeWorkshop(Workshops.BAKERY);
+            });
+            bakery.setImage(new Image("/images/workshops/BAKERY.png"));
+        } else if (workshop == Workshops.WEAVING) {
+            weaving.setOnMouseClicked(event -> {
+                game.work(workshop1);
+            });
+            buyWeaving.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+            buyWeaving.setOnAction(event -> {
+                upgradeWorkshop(Workshops.WEAVING);
+            });
+            weaving.setImage(new Image("/images/workshops/WEAVING.png"));
+        } else if (workshop == Workshops.MILK_PACKING) {
+            milkPacking.setOnMouseClicked(event -> {
+                game.work(workshop1);
+            });
+            buyMilkPacking.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+            buyMilkPacking.setOnAction(event -> {
+                upgradeWorkshop(Workshops.MILK_PACKING);
+            });
+            milkPacking.setImage(new Image("/images/workshops/MILK_PACKING.png"));
+        } else if (workshop == Workshops.ICE_CREAM_SHOP) {
+            iceCream.setOnMouseClicked(event -> {
+                game.work(workshop1);
+            });
+            buyIceCream.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+            buyIceCream.setOnAction(event -> {
+                upgradeWorkshop(Workshops.ICE_CREAM_SHOP);
+            });
+            iceCream.setImage(new Image("/images/workshops/ICE_CREAM_SHOP.png"));
+        } else if (workshop == Workshops.SEWING) {
+            sewing.setOnMouseClicked(event -> {
+                game.work(workshop1);
+            });
+            buySewing.getStylesheets().add("/view/styles/buttonStyles/upgradeButton.css");
+            buySewing.setOnAction(event -> {
+                upgradeWorkshop(Workshops.SEWING);
+            });
+            sewing.setImage(new Image("/images/workshops/SEWING.png"));
         }
     }
 
