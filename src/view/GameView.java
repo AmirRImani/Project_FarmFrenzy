@@ -136,7 +136,8 @@ public class GameView implements Initializable {
             imageView.setFitHeight(30);
             taskImage.getChildren().add(imageView);
 
-            label.setFont(Font.font("System",10));
+            label.setFont(Font.font("System",8));
+            label.setPrefWidth(40);
             label.setAlignment(Pos.CENTER_LEFT);
             taskLabel.getChildren().add(label);
         }
@@ -383,17 +384,23 @@ public class GameView implements Initializable {
     private ImageView addCage(Cage cage) {
         HashSet<Cage> cages = new HashSet<>(game.getCages());
 
-        ImageView imageView = new ImageView(new Image("/images/objects/CAGE" + cage.getCageLevel() + ".png"));
-        imageView.setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (cage.getX() - 1) * WIDTH/Board.COLUMN.getLength());
-        imageView.setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (cage.getY() - 1) * HEIGHT/Board.ROW.getLength());
-        imageView.setFitWidth(60);
-        imageView.setFitHeight(60);
+        if (cage.getCageLevel() <= 0) {
+            gameBoard.getChildren().remove(cagesView.get(cage));
+            cagesView.remove(cage);
+            return null;
+        } else {
+            ImageView imageView = new ImageView(new Image("/images/objects/CAGE" + cage.getCageLevel() + ".png"));
+            imageView.setLayoutX(WIDTH / (2 * Board.COLUMN.getLength()) + (cage.getX() - 1) * WIDTH / Board.COLUMN.getLength());
+            imageView.setLayoutY(HEIGHT / (2 * Board.ROW.getLength()) + (cage.getY() - 1) * HEIGHT / Board.ROW.getLength());
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
 
-        if (!gameBoard.getChildren().contains(cagesView.get(cage))) {
-            cagesView.put(cage, imageView);
-            gameBoard.getChildren().add(imageView);
+            if (!gameBoard.getChildren().contains(cagesView.get(cage))) {
+                cagesView.put(cage, imageView);
+                gameBoard.getChildren().add(imageView);
+            }
+            return imageView;
         }
-        return imageView;
     }
 
 
@@ -809,9 +816,14 @@ public class GameView implements Initializable {
         }
 
         for (Cage cage : cagesView.keySet()) {
-            cagesView.get(cage).setImage(new Image("/images/objects/CAGE" + cage.getCageLevel() + ".png"));
-            cagesView.get(cage).setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (cage.getX() - 1) * WIDTH/Board.COLUMN.getLength());
-            cagesView.get(cage).setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (cage.getY() - 1) * HEIGHT/Board.ROW.getLength());
+            if (cage.getCageLevel() <= 0) {
+                gameBoard.getChildren().remove(cagesView.get(cage));
+                cagesView.remove(cage);
+            } else {
+                cagesView.get(cage).setImage(new Image("/images/objects/CAGE" + cage.getCageLevel() + ".png"));
+                cagesView.get(cage).setLayoutX(WIDTH / (2 * Board.COLUMN.getLength()) + (cage.getX() - 1) * WIDTH / Board.COLUMN.getLength());
+                cagesView.get(cage).setLayoutY(HEIGHT / (2 * Board.ROW.getLength()) + (cage.getY() - 1) * HEIGHT / Board.ROW.getLength());
+            }
         }
 
         progressWell.setProgress(game.wellProgress());
