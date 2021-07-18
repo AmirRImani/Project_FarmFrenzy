@@ -1,0 +1,13 @@
+[INFO], 18/Jul/2021 - 20:33:59, Built successfully
+[INFO], 18/Jul/2021 - 20:34:03, Can't start to water well
+[INFO], 18/Jul/2021 - 20:34:04, Not enough coin to buy!
+[FINE], 18/Jul/2021 - 20:34:05, Buying has been done!
+[INFO], 18/Jul/2021 - 20:34:13, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 20:34:13, Grass planted
+[INFO], 18/Jul/2021 - 20:34:13, Grass planted
+[INFO], 18/Jul/2021 - 20:34:13, Grass planted
+[INFO], 18/Jul/2021 - 20:34:14, Grass planted
+[INFO], 18/Jul/2021 - 20:34:14, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 20:34:14, Grass planted
+[INFO], 18/Jul/2021 - 20:34:15, Water needed
+[INFO], 18/Jul/2021 - 20:34:15, Water needed
