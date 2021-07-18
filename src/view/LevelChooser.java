@@ -12,10 +12,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import levels.Level;
 import levels.LevelsOperation;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,6 +36,7 @@ public class LevelChooser implements Initializable {
     AnchorPane anchorpane;
 
     public void setInitial(User user) {
+        music();
         this.user = user;
         numberOfLevels = LevelsOperation.NUMBER_OF_LEVELS;
         unlockedLevels = user.getUnlockedLevels();
@@ -61,7 +65,6 @@ public class LevelChooser implements Initializable {
             anchorpane.getChildren().add(buttons[i]);
         }
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -102,6 +105,18 @@ public class LevelChooser implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+
+    MediaPlayer mediaPlayer;
+    public void music() {
+
+        String path = getClass().getResource("/musics/Antarctica.mp3").getPath();
+        Media media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(-1);
+        mediaPlayer.play();
+
     }
 
 }
