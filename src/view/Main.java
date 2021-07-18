@@ -8,8 +8,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.scene.media.*;
+
+
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
 public class Main extends Application {
 
@@ -22,7 +26,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(icon);
         primaryStage.show();
-
+     ;
         primaryStage.setOnCloseRequest(event -> {
             event.consume();
             try {
@@ -31,11 +35,13 @@ public class Main extends Application {
                 e.printStackTrace();
             }
         });
+
     }
 
 
     public static void main(String[] args) {
         launch(args);
+
     }
 
     public void exit(Stage stage) throws IOException {
@@ -50,4 +56,5 @@ public class Main extends Application {
             System.exit(1);
         }
     }
+
 }
