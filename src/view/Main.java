@@ -8,7 +8,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.scene.media.*;
+import java.nio.file.Paths;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 
 
@@ -26,7 +28,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(icon);
         primaryStage.show();
-     ;
+        music();
         primaryStage.setOnCloseRequest(event -> {
             event.consume();
             try {
@@ -35,6 +37,7 @@ public class Main extends Application {
                 e.printStackTrace();
             }
         });
+
 
     }
 
@@ -55,6 +58,13 @@ public class Main extends Application {
         if(aLert.showAndWait().get() == ButtonType.YES) {
             System.exit(1);
         }
+    }
+    MediaPlayer mediaPlayer;
+    public void music() {
+        String s = "/view/Main Menu.mp3";
+        Media h = new Media(Paths.get(s).toUri().toString());
+        mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.play();
     }
 
 }

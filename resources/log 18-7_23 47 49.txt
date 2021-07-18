@@ -1,0 +1,111 @@
+[FINE], 18/Jul/2021 - 23:47:55, Buying has been done!
+[FINE], 18/Jul/2021 - 23:47:57, Buying has been done!
+[INFO], 18/Jul/2021 - 23:47:58, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:47:59, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:47:59, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:47:59, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:48:00, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:48:00, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:48:00, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:48:01, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:48:08, Grass planted
+[INFO], 18/Jul/2021 - 23:48:08, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:48:08, Grass planted
+[INFO], 18/Jul/2021 - 23:48:14, Grass planted
+[FINE], 18/Jul/2021 - 23:48:14, New cage on 6, 4
+[INFO], 18/Jul/2021 - 23:48:14, Grass planted
+[INFO], 18/Jul/2021 - 23:48:14, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:14, Grass planted
+[INFO], 18/Jul/2021 - 23:48:15, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:15, Water needed
+[INFO], 18/Jul/2021 - 23:48:15, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:15, Water needed
+[INFO], 18/Jul/2021 - 23:48:18, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:48:18, Water needed
+[INFO], 18/Jul/2021 - 23:48:19, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:48:19, Water needed
+[INFO], 18/Jul/2021 - 23:48:21, Water needed
+[INFO], 18/Jul/2021 - 23:48:23, Water needed
+[INFO], 18/Jul/2021 - 23:48:24, Water needed
+[INFO], 18/Jul/2021 - 23:48:24, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:48:24, Water needed
+[INFO], 18/Jul/2021 - 23:48:29, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:48:29, Water needed
+[FINE], 18/Jul/2021 - 23:48:30, New cage on 3, 8
+[INFO], 18/Jul/2021 - 23:48:30, Water needed
+[INFO], 18/Jul/2021 - 23:48:31, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:31, Water needed
+[INFO], 18/Jul/2021 - 23:48:32, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:32, Water needed
+[INFO], 18/Jul/2021 - 23:48:33, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:33, Water needed
+[INFO], 18/Jul/2021 - 23:48:33, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:33, Water needed
+[INFO], 18/Jul/2021 - 23:48:33, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:33, Water needed
+[INFO], 18/Jul/2021 - 23:48:33, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:33, Water needed
+[INFO], 18/Jul/2021 - 23:48:33, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:33, Water needed
+[INFO], 18/Jul/2021 - 23:48:34, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:34, Water needed
+[INFO], 18/Jul/2021 - 23:48:34, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:34, Water needed
+[INFO], 18/Jul/2021 - 23:48:34, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:34, Water needed
+[INFO], 18/Jul/2021 - 23:48:34, Cage can't be used. You used it on this cage in this step
+[INFO], 18/Jul/2021 - 23:48:34, Water needed
+[INFO], 18/Jul/2021 - 23:48:37, Water needed
+[FINE], 18/Jul/2021 - 23:48:38, Cage on [ 2 8 ] resistance increased
+[INFO], 18/Jul/2021 - 23:48:38, Water needed
+[FINE], 18/Jul/2021 - 23:48:41, Cage on [ 2 7 ] resistance increased
+[INFO], 18/Jul/2021 - 23:48:41, Water needed
+[FINE], 18/Jul/2021 - 23:48:44, Wild BEAR on [2 7 ] has been caught
+[INFO], 18/Jul/2021 - 23:48:44, Water needed
+[INFO], 18/Jul/2021 - 23:48:46, Water needed
+[INFO], 18/Jul/2021 - 23:48:47, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:48:47, Water needed
+[INFO], 18/Jul/2021 - 23:48:48, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:48:48, Water needed
+[INFO], 18/Jul/2021 - 23:48:50, Water needed
+[INFO], 18/Jul/2021 - 23:48:52, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:48:52, Water needed
+[INFO], 18/Jul/2021 - 23:48:56, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:48:56, Water needed
+[INFO], 18/Jul/2021 - 23:48:58, Water needed
+[INFO], 18/Jul/2021 - 23:49:17, Watering well started.
+[INFO], 18/Jul/2021 - 23:49:17, Can't start to water well
+[INFO], 18/Jul/2021 - 23:49:18, Can't start to water well
+[INFO], 18/Jul/2021 - 23:49:20, Can't start to water well
+[INFO], 18/Jul/2021 - 23:49:20, Can't start to water well
+[INFO], 18/Jul/2021 - 23:49:20, Can't start to water well
+[INFO], 18/Jul/2021 - 23:49:22, Can't start to water well
+[INFO], 18/Jul/2021 - 23:49:25, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:49:25, Grass planted
+[INFO], 18/Jul/2021 - 23:49:26, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:49:26, Grass planted
+[FINE], 18/Jul/2021 - 23:49:27, New cage on 4, 8
+[INFO], 18/Jul/2021 - 23:49:27, Grass planted
+[INFO], 18/Jul/2021 - 23:49:27, Grass planted
+[INFO], 18/Jul/2021 - 23:49:28, Grass planted
+[INFO], 18/Jul/2021 - 23:49:28, Water needed
+[INFO], 18/Jul/2021 - 23:49:28, Water needed
+[INFO], 18/Jul/2021 - 23:49:28, Water needed
+[INFO], 18/Jul/2021 - 23:49:39, Transporting started
+[INFO], 18/Jul/2021 - 23:49:45, Truck is on road
+[INFO], 18/Jul/2021 - 23:49:49, Truck is on road
+[INFO], 18/Jul/2021 - 23:49:49, Truck is on road
+[INFO], 18/Jul/2021 - 23:49:49, Truck is on road
+[INFO], 18/Jul/2021 - 23:49:53, Truck is on road
+[INFO], 18/Jul/2021 - 23:49:54, Truck is on road
+[INFO], 18/Jul/2021 - 23:49:54, Truck is on road
+[INFO], 18/Jul/2021 - 23:49:55, Truck is on road
+[INFO], 18/Jul/2021 - 23:49:55, Truck is on road
+[INFO], 18/Jul/2021 - 23:49:56, Truck is on road
+[INFO], 18/Jul/2021 - 23:49:56, Truck is on road
+[INFO], 18/Jul/2021 - 23:49:57, Truck is on road
+[INFO], 18/Jul/2021 - 23:53:46, Truck is on road
+[INFO], 18/Jul/2021 - 23:53:46, Truck is on road
+[INFO], 18/Jul/2021 - 23:53:46, Truck is on road
+[INFO], 18/Jul/2021 - 23:53:46, Truck is on road
+[INFO], 18/Jul/2021 - 23:53:47, Truck is on road

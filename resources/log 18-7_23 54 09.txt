@@ -1,0 +1,29 @@
+[FINE], 18/Jul/2021 - 23:54:17, Buying has been done!
+[FINE], 18/Jul/2021 - 23:54:18, Buying has been done!
+[FINE], 18/Jul/2021 - 23:54:19, Buying has been done!
+[INFO], 18/Jul/2021 - 23:54:24, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:54:24, Grass planted
+[INFO], 18/Jul/2021 - 23:54:27, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:54:28, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:54:28, Grass planted
+[INFO], 18/Jul/2021 - 23:54:29, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:54:29, Grass planted
+[INFO], 18/Jul/2021 - 23:54:31, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:54:31, Grass planted
+[INFO], 18/Jul/2021 - 23:54:32, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:54:32, Grass planted
+[INFO], 18/Jul/2021 - 23:54:39, Watering well started.
+[INFO], 18/Jul/2021 - 23:54:40, Can't start to water well
+[INFO], 18/Jul/2021 - 23:54:42, Can't start to water well
+[INFO], 18/Jul/2021 - 23:54:43, Can't start to water well
+[INFO], 18/Jul/2021 - 23:54:43, Can't start to water well
+[INFO], 18/Jul/2021 - 23:54:43, Can't start to water well
+[INFO], 18/Jul/2021 - 23:54:43, Can't start to water well
+[INFO], 18/Jul/2021 - 23:54:45, There isn't any product on this coordinate 
+[INFO], 18/Jul/2021 - 23:54:46, Water needed
+[INFO], 18/Jul/2021 - 23:54:47, Water needed
+[INFO], 18/Jul/2021 - 23:54:47, Water needed
+[INFO], 18/Jul/2021 - 23:54:48, Water needed
+[INFO], 18/Jul/2021 - 23:54:49, Water needed
+[INFO], 18/Jul/2021 - 23:54:50, Water needed
+[INFO], 18/Jul/2021 - 23:54:59, Transporting started

@@ -1,0 +1,17 @@
+[INFO], 18/Jul/2021 - 23:46:43, Built successfully
+[INFO], 18/Jul/2021 - 23:46:46, Not enough coin to buy!
+[INFO], 18/Jul/2021 - 23:46:49, Not enough coin to buy!
+[INFO], 18/Jul/2021 - 23:46:49, Grass planted
+[INFO], 18/Jul/2021 - 23:47:02, Not enough coin to buy! 
+[INFO], 18/Jul/2021 - 23:47:02, Not enough coin to buy!
+[INFO], 18/Jul/2021 - 23:47:04, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:47:05, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:47:05, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:47:06, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:47:06, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:47:07, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:47:08, Not enough coin to buy! 
+[INFO], 18/Jul/2021 - 23:47:10, Not enough coin to buy! 
+[INFO], 18/Jul/2021 - 23:47:10, Not enough coin to buy! 
+[INFO], 18/Jul/2021 - 23:47:11, Not enough coin to build this workshop!
+[INFO], 18/Jul/2021 - 23:47:12, Not enough coin to build this workshop!

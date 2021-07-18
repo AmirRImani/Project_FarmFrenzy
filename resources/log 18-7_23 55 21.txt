@@ -1,0 +1,3 @@
+[INFO], 18/Jul/2021 - 23:55:33, Transporting started
+[INFO], 18/Jul/2021 - 23:55:34, Truck is on road
+[INFO], 18/Jul/2021 - 23:57:04, Truck is on road
