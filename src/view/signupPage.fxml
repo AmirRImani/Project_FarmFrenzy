@@ -32,9 +32,9 @@
             <Font name="Verdana Bold" size="64.0" />
          </font>
       </Label>
-      <Label fx:id="labelSignup" alignment="CENTER" layoutX="256.0" layoutY="67.0" prefHeight="83.0" prefWidth="318.0" textFill="RED">
+      <Label fx:id="labelSignup" alignment="CENTER" layoutX="297.0" layoutY="90.0" prefHeight="102.0" prefWidth="405.0" textFill="RED">
          <font>
-            <Font name="Verdana" size="17.0" />
+            <Font name="Verdana" size="24.0" />
          </font>
       </Label>
       <TextField fx:id="txtUsername" layoutX="430.0" layoutY="251.0" prefHeight="40.0" prefWidth="250.0" promptText="Username">
