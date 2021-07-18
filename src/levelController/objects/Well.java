@@ -8,8 +8,6 @@ public class Well {
     private float amountOfWater;
     private boolean startToWater;
     private int startTime;
-    //TODO these methods can be used in sharedClasses.TimeProcessor
-
 
     public Well() {
         this.amountOfWater = this.HIGHEST_AMOUNT;
@@ -28,7 +26,6 @@ public class Well {
     }
 
     public boolean water(){
-        //TODO first check isEmpty then water
         if(isEmpty() && !startToWater) {
             startTime = TimeProcessor.getInstance().currentStep;
             startToWater = true;
@@ -49,4 +46,14 @@ public class Well {
         return false;
     }
 
+    public double progress() {
+        return amountOfWater/HIGHEST_AMOUNT;
+    }
+
+    public void fullCheck() {
+        if(TimeProcessor.getInstance().currentStep >= startTime + TIME_TO_FULL && startToWater){
+            amountOfWater = HIGHEST_AMOUNT;
+            startToWater = false;
+        }
+    }
 }

@@ -87,7 +87,7 @@ public class Workshop {
         return false;
     }
 
-    public int progress() {
+    public double progress() {
        return (TimeProcessor.getInstance().currentStep - startTime)/timeToProduce;
     }
 }

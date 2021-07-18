@@ -33,6 +33,7 @@ public class TimeProcessor {
         game.workshopProducts(gameView);
         game.domesticProducts(gameView);
         game.feedAnimals(gameView);
+        game.wellCheck();
         game.domeHealth();
         game.domeDie(gameView);
         game.appearWilds(gameView);

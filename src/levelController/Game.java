@@ -706,6 +706,14 @@ public class Game {
     public boolean truckOnRoad() {
         return truck.onRoad();
     }
+
+    public double wellProgress() {
+        return well.progress();
+    }
+
+    public void wellCheck() {
+        well.fullCheck();
+    }
 }
 
 

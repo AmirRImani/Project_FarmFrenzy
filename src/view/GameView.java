@@ -59,7 +59,7 @@ public class GameView implements Initializable {
     VBox warehouse1, warehouse2, warehouse3, warehouse4, warehouse5;
 
     @FXML
-    ImageView imgHen, imgTurkey, imgBuffalo, imgDog, imgCat, imgTurn, imgTruck;
+    ImageView imgHen, imgTurkey, imgBuffalo, imgDog, imgCat, imgTurn, imgTruck, imgWell;
 
     @FXML
     ImageView mill, bakery, weaving, milkPacking, iceCream, sewing;
@@ -68,13 +68,17 @@ public class GameView implements Initializable {
     Button buyMill, buyBakery, buyWeaving, buyMilkPacking, buyIceCream, buySewing;
 
     @FXML
-    ProgressBar progressMill, progressBakery, progressWeaving, progressMilkPacking, progressIceCream, progressSewing;
+    ProgressBar progressMill, progressBakery, progressWeaving, progressMilkPacking, progressIceCream, progressSewing, progressWell;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         gameBoard.setOnMouseClicked(event -> {
             if (!onProduct(event.getX(), event.getY()))
                 addGrass(event.getX(), event.getY());
+        });
+
+        imgWell.setOnMouseClicked(event -> {
+            well();
         });
 
         imgHen.setOnMouseClicked(event -> {
@@ -251,6 +255,8 @@ public class GameView implements Initializable {
         cages = new HashMap<>(); //TODO
         initialGrass();
 
+        progressWell.setProgress(game.wellProgress());
+
         if (game.truckOnRoad())
             imgTruck.setImage(new Image("/images/objects/empty2.png"));
     }
@@ -264,6 +270,8 @@ public class GameView implements Initializable {
         getAnimalsView();
         cages = new HashMap<>(); //TODO
         initialGrass();
+
+        progressWell.setProgress(game.wellProgress());
 
         if (game.truckOnRoad())
             imgTruck.setImage(new Image("/images/objects/empty2.png"));
@@ -514,10 +522,7 @@ public class GameView implements Initializable {
 
     private void well() {
         //TODO
-        if (game.well()) {
-
-        }
-
+        game.well();
     }
 
 
@@ -553,6 +558,8 @@ public class GameView implements Initializable {
             animalsView.get(animal).setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (animal.getX() - 1) * WIDTH/Board.COLUMN.getLength());
             animalsView.get(animal).setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (animal.getY() - 1) * HEIGHT/Board.ROW.getLength());
         }
+
+        progressWell.setProgress(game.wellProgress());
     }
 
     private void initialGrass() {
@@ -585,6 +592,8 @@ public class GameView implements Initializable {
 
             grassViews.put(grass, image);
             gameBoard.getChildren().add(0, image);
+
+            progressWell.setProgress(game.wellProgress());
         }
     }
 
