@@ -697,6 +697,10 @@ public class Game {
     public void removeCage(Cage cage) {
         cages.remove(cage);
     }
+
+    public int getRemained() {
+        return warehouse.getSpace();
+    }
 }
 
 

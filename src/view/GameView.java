@@ -86,7 +86,7 @@ public class GameView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         gameBoard.setOnMouseClicked(event -> {
-            if (!onProduct(event.getX(), event.getY()))
+            if (!onProduct(event.getX(), event.getY()) && !onWild(event.getX(), event.getY()))
                 addGrass(event.getX(), event.getY());
         });
 
@@ -143,13 +143,22 @@ public class GameView implements Initializable {
         }
     }
 
+    private boolean onWild(double X, double Y) {
+        int x = Math.toIntExact(Math.round((X + WIDTH/(2 * Board.COLUMN.getLength()))/(WIDTH/Board.COLUMN.getLength()) + 1));
+        int y = Math.toIntExact(Math.round((Y + HEIGHT/(2 * Board.ROW.getLength()))/(HEIGHT/Board.ROW.getLength()) + 1));
+
+        for (Animal animal : animalsView.keySet()) {
+            if(animal instanceof Wild && animal.getX() == x && animal.getY() == y)
+                return true;
+        }
+        return false;
+    }
+
     private boolean onProduct(double X, double Y) {
         int x = Math.toIntExact(Math.round((X + WIDTH/(2 * Board.COLUMN.getLength()))/(WIDTH/Board.COLUMN.getLength()) + 1));
         int y = Math.toIntExact(Math.round((Y + HEIGHT/(2 * Board.ROW.getLength()))/(HEIGHT/Board.ROW.getLength()) + 1));
-        System.out.println("Grass " + x + " " + y);
 
         for (Product product : productsView.keySet()) {
-            System.out.println("Product " +product.getX() + " " + product.getY());
             if(product.getX() == x && product.getY() == y)
                 return true;
         }
@@ -297,7 +306,11 @@ public class GameView implements Initializable {
         game = new Game(level, user);
         workshops = game.getWorkshops();
         productsView = getProductsView();
-        getCagesView();
+        cagesView = getCagesView();
+        for (Cage cage : cagesView.keySet()) {
+            addCage(cage);
+        }
+
         workshopInitialize();
         warehouseInitialize();
         getAnimalsView();
@@ -382,8 +395,6 @@ public class GameView implements Initializable {
     }
 
     private ImageView addCage(Cage cage) {
-        HashSet<Cage> cages = new HashSet<>(game.getCages());
-
         if (cage.getCageLevel() <= 0) {
             gameBoard.getChildren().remove(cagesView.get(cage));
             cagesView.remove(cage);
@@ -395,10 +406,11 @@ public class GameView implements Initializable {
             imageView.setFitWidth(50);
             imageView.setFitHeight(50);
 
-            if (!gameBoard.getChildren().contains(cagesView.get(cage))) {
+            if (!cagesView.containsKey(cage)) {
                 cagesView.put(cage, imageView);
                 gameBoard.getChildren().add(imageView);
-            }
+            } else if (!gameBoard.getChildren().contains(cagesView.get(cage)))
+                gameBoard.getChildren().add(imageView);
             return imageView;
         }
     }
@@ -778,7 +790,6 @@ public class GameView implements Initializable {
 
 
     public void turn(ActionEvent actionEvent) {
-        //TODO
         game.turn(1, this);
         updateBoard();
         for (Workshop workshop : workshops) {
@@ -792,6 +803,12 @@ public class GameView implements Initializable {
 
         if (!game.truckOnRoad())
             imgTruck.setImage(new Image("/images/objects/truck2.png"));
+
+        for (Products products : game.getWarehouseProducts(1).keySet()) {
+            System.out.println(products + " " + game.getWarehouseProducts(1).get(products));
+        }
+        System.out.println(game.getRemained());
+        System.out.println();
     }
 
     private void progressWorkshop(Workshop workshop) {
@@ -847,7 +864,6 @@ public class GameView implements Initializable {
     private void addGrass(double X, double Y) {
         int x = Math.toIntExact(Math.round((X + WIDTH/(2 * Board.COLUMN.getLength()))/(WIDTH/Board.COLUMN.getLength()) + 1));
         int y = Math.toIntExact(Math.round((Y + HEIGHT/(2 * Board.ROW.getLength()))/(HEIGHT/Board.ROW.getLength()) + 1));
-        System.out.println(x + " " + y);
         Grass grass = game.plant(x,y);
 
         if (grass != null) {

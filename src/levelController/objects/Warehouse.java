@@ -60,6 +60,7 @@ public class Warehouse {
 
     public void decreaseAmount(Products product, int amount){
         amountOfProduct.replace(product, amountOfProduct.get(product) - amount);
+        remainedSpace += amount * product.getSpace();
     }
 
 }

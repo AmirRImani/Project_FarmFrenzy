@@ -8,14 +8,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import java.nio.file.Paths;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 
-
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 
 public class Main extends Application {
 
@@ -61,9 +59,10 @@ public class Main extends Application {
     }
     MediaPlayer mediaPlayer;
     public void music() {
-        String s = "/view/Main Menu.mp3";
-        Media h = new Media(Paths.get(s).toUri().toString());
-        mediaPlayer = new MediaPlayer(h);
+        String path = getClass().getResource("/musics/MainMenu.mp3").getPath();
+        Media media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(-1);
         mediaPlayer.play();
     }
 
