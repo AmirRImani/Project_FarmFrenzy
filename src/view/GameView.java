@@ -25,6 +25,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -40,6 +42,7 @@ import tasks.Task;
 import workshops.Workshop;
 import workshops.Workshops;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -85,6 +88,7 @@ public class GameView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        music();
         gameBoard.setOnMouseClicked(event -> {
             if (!onProduct(event.getX(), event.getY()) && !onWild(event.getX(), event.getY()))
                 addGrass(event.getX(), event.getY());
@@ -929,6 +933,15 @@ public class GameView implements Initializable {
             progressIceCream.setProgress(0);
         else if (workshop.getName().equals(Workshops.SEWING.name()) && workshop.isBusy())
             progressSewing.setProgress(0);
+    }
+
+    MediaPlayer mediaPlayer3;
+    public void music() {
+        String path = getClass().getResource("/musics/Africa.mp3").getPath();
+        Media media = new Media(new File(path).toURI().toString());
+        mediaPlayer3 = new MediaPlayer(media);
+        mediaPlayer3.setCycleCount(-1);
+        mediaPlayer3.play();
     }
 
 
