@@ -261,12 +261,12 @@ public class Game {
         //TODO a path for exit after win in code should be added
     }
 
-    public int truckLoad(String productName) {
-        return this.warehouse.truckLoad(Products.valueOf(productName), this.truck);
+    public boolean truckLoad(Products product) {
+        return this.warehouse.truckLoad(product, this.truck);
     }
 
-    public int truckUnload(String productName) {
-        return this.truck.unload(Products.valueOf(productName), this.warehouse);
+    public boolean truckUnload(Products product) {
+        return this.truck.unload(product, this.warehouse);
     }
 
     public boolean build(Workshops workshop) {
@@ -693,6 +693,14 @@ public class Game {
             }
         }
         return products;
+    }
+
+    public HashMap<Products,Integer> getWarehouseProducts(int x) {
+        return new HashMap<>(warehouse.getAmountOfProduct());
+    }
+
+    public HashMap<Products, Integer> getTruckProducts() {
+        return new HashMap<>(truck.getAmountOfProducts());
     }
 }
 

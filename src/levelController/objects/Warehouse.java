@@ -40,30 +40,21 @@ public class Warehouse {
     }
 
 
-    public int truckLoad(Products product, Truck truck) {
-        if(amountOfProduct.containsKey(product)){
-            int amount = truck.getCapacity() / product.getSpace();
-            int availableAmount = amountOfProduct.get(product);
-            int quantity = Math.min(amount, availableAmount);
-            if(truck.onRoad()){
-                //System.out.println("Truck is on road");
-                return 0;
-            }
-            if(amount == 0) {
-                //System.out.println("Truck doesn't have enough space");
-                return 1;
-            } else if(availableAmount == 0){
-                //System.out.println("This product isn't available");
-                return 2;
-            } else{
-                truck.load(product, quantity);
-                amountOfProduct.replace(product, amountOfProduct.get(product) - quantity);
-                //System.out.println("Truck loaded " + quantity + " " + product.name());
-                return 3;
-            }
+    public boolean truckLoad(Products product, Truck truck) {
+        int amount = truck.getCapacity() / product.getSpace();
+        int availableAmount = amountOfProduct.get(product);
+        int quantity = Math.min(amount, availableAmount);
+        if(truck.onRoad()) {
+            //System.out.println("Truck is on road");
+            return false;
+        } else if(amount == 0) {
+            //System.out.println("Truck doesn't have enough space");
+            return false;
         } else {
-            //System.out.println("This product isn't available");
-            return 4;
+            truck.load(product, quantity);
+            amountOfProduct.replace(product, amountOfProduct.get(product) - quantity);
+            //System.out.println("Truck loaded " + quantity + " " + product.name());
+            return true;
         }
     }
 

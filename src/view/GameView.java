@@ -306,13 +306,13 @@ public class GameView implements Initializable {
         image.setFitWidth(24);
         image.setFitHeight(24);
 
-        if (warehouse1.getChildren().size() < 3)
+        if (warehouse1.getChildren().size() < 4)
             warehouse1.getChildren().add(image);
-        else if (warehouse2.getChildren().size() < 3)
+        else if (warehouse2.getChildren().size() < 4)
             warehouse2.getChildren().add(image);
-        else if (warehouse3.getChildren().size() < 3)
+        else if (warehouse3.getChildren().size() < 4)
             warehouse3.getChildren().add(image);
-        else if (warehouse4.getChildren().size() < 3)
+        else if (warehouse4.getChildren().size() < 4)
             warehouse4.getChildren().add(image);
         else
             warehouse5.getChildren().add(image);
@@ -568,6 +568,21 @@ public class GameView implements Initializable {
         grassViews.remove(grass);
     }
 
+
+    @FXML
+    private void warehouseOpen(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("warehouseViewPage.fxml"));
+        root = loader.load();
+
+        WarehouseView warehouseView = loader.getController();
+        warehouseView.setInitial(game);
+
+        stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public void pause(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();

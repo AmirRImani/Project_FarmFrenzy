@@ -27,16 +27,6 @@
       </HBox>
       <AnchorPane fx:id="gameBoard" layoutX="200.0" layoutY="180.0" prefHeight="440.0" prefWidth="600.0" />
       <ImageView fx:id="imgTurn" fitHeight="50.0" fitWidth="150.0" layoutX="632.0" layoutY="726.0" pickOnBounds="true" preserveRatio="true" styleClass="turn-imageView" />
-      <ImageView fitHeight="170.0" fitWidth="235.0" layoutX="397.0" layoutY="635.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/objects/Warehouse.png" />
-         </image>
-      </ImageView>
-      <VBox fx:id="warehouse1" alignment="BOTTOM_LEFT" layoutX="458.0" layoutY="685.0" prefHeight="72.0" prefWidth="24.0" />
-      <VBox fx:id="warehouse2" alignment="BOTTOM_LEFT" layoutX="482.0" layoutY="685.0" prefHeight="72.0" prefWidth="24.0" />
-      <VBox fx:id="warehouse3" alignment="BOTTOM_LEFT" layoutX="502.0" layoutY="685.0" prefHeight="72.0" prefWidth="24.0" />
-      <VBox fx:id="warehouse4" alignment="BOTTOM_LEFT" layoutX="525.0" layoutY="685.0" prefHeight="72.0" prefWidth="24.0" />
-      <VBox fx:id="warehouse5" alignment="BOTTOM_LEFT" layoutX="549.0" layoutY="685.0" prefHeight="72.0" prefWidth="24.0" />
       <ImageView fx:id="milkPacking" fitHeight="140.0" fitWidth="180.0" layoutX="810.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="iceCream" fitHeight="140.0" fitWidth="180.0" layoutX="810.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="sewing" fitHeight="140.0" fitWidth="180.0" layoutX="809.0" layoutY="546.0" pickOnBounds="true" preserveRatio="true" />
@@ -55,5 +45,16 @@
       <ProgressBar fx:id="progressMilkPacking" layoutX="800.0" layoutY="295.0" opacity="0.5" prefHeight="18.0" prefWidth="198.0" progress="0.0" />
       <ProgressBar fx:id="progressIceCream" layoutX="800.0" layoutY="490.0" opacity="0.5" prefHeight="18.0" prefWidth="198.0" progress="0.0" />
       <ProgressBar fx:id="progressSewing" layoutX="800.0" layoutY="682.0" opacity="0.5" prefHeight="18.0" prefWidth="198.0" progress="0.0" />
+      <Button layoutX="382.0" layoutY="615.0" mnemonicParsing="false" onAction="#warehouseOpen" prefHeight="170.0" prefWidth="235.0" styleClass="warehouse-button" />
+      <VBox fx:id="warehouse1" alignment="BOTTOM_LEFT" layoutX="442.0" layoutY="674.0" prefHeight="101.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse2" alignment="BOTTOM_LEFT" layoutX="466.0" layoutY="674.0" prefHeight="101.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse3" alignment="BOTTOM_LEFT" layoutX="486.0" layoutY="674.0" prefHeight="101.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse4" alignment="BOTTOM_LEFT" layoutX="509.0" layoutY="674.0" prefHeight="101.0" prefWidth="24.0" />
+      <VBox fx:id="warehouse5" alignment="BOTTOM_LEFT" layoutX="533.0" layoutY="674.0" prefHeight="101.0" prefWidth="24.0" />
+      <ImageView fitHeight="108.0" fitWidth="180.0" layoutX="236.0" layoutY="656.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/objects/Truck.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

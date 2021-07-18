@@ -17,6 +17,8 @@ public class Truck {
 
     public int getCapacity() { return remainedCapacity; }
 
+    public HashMap<Products, Integer> getAmountOfProducts() { return amountOfProducts; }
+
     public Truck() {
         this.remainedCapacity = CAPACITY;
         this.startToGo = false;
@@ -32,31 +34,26 @@ public class Truck {
             amountOfProducts.put(product, quantity);
     }
 
-    public int unload(Products product, Warehouse warehouse) {
+    public boolean unload(Products product, Warehouse warehouse) {
         if(startToGo){
-            System.out.println("Truck is on road");
-            return 0;
+            //System.out.println("Truck is on road");
+            return false;
         }
         if(amountOfProducts.containsKey(product)) {
             int amount = amountOfProducts.get(product);
             int availableAmount = warehouse.getSpace();
             int quantity = Math.min(amount, availableAmount);
-            if(amount == 0) {
-                //System.out.println("This product isn't available");
-                return 1;
-            } else if(availableAmount == 0){
+            if(availableAmount == 0){
                 //System.out.println("Warehouse doesn't have enough space");
-                return 2;
-            } else{
+                return false;
+            } else {
                 this.remainedCapacity += quantity * product.getSpace();
                 warehouse.addProduct(product, quantity);
                 //System.out.println("Truck unloaded " + quantity + " " + product.name());
-                return 3;
+                return true;
             }
-        } else {
-            //System.out.println("Not Found");
-            return 4;
         }
+        return false;
     }
 
     public boolean transport() {

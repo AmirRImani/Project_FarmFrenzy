@@ -1,0 +1,4 @@
+.button {
+    -fx-background-image: url("/images/iconsAndLabels/upgradeButtonOn.png");
+    -fx-background-color: transparent;
+}

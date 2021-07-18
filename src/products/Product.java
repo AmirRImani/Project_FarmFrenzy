@@ -23,6 +23,8 @@ public class Product {
 
     public int getY() { return y; }
 
+    public int getPrice() { return price; }
+
     public Product(Products product, int x, int y) {
         this.nameOfProduct = product.name();
         this.spaceNeeded = product.getSpace();

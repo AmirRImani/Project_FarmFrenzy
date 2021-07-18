@@ -1,0 +1,14 @@
+.button {
+    -fx-background-image: url("/images/iconsAndLabels/upgradeButton.png");
+    -fx-background-color: transparent;
+}
+
+.button:hover {
+    -fx-background-image: url("/images/iconsAndLabels/upgradeButtonOn.png");
+    -fx-background-color: transparent;
+}
+
+.button:pressed {
+    -fx-background-image: url("/images/iconsAndLabels/upgradeButtonPressed.png");
+    -fx-background-color: transparent;
+}
