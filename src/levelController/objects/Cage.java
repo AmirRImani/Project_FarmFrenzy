@@ -8,7 +8,7 @@ public class Cage {
     private boolean prisoned;
     private final int MAXIMUM_FULL_CAGE = 5;
     private int numberOfTapNeed;
-    private int numberOfTap;
+    private int currentLevel;
     private int lastAttempt;//TODO to recognize whether user tapped in sequence
     private int startTimeComplete;//TODO start wild to be in cage completely
 
@@ -20,22 +20,22 @@ public class Cage {
 
     public boolean isPrisoned() { return prisoned; }
 
-    public int getCageLevel() { return numberOfTap; }
+    public int getCageLevel() { return currentLevel; }
 
     public Cage(Wild wild) {
         this.wild = wild;
         this.prisoned = false;
         this.numberOfTapNeed = wild.getTapNeeded();
-        this.numberOfTap = 1;
+        this.currentLevel = 1;
         this.lastAttempt = TimeProcessor.getInstance().currentStep;
         this.startTimeComplete = 0;
     }
 
     public boolean increaseTap(){
         if(lastAttempt < TimeProcessor.getInstance().currentStep && !prisoned) {
-            numberOfTap++;
+            currentLevel++;
             lastAttempt = TimeProcessor.getInstance().currentStep;
-            if(numberOfTap >= numberOfTapNeed){
+            if(currentLevel >= numberOfTapNeed){
                 startTimeComplete = TimeProcessor.getInstance().currentStep;
                 prisoned = true;
                 wild.prison(true);
@@ -47,8 +47,8 @@ public class Cage {
 
     public boolean decreaseTap() {
         if(TimeProcessor.getInstance().currentStep - lastAttempt > 1) {
-            numberOfTap --;
-            if(numberOfTap <= 0) {
+            currentLevel--;
+            if(currentLevel <= 0) {
                 wild.setCage(false);
                 return true;
             }

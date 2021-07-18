@@ -62,6 +62,8 @@ public class Game {
 
     public HashSet<Task> getTasks() { return tasks; }
 
+    public HashSet<Cage> getCages() { return cages; }
+
     public HashSet<Animal> getAnimals() {
         HashSet<Animal> animals = new HashSet<>(domestics);
         animals.addAll(helpers);
@@ -220,8 +222,6 @@ public class Game {
                 if(cage.getX() == wild.getX() && cage.getY() == wild.getY()) {
                     if(wild.isPrisoned()){
                         if(warehouse.addProduct(Products.valueOf("CAUGHT_" + wild.getName()), 1)) {
-                            wilds.remove(wild);
-                            cages.remove(cage);
                             //System.out.println("Wild " + wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
                             logger.setUseParentHandlers(false);
                             logger.fine("Wild " + wild.getName() + " on [" + wild.getX() + " " + wild.getY() + " ] has been caught");
@@ -237,7 +237,7 @@ public class Game {
                         //System.out.println("Cage on [ " + cage.getX() + " " + cage.getY() + " ] resistance increased");
                         logger.setUseParentHandlers(false);
                         logger.fine("Cage on [ " + cage.getX() + " " + cage.getY() + " ] resistance increased");
-                        return 10 + cage.getCageLevel();
+                        return 2;
                     } else {
                         //System.out.println("Cage can't be used. You used it on this cage in this step");
                         logger.setUseParentHandlers(false);
@@ -684,6 +684,22 @@ public class Game {
 
     public double truckProgress() {
         return truck.progress();
+    }
+
+    public Cage getCage(Wild wild) {
+        for (Cage cage : cages) {
+            if(cage.getWild() == wild)
+                return cage;
+        }
+        return null;
+    }
+
+    public void removeWild(Wild wild) {
+        wilds.remove(wild);
+    }
+
+    public void removeCage(Cage cage) {
+        cages.remove(cage);
     }
 }
 

@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import levelController.Game;
 import levelController.objects.Board;
+import levelController.objects.Cage;
 import levelController.objects.Grass;
 import levels.Level;
 import products.Product;
@@ -54,7 +55,7 @@ public class GameView implements Initializable {
     private Game game;
     private HashMap<Animal, ImageView> animalsView;
     private HashMap<Product, ImageView> productsView;
-    private HashMap<Wild, ImageView> cages;
+    private HashMap<Cage, ImageView> cagesView;
     private HashMap<Grass, ImageView> grassViews;
     private HashSet<Workshop> workshops;
 
@@ -295,10 +296,11 @@ public class GameView implements Initializable {
         game = new Game(level, user);
         workshops = game.getWorkshops();
         productsView = getProductsView();
+        getCagesView();
         workshopInitialize();
         warehouseInitialize();
         getAnimalsView();
-        cages = new HashMap<>(); //TODO
+        cagesView = new HashMap<>(); //TODO
         initialGrass();
 
         progressWell.setProgress(game.wellProgress());
@@ -327,7 +329,7 @@ public class GameView implements Initializable {
         workshopInitialize();
         warehouseInitialize();
         getAnimalsView();
-        cages = new HashMap<>(); //TODO
+        cagesView = new HashMap<>(); //TODO
         initialGrass();
 
         progressWell.setProgress(game.wellProgress());
@@ -364,10 +366,34 @@ public class GameView implements Initializable {
             addAnimal(animal);
     }
 
+    private HashMap<Cage, ImageView> getCagesView() {
+        HashSet<Cage> cages = new HashSet<>(game.getCages());
+        HashMap<Cage, ImageView> cageImageView = new HashMap<>();
+        for (Cage cage : cages)
+            cageImageView.put(cage, addCage(cage));
+        return cageImageView;
+    }
+
     private void warehouseInitialize() {
         for (Product product : game.getWarehouseProducts()) {
             toWarehouse(product);
         }
+    }
+
+    private ImageView addCage(Cage cage) {
+        HashSet<Cage> cages = new HashSet<>(game.getCages());
+
+        ImageView imageView = new ImageView(new Image("/images/objects/CAGE" + cage.getCageLevel() + ".png"));
+        imageView.setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (cage.getX() - 1) * WIDTH/Board.COLUMN.getLength());
+        imageView.setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (cage.getY() - 1) * HEIGHT/Board.ROW.getLength());
+        imageView.setFitWidth(60);
+        imageView.setFitHeight(60);
+
+        if (!gameBoard.getChildren().contains(cagesView.get(cage))) {
+            cagesView.put(cage, imageView);
+            gameBoard.getChildren().add(imageView);
+        }
+        return imageView;
     }
 
 
@@ -513,9 +539,6 @@ public class GameView implements Initializable {
         else if (animal instanceof Wild)
             name = ((Wild) animal).getName();
         ImageView image = new ImageView(new Image("/images/animals/" + name + ".png"));//TODO
-        System.out.println(animal.getX() + " " + animal.getY());
-        System.out.print(WIDTH/(2 * Board.COLUMN.getLength()) + (animal.getX() - 1) * WIDTH/Board.COLUMN.getLength() + " ");
-        System.out.println(HEIGHT/(2 * Board.ROW.getLength()) + (animal.getY() - 1) * HEIGHT/Board.ROW.getLength());
         image.setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (animal.getX() - 1) * WIDTH/Board.COLUMN.getLength());
         image.setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (animal.getY() - 1) * HEIGHT/Board.ROW.getLength());
         image.setFitWidth(60);
@@ -533,16 +556,23 @@ public class GameView implements Initializable {
                 toWarehouse(new Product(Products.valueOf("CAUGHT_" + ((Wild) animal).getName())));
                 gameBoard.getChildren().remove(animalsView.get(animal));
                 animalsView.remove(animal);
+
+                Cage cage = game.getCage((Wild) animal);
+                gameBoard.getChildren().remove(cagesView.get(cage));
+                cagesView.remove(cage);
+
+                game.removeWild((Wild) animal);
+                game.removeCage(cage);
             }
-//            else if (result == 1) {
-//
-//            } else if (result >= 10) {
-//                increaseCage(animal, result-10);
-//            } else if (result == 3) {
-//
-//            } else if (result == 4) {
-//                setCage(animal);
-//            }
+            else if (result == 1) {
+
+            } else if (result == 2) {
+                addCage(game.getCage((Wild) animal));
+            } else if (result == 3) {
+
+            } else if (result == 4) {
+                addCage(game.getCage((Wild) animal));
+            }
 
             });
         }
@@ -776,6 +806,12 @@ public class GameView implements Initializable {
         for (Animal animal : animalsView.keySet()) {
             animalsView.get(animal).setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (animal.getX() - 1) * WIDTH/Board.COLUMN.getLength());
             animalsView.get(animal).setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (animal.getY() - 1) * HEIGHT/Board.ROW.getLength());
+        }
+
+        for (Cage cage : cagesView.keySet()) {
+            cagesView.get(cage).setImage(new Image("/images/objects/CAGE" + cage.getCageLevel() + ".png"));
+            cagesView.get(cage).setLayoutX(WIDTH/(2 * Board.COLUMN.getLength()) + (cage.getX() - 1) * WIDTH/Board.COLUMN.getLength());
+            cagesView.get(cage).setLayoutY(HEIGHT/(2 * Board.ROW.getLength()) + (cage.getY() - 1) * HEIGHT/Board.ROW.getLength());
         }
 
         progressWell.setProgress(game.wellProgress());
