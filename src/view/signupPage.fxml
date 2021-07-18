@@ -7,27 +7,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="bodybg" stylesheets="@styles/backgrounds/backgroundSignupPage.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Signup">
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" styleClass="bodybg" stylesheets="@styles/backgrounds/backgroundSignupPage.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Signup">
    <children>
-      <Button fx:id="btnSignup" layoutX="606.0" layoutY="402.0" mnemonicParsing="false" onAction="#signup" prefHeight="60.0" prefWidth="180.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Signup" textFill="WHITE" />
-      <Button fx:id="btnExit" layoutX="14.0" layoutY="522.0" mnemonicParsing="false" onAction="#exit" prefHeight="60.0" prefWidth="180.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Exit" textFill="WHITE" />
-      <Button fx:id="btnBack" layoutX="310.0" layoutY="462.0" mnemonicParsing="false" onAction="#back" prefHeight="60.0" prefWidth="180.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Back to former page" textFill="WHITE" />
-      <Label layoutX="239.0" layoutY="353.0" text="Email" textFill="RED">
+      <Button fx:id="btnSignup" layoutX="766.0" layoutY="431.0" mnemonicParsing="false" onAction="#signup" prefHeight="75.0" prefWidth="220.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Signup" textFill="WHITE" />
+      <Button fx:id="btnExit" layoutX="14.0" layoutY="661.0" mnemonicParsing="false" onAction="#exit" prefHeight="75.0" prefWidth="220.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Exit" textFill="WHITE" />
+      <Button fx:id="btnBack" layoutX="390.0" layoutY="542.0" mnemonicParsing="false" onAction="#back" prefHeight="75.0" prefWidth="220.0" stylesheets="@styles/buttonStyles/buttonPressedBlue.css" text="Back to former page" textFill="WHITE" />
+      <Label layoutX="323.0" layoutY="355.0" text="Email" textFill="RED">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="239.0" layoutY="302.0" text="Password" textFill="RED">
+      <Label layoutX="323.0" layoutY="304.0" text="Password" textFill="RED">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="236.0" layoutY="251.0" prefHeight="35.0" prefWidth="83.0" text="Username" textFill="RED">
+      <Label layoutX="320.0" layoutY="253.0" prefHeight="35.0" prefWidth="83.0" text="Username" textFill="RED">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="257.0" layoutY="12.0" prefHeight="83.0" prefWidth="317.0" text="Signup" textFill="RED">
+      <Label alignment="CENTER" layoutX="341.0" layoutY="14.0" prefHeight="83.0" prefWidth="317.0" text="Signup" textFill="RED">
          <font>
             <Font name="Verdana Bold" size="64.0" />
          </font>
@@ -37,17 +37,17 @@
             <Font name="Verdana" size="17.0" />
          </font>
       </Label>
-      <TextField fx:id="txtUsername" layoutX="346.0" layoutY="249.0" prefHeight="40.0" prefWidth="250.0" promptText="Username">
+      <TextField fx:id="txtUsername" layoutX="430.0" layoutY="251.0" prefHeight="40.0" prefWidth="250.0" promptText="Username">
          <font>
             <Font size="16.0" />
          </font>
       </TextField>
-      <PasswordField fx:id="txtPassword" layoutX="346.0" layoutY="296.0" prefHeight="40.0" prefWidth="250.0" promptText="Password">
+      <PasswordField fx:id="txtPassword" layoutX="430.0" layoutY="298.0" prefHeight="40.0" prefWidth="250.0" promptText="Password">
          <font>
             <Font size="16.0" />
          </font>
       </PasswordField>
-      <TextField fx:id="txtEmail" layoutX="346.0" layoutY="347.0" prefHeight="40.0" prefWidth="250.0" promptText="Email Address">
+      <TextField fx:id="txtEmail" layoutX="430.0" layoutY="349.0" prefHeight="40.0" prefWidth="250.0" promptText="Email Address">
          <font>
             <Font size="16.0" />
          </font>
