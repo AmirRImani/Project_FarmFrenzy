@@ -47,13 +47,9 @@ public class User {
         this.numberOfCoins = 0;
     }
 
-    public void nextLevel() {
-        unlockedLevels ++;
-    }
-
     public void award(int award) {
         numberOfCoins += award;
     }
 
-
+    public void unlockLevel() { unlockedLevels++; }
 }

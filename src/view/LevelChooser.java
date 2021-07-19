@@ -1,5 +1,6 @@
 package view;
 
+import entry.EnterProcess;
 import entry.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import levels.Level;
 import levels.LevelsOperation;
+import sharedClasses.FileOperator;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +39,41 @@ public class LevelChooser implements Initializable {
     AnchorPane anchorpane;
 
     public void setInitial(User user, MediaPlayer player) {
+        player.pause();
+        music();
+        this.user = user;
+        numberOfLevels = LevelsOperation.NUMBER_OF_LEVELS;
+        unlockedLevels = user.getUnlockedLevels();
+
+        buttons = new Button[numberOfLevels];
+        for (int i = 0; i < numberOfLevels; i++) {
+            buttons[i] = new Button();
+            if(unlockedLevels >= i+1) {
+                buttons[i].getStylesheets().add("/view/styles/buttonStyles/levelButtons/levelButton" + (i + 1) + ".css");
+                int finalI = i;
+                buttons[i].setOnAction(event -> {
+                    try {
+                        toLevel(event, user, finalI + 1);
+                    } catch (IOException e) {
+
+                    }
+                });
+            }
+            else
+                buttons[i].getStylesheets().add("/view/styles/buttonStyles/levelButtons/levelButtonLocked" + (i+1) + ".css");
+            buttons[i].setPrefWidth(40);
+            buttons[i].setPrefHeight(40);
+            buttons[i].setLayoutX(65 + 100 * i);
+            buttons[i].setLayoutY(535 - 30 * i);
+
+            anchorpane.getChildren().add(buttons[i]);
+        }
+    }
+
+    public void setInitial(User user, MediaPlayer player, int x) {
+        EnterProcess enterProcess = new EnterProcess();
+        enterProcess.save(user);
+
         player.pause();
         music();
         this.user = user;
@@ -100,10 +137,12 @@ public class LevelChooser implements Initializable {
         loader.setLocation(getClass().getResource("gameViewPage.fxml"));
         root = loader.load();
 
-        GameView gameView = loader.getController();
-        gameView.setInitial(level, user, mediaPlayer);
-
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+
+        GameView gameView = loader.getController();
+        gameView.setInitial(level, user, mediaPlayer, stage);
+
+
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

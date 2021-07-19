@@ -306,7 +306,8 @@ public class GameView implements Initializable {
         }
     }
 
-    public void setInitial(Level level, User user, MediaPlayer player) {
+    public void setInitial(Level level, User user, MediaPlayer player, Stage stage) {
+        this.stage = stage;
         player.pause();
         music();
         game = new Game(level, user);
@@ -342,7 +343,8 @@ public class GameView implements Initializable {
         showTasks();
     }
 
-    public void setInitial(Game game, MediaPlayer mediaPlayer) {
+    public void setInitial(Game game, MediaPlayer mediaPlayer, Stage stage) {
+        this.stage = stage;
         this.mediaPlayer = mediaPlayer;
         this.game = game;
         workshops = game.getWorkshops();
@@ -797,7 +799,7 @@ public class GameView implements Initializable {
 
 
     public void turn(ActionEvent actionEvent) {
-        game.turn(1, this);
+        boolean won = game.turn(1, this);
         updateBoard();
         for (Workshop workshop : workshops) {
             progressWorkshop(workshop);
@@ -811,11 +813,8 @@ public class GameView implements Initializable {
         if (!game.truckOnRoad())
             imgTruck.setImage(new Image("/images/objects/truck2.png"));
 
-        for (Products products : game.getWarehouseProducts(1).keySet()) {
-            System.out.println(products + " " + game.getWarehouseProducts(1).get(products));
-        }
-        System.out.println(game.getRemained());
-        System.out.println();
+        if (won)
+            won(actionEvent);
     }
 
     private void progressWorkshop(Workshop workshop) {
@@ -936,6 +935,23 @@ public class GameView implements Initializable {
             progressIceCream.setProgress(0);
         else if (workshop.getName().equals(Workshops.SEWING.name()) && workshop.isBusy())
             progressSewing.setProgress(0);
+    }
+
+    public void won(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("wonPage.fxml"));
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Won won = loader.getController();
+        won.setInitial(game.getUser(), mediaPlayer);
+
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void music() {

@@ -148,10 +148,11 @@ public class WarehouseView implements Initializable {
         loader.setLocation(getClass().getResource("gameViewPage.fxml"));
         root = loader.load();
 
-        GameView gameView = loader.getController();
-        gameView.setInitial(game, mediaPlayer);
-
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+
+        GameView gameView = loader.getController();
+        gameView.setInitial(game, mediaPlayer, stage);
+
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

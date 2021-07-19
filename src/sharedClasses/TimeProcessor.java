@@ -45,12 +45,8 @@ public class TimeProcessor {
         game.wildAttack(gameView);
         game.transportCompleted();
         game.grassAlarm(last);
-        //game.showDetails(last);
         exit = game.checkWin();
-        //TODO
-        //TODO after calling this method also check animal moves, dog attacks, cat catches, wild attacks, ...
         return exit;
-
     }
 
 }

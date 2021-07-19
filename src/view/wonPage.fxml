@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" styleClass="main-anchorPane" stylesheets="@styles/backgrounds/backgroundPause.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Won">
+   <children>
+      <ImageView fitHeight="375.0" fitWidth="500.0" layoutX="250.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true" styleClass="pause-anchorPane" />
+      <Button layoutX="400.0" layoutY="431.0" mnemonicParsing="false" onAction="#back" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: transparent;" styleClass="levels-button" />
+      <Label alignment="CENTER" layoutX="406.0" layoutY="246.0" prefHeight="100.0" prefWidth="200.0" text="Congratulation  You won" textFill="#694900">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

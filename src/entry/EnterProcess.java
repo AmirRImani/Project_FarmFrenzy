@@ -109,6 +109,22 @@ public class EnterProcess {
         }
     }
 
+    public void save(User user){
+        for (User user1 : users) {
+            if (user1.getName().equals(user.getName())) {
+                users.remove(user1);
+                break;
+            }
+        }
+        users.add(user);
+        FileOperator fileOperator = new FileOperator("users.json");
+        try {
+            fileOperator.saveFile(fileOperator.getFile(),users, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 //    public void input(Scanner scanner){
 //        String command;
 //        User user;

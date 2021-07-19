@@ -257,11 +257,8 @@ public class Game {
     }
 
     public boolean turn(int turnNumber, GameView gameView) {
-        boolean exit;
         TimeProcessor timeProcessor = TimeProcessor.getInstance();
-        exit = timeProcessor.changeSteps(turnNumber,this, gameView);
-        return exit;
-        //TODO a path for exit after win in code should be added
+        return timeProcessor.changeSteps(turnNumber,this, gameView);
     }
 
     public boolean truckLoad(Products product) {
@@ -575,28 +572,30 @@ public class Game {
 
     public boolean checkWin() {
         //TODO if user did all tasks of level
-        boolean win = true;
+        boolean won = true;
         for (Task task : tasks) {
             if (task.getType().equals("COIN")) {
-                if (task.getTarget() != coin) {
-                    win = false;
-                    return win;
+                if (task.getTarget() > coin) {
+                    won = false;
+                    return won;
                 }
             } else if (task.getType().equals("CATCH")) {
-                if (task.getTarget() < warehouse.amount(task.getTypeOfProduct())) {
-                    win = false;
-                    return win;
+                if (task.getTarget() > warehouse.amount(task.getTypeOfProduct())) {
+                    won = false;
+                    return won;
                 }
             } else if (task.getType().equals("DOMESTIC")) {
-                if (task.getTarget() < domeAmount(task.getTypeOfDomestic())) {
-                    win = false;
-                    return win;
+                if (task.getTarget() > domeAmount(task.getTypeOfDomestic())) {
+                    won = false;
+                    return won;
                 }
             }
         }
-        if(win)
+        if(won) {
+            user.unlockLevel();
             System.out.println("Turn " + TimeProcessor.getInstance().currentStep + ": " + "Tasks completed\nYou WON");
-        return win;
+        }
+        return won;
     }
 
     public int domeAmount(Domestics typeOfDomestic) {

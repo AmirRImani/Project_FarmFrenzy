@@ -30,10 +30,11 @@ public class Pause {
         loader.setLocation(getClass().getResource("gameViewPage.fxml"));
         root = loader.load();
 
-        GameView gameView = loader.getController();
-        gameView.setInitial(game, mediaPlayer);
-
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+
+        GameView gameView = loader.getController();
+        gameView.setInitial(game, mediaPlayer, stage);
+
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -52,10 +53,11 @@ public class Pause {
             loader.setLocation(getClass().getResource("gameViewPage.fxml"));
             root = loader.load();
 
-            GameView gameView = loader.getController();
-            gameView.setInitial(game.getLevel(), game.getUser(), mediaPlayer);
-
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            GameView gameView = loader.getController();
+            gameView.setInitial(game.getLevel(), game.getUser(), mediaPlayer, stage);
+
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
