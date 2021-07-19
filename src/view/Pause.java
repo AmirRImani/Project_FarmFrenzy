@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import levelController.Game;
 
@@ -17,8 +18,10 @@ public class Pause {
     private Scene scene;
     private Parent root;
     private Game game;
+    private MediaPlayer mediaPlayer;
 
-    public void setInitial(Game game) {
+    public void setInitial(Game game, MediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
         this.game = game;
     }
 
@@ -28,7 +31,7 @@ public class Pause {
         root = loader.load();
 
         GameView gameView = loader.getController();
-        gameView.setInitial(game);
+        gameView.setInitial(game, mediaPlayer);
 
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -50,7 +53,7 @@ public class Pause {
             root = loader.load();
 
             GameView gameView = loader.getController();
-            gameView.setInitial(game.getLevel(), game.getUser());
+            gameView.setInitial(game.getLevel(), game.getUser(), mediaPlayer);
 
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -72,7 +75,7 @@ public class Pause {
             root = loader.load();
 
             LevelChooser levelChooser = loader.getController();
-            levelChooser.setInitial(game.getUser());
+            levelChooser.setInitial(game.getUser(), mediaPlayer);
 
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -89,7 +92,13 @@ public class Pause {
         aLert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
 
         if(aLert.showAndWait().get() == ButtonType.YES) {
-            root = FXMLLoader.load(getClass().getResource("entryPage.fxml"));
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("entryPage.fxml"));
+            root = loader.load();
+
+            Entry entry = loader.getController();
+            entry.setInitial( mediaPlayer);
+
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);

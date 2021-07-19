@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -16,6 +17,7 @@ public class Login {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private MediaPlayer mediaPlayer;
 
     @FXML
     Button btnExit, btnLogin;
@@ -28,6 +30,10 @@ public class Login {
 
     @FXML
     Label labelLogin;
+
+    public void setInitial(MediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
+    }
 
     public void login(javafx.event.ActionEvent actionEvent) throws IOException {
         EnterProcess enterProcess = new EnterProcess();
@@ -50,7 +56,7 @@ public class Login {
         root = loader.load();
 
         LevelChooser levelChooser = loader.getController();
-        levelChooser.setInitial(user);
+        levelChooser.setInitial(user, mediaPlayer);
 
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);

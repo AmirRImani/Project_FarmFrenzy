@@ -31,11 +31,13 @@ public class LevelChooser implements Initializable {
     private int numberOfLevels;
     private int unlockedLevels;
     private Button[] buttons;
+    private MediaPlayer mediaPlayer;
 
     @FXML
     AnchorPane anchorpane;
 
-    public void setInitial(User user) {
+    public void setInitial(User user, MediaPlayer player) {
+        player.pause();
         music();
         this.user = user;
         numberOfLevels = LevelsOperation.NUMBER_OF_LEVELS;
@@ -99,7 +101,7 @@ public class LevelChooser implements Initializable {
         root = loader.load();
 
         GameView gameView = loader.getController();
-        gameView.setInitial(level, user);
+        gameView.setInitial(level, user, mediaPlayer);
 
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -107,16 +109,12 @@ public class LevelChooser implements Initializable {
         stage.show();
     }
 
-
-    MediaPlayer mediaPlayer;
     public void music() {
-
         String path = getClass().getResource("/musics/Antarctica.mp3").getPath();
         Media media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(-1);
         mediaPlayer.play();
-
     }
 
 }

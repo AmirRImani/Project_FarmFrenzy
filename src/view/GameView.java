@@ -61,6 +61,7 @@ public class GameView implements Initializable {
     private HashMap<Cage, ImageView> cagesView;
     private HashMap<Grass, ImageView> grassViews;
     private HashSet<Workshop> workshops;
+    private MediaPlayer mediaPlayer;
 
     @FXML
     AnchorPane gameBoard;
@@ -88,7 +89,6 @@ public class GameView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        music();
         gameBoard.setOnMouseClicked(event -> {
             if (!onProduct(event.getX(), event.getY()) && !onWild(event.getX(), event.getY()))
                 addGrass(event.getX(), event.getY());
@@ -306,7 +306,9 @@ public class GameView implements Initializable {
         }
     }
 
-    public void setInitial(Level level, User user) {
+    public void setInitial(Level level, User user, MediaPlayer player) {
+        player.pause();
+        music();
         game = new Game(level, user);
         workshops = game.getWorkshops();
         productsView = getProductsView();
@@ -340,7 +342,8 @@ public class GameView implements Initializable {
         showTasks();
     }
 
-    public void setInitial(Game game) {
+    public void setInitial(Game game, MediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
         this.game = game;
         workshops = game.getWorkshops();
         productsView = getProductsView();
@@ -897,7 +900,7 @@ public class GameView implements Initializable {
         root = loader.load();
 
         WarehouseView warehouseView = loader.getController();
-        warehouseView.setInitial(game);
+        warehouseView.setInitial(game, mediaPlayer);
 
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -911,7 +914,7 @@ public class GameView implements Initializable {
         root = loader.load();
 
         Pause pause = loader.getController();
-        pause.setInitial(game);
+        pause.setInitial(game, mediaPlayer);
 
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -935,38 +938,11 @@ public class GameView implements Initializable {
             progressSewing.setProgress(0);
     }
 
-    MediaPlayer mediaPlayer3;
     public void music() {
         String path = getClass().getResource("/musics/Africa.mp3").getPath();
         Media media = new Media(new File(path).toURI().toString());
-        mediaPlayer3 = new MediaPlayer(media);
-        mediaPlayer3.setCycleCount(-1);
-        mediaPlayer3.play();
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(-1);
+        mediaPlayer.play();
     }
-
-
-//    public void walk(Animal animal, Directions direction) {
-//        if (direction != null) {
-//            if (direction == Directions.RIGHT)
-//                animalsView.get(animal).setX(80);
-//            else if (direction == Directions.LEFT)
-//                animalsView.get(animal).setX(-80);
-//            else if (direction == Directions.DOWN)
-//                animalsView.get(animal).setY(55);
-//            else if (direction == Directions.UP)
-//                animalsView.get(animal).setY(-55);
-//        }
-//    }
 }
-
-//class GrassView {
-//    private int column;
-//    private int row;
-//    private int quantity;
-//
-//    public GrassView(int column, int row, int quantity) {
-//        this.column = column;
-//        this.row = row;
-//        this.quantity = quantity;
-//    }
-//}

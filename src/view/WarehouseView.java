@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import levelController.Game;
 import products.Products;
@@ -32,6 +33,7 @@ public class WarehouseView implements Initializable {
     private TableView tableWarehouse, tableTruck;
     private Game game;
     private Products productSelectedWarehouse, productSelectedTruck;
+    private MediaPlayer mediaPlayer;
 
     @FXML
     AnchorPane anchorPane1, anchorPane2;
@@ -120,7 +122,8 @@ public class WarehouseView implements Initializable {
     }
 
 
-    public void setInitial(Game game) {
+    public void setInitial(Game game, MediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
         this.game = game;
         setItems();
         //TODO
@@ -146,7 +149,7 @@ public class WarehouseView implements Initializable {
         root = loader.load();
 
         GameView gameView = loader.getController();
-        gameView.setInitial(game);
+        gameView.setInitial(game, mediaPlayer);
 
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
