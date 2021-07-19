@@ -123,8 +123,15 @@ public class LevelChooser implements Initializable {
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("entryPage.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("entryPage.fxml"));
+        root = loader.load();
+
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+
+        Entry entry = loader.getController();
+        entry.setInitial(mediaPlayer);
+
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

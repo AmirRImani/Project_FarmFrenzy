@@ -65,8 +65,15 @@ public class Entry implements Initializable {
     }
 
     public void forget(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("forgetPage.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("forgetPage.fxml"));
+        root = loader.load();
+
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+
+        Forget forget = loader.getController();
+        forget.setInitial(mediaPlayer);
+
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

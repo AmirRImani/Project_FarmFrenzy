@@ -19,6 +19,7 @@ public class Forget {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private MediaPlayer mediaPlayer;
 
     @FXML
     Button btnReset, btnReset1;
@@ -34,6 +35,10 @@ public class Forget {
 
     @FXML
     ImageView imageView;
+
+    public void setInitial(MediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
+    }
 
     public void reset(javafx.event.ActionEvent actionEvent) {
         EnterProcess enterProcess = new EnterProcess();
@@ -73,8 +78,15 @@ public class Forget {
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("entryPage.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("entryPage.fxml"));
+        root = loader.load();
+
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+
+        Entry entry = loader.getController();
+        entry.setInitial(mediaPlayer);
+
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
